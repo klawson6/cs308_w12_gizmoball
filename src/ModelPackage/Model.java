@@ -1,4 +1,4 @@
-package Model;
+package ModelPackage;
 
 import Physics.LineSegment;
 
@@ -11,7 +11,7 @@ public class Model{
     private double friction = 10;
     private LineSegment[] borders = new LineSegment[4];
     private HashSet<Gizmo> gizmoList = new HashSet<>();
-    private Ball ball = new Ball();
+    private Ball ball;
     private HashSet<Observer> observer;
 
     public Model(){
@@ -25,8 +25,13 @@ public class Model{
     }
 
 
-    public void addGizmo(String Type, int x, int y){
+    public void addGizmo(Gizmo gizmo){
 
+        gizmoList.add(gizmo);
+
+    }
+
+    public void addBall(Ball ball){
 
     }
 
