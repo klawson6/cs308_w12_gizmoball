@@ -7,7 +7,9 @@ public class GAbsorber extends Gizmo {
     private Vect xYStart;
     private Vect xYEnd;
 
-    public GAbsorber(){
+    public GAbsorber(Vect xYStart, Vect xYEnd){
+        this.xYStart = xYStart;
+        this.xYEnd = xYEnd;
 
     }
 
