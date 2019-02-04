@@ -1,13 +1,17 @@
 import ModelPackage.Model;
-import ModelPackage.GTriangle;
 
 public class Main {
 
     public static void main(String[] args) {
 
-        Model model = new Model();
+
+        LoadFile r = new LoadFile();
+
+        Model model = r.run();
         //model.addObserver(View.GUI);
-        model.addGizmo(new GTriangle(1,1));
+//        model.addGizmo(new GTriangle(1,1));
+
+
 
     }
 
