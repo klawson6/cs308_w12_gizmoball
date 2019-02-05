@@ -1,10 +1,9 @@
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
-import java.util.Vector;
+import Physics.Vect;
 
 import ModelPackage.*;
-import Physics.Vect;
 
 public class LoadFile {
 
@@ -95,12 +94,12 @@ public class LoadFile {
                     String name = scan.next();
                     double xPos = scan.nextDouble();
                     double yPos = scan.nextDouble();
-                    String xVel = scan.next();
-                    String yVel = scan.next();
+                    double xVel = Double.parseDouble(scan.next());
+                    double yVel = Double.parseDouble(scan.next());
 
 
 //                    System.out.println("Ball called " + name + " at (" + xPos + ", " + yPos + ") going at " + xVel + "L/sec on the x axis and " + yVel + "L/sec on the y axis");
-                    model.addBall(new Ball(xPos,yPos,1)); //TODO: Radius is not provided and velocity is?
+                    model.addBall(new Ball(xPos,yPos,xVel, yVel)); //TODO: Radius is not provided and velocity is?
                 } else if (info.startsWith("Absorber")) {
                     String type = scan.next();
                     String name = scan.next();
