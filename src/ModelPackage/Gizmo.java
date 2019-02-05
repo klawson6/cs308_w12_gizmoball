@@ -13,6 +13,7 @@ public abstract class Gizmo{
     private Color colour;
     private HashSet<Circle> composingCircles;
     private HashSet<LineSegment> composingLines;
+    private double reflectionCoef;
 
     public void setxPosition(int xPosition) {
         this.xPosition = xPosition;
@@ -44,5 +45,13 @@ public abstract class Gizmo{
 
     public HashSet<LineSegment> getComposingLines() {
         return composingLines;
+    }
+
+    public void setReflectionCoef(double coef){
+        reflectionCoef = coef;
+    }
+
+    public double getReflectionCoef(){
+        return reflectionCoef;
     }
 }

@@ -34,7 +34,19 @@ public class Ball {
     public Vect getPos() {
         return circle.getCenter();
     }
+    /**
+     * @effects Returns the corresponding Velocity object of the ball
+     */
+    public Vect getVelocity(){
+        return velocity;
+    }
 
+    /**
+     * @effects Returns the corresponding Circle object of the ball
+     */
+    public Circle getCircle(){
+        return circle;
+    }
     /**
      * @requires velocity is not null
      * @modifies this
