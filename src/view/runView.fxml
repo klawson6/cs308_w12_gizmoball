@@ -15,7 +15,7 @@
                 <Button mnemonicParsing="false" text="Build" />
                 <Button mnemonicParsing="false" text="Save" />
                 <Button mnemonicParsing="false" text="Load" />
-                <Button mnemonicParsing="false" text="Quit" />
+                <Button fx:id="quitButton" mnemonicParsing="false" text="Quit" />
             </buttons>
         </ButtonBar>
     </top>

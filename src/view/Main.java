@@ -10,6 +10,8 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
 
+    final static int WINDOW_SIZE = 700;
+
     @Override
     public void start(Stage primaryStage) throws Exception{
 
@@ -19,7 +21,7 @@ public class Main extends Application {
         Controller controller = loader.getController();
 
         primaryStage.setTitle("Gizmoball");
-        primaryStage.setScene(new Scene(root, 500, 500));
+        primaryStage.setScene(new Scene(root, WINDOW_SIZE, WINDOW_SIZE));
         primaryStage.show();
     }
 
