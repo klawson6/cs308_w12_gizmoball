@@ -54,6 +54,11 @@ public class GAbsorber implements Gizmo {
     }
 
     @Override
+    public double getRotation() {
+        return 0;
+    }
+
+    @Override
     public Set<LineSegment> getComposingLines() {
         return null;
     }

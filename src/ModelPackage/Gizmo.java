@@ -8,21 +8,23 @@ import java.util.Set;
 
 public interface Gizmo{
 
-    public String getGizmoType();
+    String getGizmoType();
 
-    public int getStartxPosition();
+    int getStartxPosition();
 
-    public int getStartyPosition();
+    int getStartyPosition();
 
-    public int getEndxPosition();
+    int getEndxPosition();
 
-    public int getEndyPosition();
+    int getEndyPosition();
 
-    public Color getColour();
+    Color getColour();
 
-    public Set<LineSegment> getComposingLines();
+    double getRotation();
 
-    public double getReflectionCoef();
+    Set<LineSegment> getComposingLines();
 
-    public Set<Circle> getComposingCircles();
+    double getReflectionCoef();
+
+    Set<Circle> getComposingCircles();
 }
