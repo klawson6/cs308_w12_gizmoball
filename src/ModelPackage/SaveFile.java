@@ -27,7 +27,9 @@ public class SaveFile {
                     break;
                 case "Triangle":
                     break;
-                case "Flipper":
+                case "Left Flipper":
+                    break;
+                case "Right Flipper":
                     break;
                 case "KeyConnect":
                     break;
