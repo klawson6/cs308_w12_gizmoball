@@ -4,54 +4,25 @@ import Physics.Circle;
 import Physics.LineSegment;
 
 import java.awt.*;
-import java.util.HashSet;
+import java.util.Set;
 
-public abstract class Gizmo{
+public interface Gizmo{
 
-    private int xPosition;
-    private int yPosition;
-    private Color colour;
-    private HashSet<Circle> composingCircles;
-    private HashSet<LineSegment> composingLines;
-    private double reflectionCoef;
+    public String getGizmoType();
 
-    public void setxPosition(int xPosition) {
-        this.xPosition = xPosition;
-    }
+    public int getStartxPosition();
 
-    public void setyPosition(int yPosition){
-        this.yPosition = yPosition;
-    }
+    public int getStartyPosition();
 
-    public void setColour(Color colour) {
-        this.colour = colour;
-    }
+    public int getEndxPosition();
 
-    public int getxPosition() {
-        return xPosition;
-    }
+    public int getEndyPosition();
 
-    public int getyPosition() {
-        return yPosition;
-    }
+    public Color getColour();
 
-    public Color getColour() {
-        return colour;
-    }
+    public Set<LineSegment> getComposingLines();
 
-    public HashSet<Circle> getComposingCircles() {
-        return composingCircles;
-    }
+    public double getReflectionCoef();
 
-    public HashSet<LineSegment> getComposingLines() {
-        return composingLines;
-    }
-
-    public void setReflectionCoef(double coef){
-        reflectionCoef = coef;
-    }
-
-    public double getReflectionCoef(){
-        return reflectionCoef;
-    }
+    public Set<Circle> getComposingCircles();
 }
