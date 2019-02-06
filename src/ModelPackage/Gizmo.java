@@ -27,4 +27,5 @@ public interface Gizmo{
     double getReflectionCoef();
 
     Set<Circle> getComposingCircles();
+
 }

@@ -5,11 +5,11 @@ import Physics.Geometry;
 import Physics.LineSegment;
 import Physics.Vect;
 
-import javax.sound.sampled.Line;
 import java.util.HashSet;
+import java.util.Observable;
 import java.util.Observer;
 
-public class Model{
+public class Model extends Observable {
 
     private double gravity = 25;
     private double friction = 10;
@@ -23,8 +23,6 @@ public class Model{
 
     public Model(){
         observer = new HashSet<>();
-
-
     }
 
     public void addObserver(Observer o){
@@ -35,7 +33,7 @@ public class Model{
     public void addGizmo(Gizmo gizmo){
 
         gizmoList.add(gizmo);
-
+        setChanged();
     }
 
     public void addBall(Ball ball){
