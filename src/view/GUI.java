@@ -8,7 +8,10 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-public class Main extends Application {
+import java.util.Observable;
+import java.util.Observer;
+
+public class GUI extends Application implements Observer {
 
     final static int WINDOW_SIZE = 700;
 
@@ -28,5 +31,10 @@ public class Main extends Application {
 
     public static void main(String[] args) {
         launch(args);
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+
     }
 }

@@ -1,26 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.layout.BorderPane?>
 
 <?import view.ResizableCanvas?>
-<BorderPane xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Controller" fx:id="rootBorderPane">
-    <top>
-        <ButtonBar maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" BorderPane.alignment="CENTER">
-            <buttons>
-                <Button mnemonicParsing="false" text="Run" />
-                <Button mnemonicParsing="false" text="Stop" />
-                <Button mnemonicParsing="false" text="Tick" />
-                <Button mnemonicParsing="false" text="Build" />
-                <Button mnemonicParsing="false" text="Save" />
-                <Button mnemonicParsing="false" text="Load" />
-                <Button fx:id="quitButton" mnemonicParsing="false" text="Quit" />
-            </buttons>
-        </ButtonBar>
-    </top>
-    <center>
-        <ResizableCanvas fx:id="canvas" BorderPane.alignment="center">
-        </ResizableCanvas>
-    </center>
-</BorderPane>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.layout.VBox?>
+<VBox xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Controller" fx:id="rootPane">
+    <ToolBar>
+            <Button text="Run" />
+            <Button text="Stop" />
+            <Button text="Tick" />
+            <Button text="Build" />
+            <Button text="Save" />
+            <Button text="Load" />
+            <Button fx:id="quitButton" text="Quit" />
+    </ToolBar>
+    <ResizableCanvas fx:id="canvas" BorderPane.alignment="center">
+    </ResizableCanvas>
+</VBox>
