@@ -2,6 +2,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Scanner;
 
 public class GetConfig {
 
@@ -26,11 +27,24 @@ public class GetConfig {
             System.out.println("Creating new config file with standard values.");
             createConfig();
         }
-        readInValues();
+        try {
+            readInValues();
+        }catch(FileNotFoundException e){
+            //should be impossible as if file doesn't exist it gets created but it throws an error if i dont put this in
+            System.out.println("Error. File not found.");
+        }
     }
 
-    private void readInValues(){
+    private void readInValues() throws FileNotFoundException{
+        Scanner scan = new Scanner(file);
 
+        while(scan.hasNext()){
+            String line = scan.nextLine();
+            //'#' is the prefix for a comment line. Should ignore these lines
+            if(!line.startsWith("#")){
+
+            }
+        }
     }
 
 
@@ -43,16 +57,11 @@ public class GetConfig {
             FileWriter fileWriter = new FileWriter(file);
             fileWriter.write("# Gizmoball config file for Coefficients\n");
             fileWriter.write("# Group W12 - Aleksi Daskalov, Cameron Taylor, John McMenemy, Kyle Lawson, Mark Falconer\n\n");
-            fileWriter.write("#Square\n");
-            fileWriter.write("1.0\n\n");
-            fileWriter.write("#Circle\n");
-            fileWriter.write("1.0\n\n");
-            fileWriter.write("#Triangle\n");
-            fileWriter.write("1.0\n\n");
-            fileWriter.write("#Flipper\n");
-            fileWriter.write("1.0\n\n");
-            fileWriter.write("#Line\n");
-            fileWriter.write("1.0");
+            fileWriter.write("Square 1.0\n\n");
+            fileWriter.write("Circle 1.0\n\n");
+            fileWriter.write("Triangle 1.0\n\n");
+            fileWriter.write("Flipper 1.0\n\n");
+            fileWriter.write("Line 1.0");
             fileWriter.close();
         }catch(IOException e){
             System.out.println("IO Exception for file " + filename);
