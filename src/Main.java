@@ -7,7 +7,7 @@ public class Main {
 
 
         LoadFile r = new LoadFile();
-
+        GetConfig c = new GetConfig();
         Model model = r.run();
         //model.addObserver(View.GUI);
 //        model.addGizmo(new GTriangle(1,1));
