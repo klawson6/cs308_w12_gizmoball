@@ -7,6 +7,6 @@ Circle 1.0
 
 Triangle 1.0
 
-Flipper 1.0
+Flipper 0.95
 
 Line 1.0
