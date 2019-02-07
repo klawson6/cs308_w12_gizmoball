@@ -19,6 +19,9 @@ public class ResizableCanvas extends Canvas {
         GraphicsContext gc = getGraphicsContext2D();
         gc.setFill(Color.WHITE);
         gc.fillRect(0, 0, width, height);
+
+        gc.setFill(Color.RED);
+        gc.fillOval(this.getWidth()/2-25, this.getHeight()/2-25, 50, 50);
     }
 
     @Override
