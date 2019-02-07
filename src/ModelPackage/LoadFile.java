@@ -5,8 +5,6 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 import Physics.Vect;
 
-import ModelPackage.*;
-
 public class LoadFile {
 
     private String filename;
@@ -119,11 +117,8 @@ public class LoadFile {
                     int x2 = scan.nextInt();
                     int y2 = scan.nextInt();
 
-                    Vect start = new Vect(x1,y1);
-                    Vect end = new Vect(x2,y2);
-
 //                    System.out.println("Absorber called " + name + " goes from (" + x1 + ", " + y1 + ") to (" + x2 + ", " + y2 + ")");
-                    model.addGizmo(new GAbsorber(start,end));
+                    model.addGizmo(new GAbsorber(x1,y1,x2,y2));
                 } else if (info.equals("")) {
                     System.out.print("\n"); //debug just to make look neater
                 } else {
