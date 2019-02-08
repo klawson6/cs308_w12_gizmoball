@@ -82,11 +82,13 @@ public class Model extends Observable {
 
         if(tuc<moveTime){
             moveBallForTime(ball,moveTime);
+            setChanged();
         }
 
         else{
             moveBallForTime(ball,moveTime);
             ball.modifyVelocity(cd.getVelo());
+            setChanged();
         }
 
     }
