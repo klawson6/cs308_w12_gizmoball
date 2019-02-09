@@ -31,7 +31,7 @@ public class GSquare implements Gizmo {
     }
 
     public String getGizmoType() {
-        return null;
+        return "Square";
     }
 
     public int getStartxPosition() {

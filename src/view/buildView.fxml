@@ -7,9 +7,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.control.Separator?>
-<VBox xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Controller" fx:id="rootPane">
+<VBox xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.BuildViewController" fx:id="rootPane">
     <ToolBar>
-            <Button text="Run" />
+            <Button fx:id="runButton" text="Run" />
             <Button text="Save" />
             <Button text="Load" />
             <Button fx:id="quitButton" text="Quit" />
@@ -32,6 +32,6 @@
         <Button text="Disconnect" />
         <Button text="Delete" />
     </ToolBar>
-    <ResizableCanvas fx:id="canvas" BorderPane.alignment="center">
+    <ResizableCanvas fx:id="canvas">
     </ResizableCanvas>
 </VBox>
