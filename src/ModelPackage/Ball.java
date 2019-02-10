@@ -4,7 +4,7 @@ import Physics.Angle;
 import Physics.Circle;
 import Physics.Vect;
 
-public class Ball {
+public class Ball implements IBall{
 
     // Composing circle that contains the position of the ball.
     private Circle circle;
@@ -79,5 +79,15 @@ public class Ball {
         } else {
             return null;
         }
+    }
+
+    @Override
+    public double getXPosition() {
+       return circle.getCenter().x();
+    }
+
+    @Override
+    public double getYPosition() {
+        return circle.getCenter().y();
     }
 }

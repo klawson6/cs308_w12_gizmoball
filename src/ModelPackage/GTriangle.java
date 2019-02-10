@@ -18,17 +18,25 @@ public class GTriangle implements Gizmo{
     private HashSet<KeyEvent> keyBindings = new HashSet<>();
     private String id;
     private HashSet<Gizmo> connections = new HashSet<>();
+    private HashSet<LineSegment> composingLines = new HashSet<>();
+    private HashSet<Circle> composingCircles = new HashSet<>();
+
+    //TODO Still to figure out how triangle line and circles will work
 
     public GTriangle(int xPosition, int yPosition){
         this.xPosition = xPosition;
         this.yPosition = yPosition;
         id = "T" + xPosition + yPosition;
+        addLines();
+        addCircles();
     }
 
     public GTriangle(int xPosition, int yPosition, String id){
         this.xPosition = xPosition;
         this.yPosition = yPosition;
         this.id = id;
+        addLines();
+        addCircles();
     }
 
     public void setRotation(double angle){
@@ -49,7 +57,13 @@ public class GTriangle implements Gizmo{
 
     }
 
+    private void addCircles(){
 
+    }
+
+    private void addLines(){
+
+    }
     
     public String getGizmoType() {
         return "Triangle";
@@ -87,7 +101,7 @@ public class GTriangle implements Gizmo{
 
     
     public Set<LineSegment> getComposingLines() {
-        return null;
+        return composingLines;
     }
 
     
@@ -97,7 +111,7 @@ public class GTriangle implements Gizmo{
 
     
     public Set<Circle> getComposingCircles() {
-        return null;
+        return composingCircles;
     }
 
     public void addKeyBinding(KeyEvent key) {

@@ -1,7 +1,10 @@
 package view;
 
+import ModelPackage.Ball;
 import ModelPackage.Gizmo;
+import ModelPackage.IBall;
 import ModelPackage.IGizmo;
+import Physics.Vect;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
@@ -12,6 +15,7 @@ import java.util.HashSet;
 public class ResizableCanvas extends Canvas {
 
     private HashSet<Gizmo> gizmoList;
+    private IBall ball;
 
     public ResizableCanvas() {
         // Redraw canvas when size changes.
@@ -67,10 +71,22 @@ public class ResizableCanvas extends Canvas {
 
         }
 
+        //TODO will need to change to use an Interface
+        if(ball != null){
+            int wGridSquareSize = (int) width / 30;
+            int hGridSquareSize = (int) height / 30;
+            gc.setFill(Color.YELLOW);
+            gc.fillOval(ball.getXPosition() * wGridSquareSize, ball.getYPosition() * hGridSquareSize, wGridSquareSize, hGridSquareSize);
+        }
+
     }
 
     public void setGizmoList(HashSet<Gizmo> gizmoList) {
         this.gizmoList = gizmoList;
+    }
+
+    public void setBall(IBall ball){
+        this.ball = ball;
     }
 
     @Override

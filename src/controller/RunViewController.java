@@ -1,7 +1,6 @@
 package controller;
 
-import ModelPackage.Gizmo;
-import ModelPackage.Model;
+import ModelPackage.*;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
@@ -55,10 +54,12 @@ public class RunViewController implements Initializable {
     }
 
     public void update(Observable o){
-        Model model = (Model) o;
+        IModel model = (IModel) o;
         HashSet<Gizmo> gizmos = model.getGizmoList();
+        IBall ball = model.getBall();
 
         canvas.setGizmoList(gizmos);
+        canvas.setBall(ball);
         canvas.draw();
 
     }

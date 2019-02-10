@@ -11,7 +11,7 @@ import java.util.HashSet;
 import java.util.Observable;
 import java.util.Observer;
 
-public class Model extends Observable {
+public class Model extends Observable implements IModel {
 
     private double gravity = 25;
     private double friction = 10;
@@ -25,6 +25,14 @@ public class Model extends Observable {
 
     public Model(){
         observer = new HashSet<>();
+        //TopLine
+        borders[0] = new LineSegment(0,0,20,0);
+        //LeftSide
+        borders[1] = new LineSegment(0,0,0,20);
+        //RightSide
+        borders[2] = new LineSegment(20,0,20,20);
+        //BottomLine
+        borders[3] = new LineSegment(0,20,20,20);
     }
 
     public void addObserver(Observer o){
@@ -63,7 +71,7 @@ public class Model extends Observable {
         this.ball = ball;
     }
 
-    public Ball getBall(){
+    public IBall getBall(){
         return ball;
     }
 
@@ -74,6 +82,7 @@ public class Model extends Observable {
      *          else if timeUntilCollision is greater than or equal to 0.05
      *              ball moves for 0.05 seconds and the ball velocity is modified by the collision
      */
+
     public void moveBall() {
 
         double moveTime = 0.05; //20fps
@@ -90,7 +99,6 @@ public class Model extends Observable {
             ball.modifyVelocity(cd.getVelo());
             setChanged();
         }
-
     }
 
     /**
@@ -126,9 +134,8 @@ public class Model extends Observable {
         double yPos = b.getPos().y();
         double xVelo = b.getVelocity().x();
         double yVelo = b.getVelocity().y();
-      //  b.setxPosition(xPos + xVelo*time);
-       // b.setyPosition(yPos + yVelo*time);
-
+        //b.setxPosition(xPos + xVelo*time);
+        //b.setyPosition(yPos + yVelo*time);
     }
     /**
      * @effects: Returns a CollisionDetails object which contains the minimum time until collision of the ball

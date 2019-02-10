@@ -18,19 +18,36 @@ public class GCircle implements Gizmo {
     private HashSet<KeyEvent> keyBindings = new HashSet<>();
     private String id;
     private HashSet<Gizmo> connections = new HashSet<>();
+    private HashSet<Circle> composingCircles = new HashSet<>();
 
     public GCircle(int xPos, int yPos){
         this.xPos = xPos;
         this.yPos = yPos;
         id = "C" + xPos + yPos;
+        addCircles();
     }
 
     public GCircle(int xPos, int yPos, String id){
         this.xPos = xPos;
         this.yPos = yPos;
         this.id = id;
+        addCircles();
     }
-    
+
+    private void addCircles(){
+
+        Circle topLeft = new Circle(xPos,yPos,0);
+        Circle topRight = new Circle(xPos+1,yPos,0);
+        Circle bottomLeft = new Circle(xPos,yPos+1,0);
+        Circle bottomRight = new Circle(xPos+1,yPos+1,0);
+
+        composingCircles.add(topLeft);
+        composingCircles.add(topRight);
+        composingCircles.add(bottomLeft);
+        composingCircles.add(bottomRight);
+
+    }
+
     public String getGizmoType() {
         return "Circle";
     }
@@ -67,7 +84,8 @@ public class GCircle implements Gizmo {
 
     
     public Set<LineSegment> getComposingLines() {
-        return null;
+        //Circles doesn't need any lines so empty list
+        return new HashSet<>();
     }
 
     
@@ -77,7 +95,7 @@ public class GCircle implements Gizmo {
 
     
     public Set<Circle> getComposingCircles() {
-        return null;
+        return composingCircles;
     }
 
     public void addKeyBinding(KeyEvent key) {

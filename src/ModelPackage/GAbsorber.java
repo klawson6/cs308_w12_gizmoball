@@ -2,6 +2,7 @@ package ModelPackage;
 
 import Physics.Circle;
 import Physics.LineSegment;
+import Physics.Vect;
 import javafx.scene.input.KeyEvent;
 
 import java.awt.*;
@@ -19,6 +20,8 @@ public class GAbsorber implements Gizmo {
     private HashSet<KeyEvent> keyBindings = new HashSet<>();
     private String id;
     private HashSet<Gizmo> connections = new HashSet<>();
+    private Set<LineSegment> composingLines = new HashSet<>();
+    private Set<Circle> composingCircles = new HashSet<>();
 
     public GAbsorber(int xStart, int yStart, int xEnd, int yEnd){
 
@@ -27,6 +30,9 @@ public class GAbsorber implements Gizmo {
         this.xEnd = xEnd;
         this.yEnd = yEnd;
         id = "A" + xStart + yStart + xEnd + yEnd;
+
+        addLines();
+        addCircles();
 
     }
 
@@ -38,8 +44,39 @@ public class GAbsorber implements Gizmo {
         this.yEnd = yEnd;
         this.id = id;
 
+        addLines();
+        addCircles();
+
     }
 
+    private void addCircles(){
+
+        Circle topLeft = new Circle(xStart,yStart,0);
+        Circle topRight = new Circle(xEnd+1,yStart,0);
+        Circle bottomLeft = new Circle(xStart,yEnd+1,0);
+        Circle bottomRight = new Circle(xEnd+1,yEnd+1,0);
+
+        composingCircles.add(topLeft);
+        composingCircles.add(topRight);
+        composingCircles.add(bottomLeft);
+        composingCircles.add(bottomRight);
+
+    }
+
+    private void addLines(){
+        //Add one to end as we get top left co-ordinate which will be one short of draw
+        //Add one to compensate for this
+
+        LineSegment topLine = new LineSegment(xStart,yStart,xEnd+1,yStart);
+        LineSegment leftLine = new LineSegment(xStart,yStart,xStart,yEnd+1);
+        LineSegment rightLine = new LineSegment(xEnd+1,yStart,xEnd+1,yEnd+1);
+        LineSegment bottomLine = new LineSegment(xStart,yEnd+1,xEnd+1,yEnd+1);
+
+        composingLines.add(topLine);
+        composingLines.add(leftLine);
+        composingLines.add(rightLine);
+        composingLines.add(bottomLine);
+    }
     
     public String getGizmoType() {
         return "Absorber";
@@ -72,7 +109,7 @@ public class GAbsorber implements Gizmo {
     }
 
     public Set<LineSegment> getComposingLines() {
-        return null;
+        return composingLines;
     }
 
     public double getReflectionCoef() {
@@ -80,17 +117,14 @@ public class GAbsorber implements Gizmo {
     }
 
     public Set<Circle> getComposingCircles() {
-        return null;
+        return composingCircles;
     }
 
     public void addKeyBinding(KeyEvent key) {
         keyBindings.add(key);
     }
 
-    public HashSet<KeyEvent> getKeybindings() {
-
-        return keyBindings;
-    }
+    public HashSet<KeyEvent> getKeybindings() {return keyBindings;}
 
     public String getId() {
         return id;

@@ -21,6 +21,11 @@ public class GFlipper implements Gizmo{
     private String id;
     private HashSet<Gizmo> connections = new HashSet<>();
 
+    private HashSet<LineSegment> composingLines = new HashSet<>();
+    private HashSet<Circle> composingCircles = new HashSet<>();
+
+    //TODO Still to figure out how flipper line and circles will work
+
     public GFlipper(int xPosition, int yPosition, boolean isLeft){
         this.xPosition = xPosition;
         this.yPosition = yPosition;
@@ -37,6 +42,14 @@ public class GFlipper implements Gizmo{
         this.yPosition = yPosition;
         this.isLeft = isLeft;
         this.id = id;
+    }
+
+    private void addCircles(){
+
+    }
+
+    private void addLines(){
+
     }
 
     public void setAngleDegrees(double angleDegrees) {
@@ -84,7 +97,7 @@ public class GFlipper implements Gizmo{
 
     
     public Set<LineSegment> getComposingLines() {
-        return null;
+        return composingLines;
     }
 
     
@@ -94,7 +107,7 @@ public class GFlipper implements Gizmo{
 
     
     public Set<Circle> getComposingCircles() {
-        return null;
+        return composingCircles;
     }
 
     public void addKeyBinding(KeyEvent key) {
