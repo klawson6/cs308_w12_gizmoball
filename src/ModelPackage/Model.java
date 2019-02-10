@@ -4,7 +4,9 @@ import Physics.Circle;
 import Physics.Geometry;
 import Physics.LineSegment;
 import Physics.Vect;
+import javafx.scene.input.KeyEvent;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Observable;
 import java.util.Observer;
@@ -36,8 +38,33 @@ public class Model extends Observable {
         setChanged();
     }
 
-    public void addBall(Ball ball){
+    //TODO: should this be a return type of IGizmo?
+    public HashSet<Gizmo> getGizmoList(){
+        return gizmoList;
+    }
 
+    public void addKeyConnection(KeyEvent keyEvent, Gizmo gizmo){
+        gizmo.addKeyBinding(keyEvent);
+    }
+
+    public void addGizmoConnection(Gizmo gizmoFrom, Gizmo gizmoTo){
+        gizmoFrom.addGizmoConnection(gizmoTo);
+    }
+
+    public void RotateGizmo(Gizmo gizmo){
+        gizmo.getRotation();
+    }
+
+
+
+
+
+    public void addBall(Ball ball){
+        this.ball = ball;
+    }
+
+    public Ball getBall(){
+        return ball;
     }
 
     /**
@@ -55,11 +82,13 @@ public class Model extends Observable {
 
         if(tuc<moveTime){
             moveBallForTime(ball,moveTime);
+            setChanged();
         }
 
         else{
             moveBallForTime(ball,moveTime);
             ball.modifyVelocity(cd.getVelo());
+            setChanged();
         }
 
     }
