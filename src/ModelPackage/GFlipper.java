@@ -59,9 +59,9 @@ public class GFlipper implements Gizmo{
     
     public String getGizmoType() {
         if(isLeft) {
-            return "Left Flipper";
+            return "LeftFlipper";
         }else{
-            return "Right Flipper";
+            return "RightFlipper";
         }
     }
 
