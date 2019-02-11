@@ -21,10 +21,10 @@ public class Model extends Observable implements IModel {
     private LineSegment[] borders = new LineSegment[4];
     private HashSet<Gizmo> gizmoList = new HashSet<>();
     private Ball ball;
-    private HashSet<Observer> observer;
+
 
     public Model(){
-        observer = new HashSet<>();
+
         //TopLine
         borders[0] = new LineSegment(0,0,20,0);
         //LeftSide
@@ -33,10 +33,11 @@ public class Model extends Observable implements IModel {
         borders[2] = new LineSegment(20,0,20,20);
         //BottomLine
         borders[3] = new LineSegment(0,20,20,20);
-    }
 
-    public void addObserver(Observer o){
-        observer.add(o);
+     //   ball = new Ball(15,15,45,50);
+     //   addGizmo(new GAbsorber(0,0,20,4));
+
+        //addGizmo(new GAbsorber(1,18,18,18));
     }
 
 
@@ -44,6 +45,7 @@ public class Model extends Observable implements IModel {
 
         gizmoList.add(gizmo);
         setChanged();
+        notifyObservers();
     }
 
     //TODO: should this be a return type of IGizmo?
@@ -69,9 +71,12 @@ public class Model extends Observable implements IModel {
 
     public void addBall(Ball ball){
         this.ball = ball;
+        setChanged();
+        notifyObservers();
+        System.out.println("Notified:" + countObservers());
     }
 
-    public IBall getBall(){
+    public Ball getBall(){
         return ball;
     }
 
@@ -88,16 +93,23 @@ public class Model extends Observable implements IModel {
         double moveTime = 0.05; //20fps
         CollisionDetails cd = timeUntilCollision();
         double tuc = cd.getTuc();
+        System.out.println("Tuc" + tuc);
 
-        if(tuc<moveTime){
-            moveBallForTime(ball,moveTime);
+        if(tuc>moveTime){
+            moveBallForTime(moveTime);
             setChanged();
+            notifyObservers();
+
         }
 
         else{
-            moveBallForTime(ball,moveTime);
-            ball.modifyVelocity(cd.getVelo());
+
+            moveBallForTime(tuc);
             setChanged();
+            notifyObservers();
+            ball.modifyVelocity(cd.getVelo());
+
+
         }
     }
 
@@ -127,15 +139,20 @@ public class Model extends Observable implements IModel {
          ball.modifyVelocity(newVelo);
     }
 
-    public void moveBallForTime(Ball b,double time){
-        applyFriction(time);
-        applyGravity(time);
-        double xPos = b.getPos().x();
-        double yPos = b.getPos().y();
-        double xVelo = b.getVelocity().x();
-        double yVelo = b.getVelocity().y();
-        //b.setxPosition(xPos + xVelo*time);
-        //b.setyPosition(yPos + yVelo*time);
+    public void moveBallForTime(double time){
+        //System.out.println("Initial ball - x=" +b.getPos().x()+ "y="+ b.getPos().y() );
+       // applyFriction(time);
+     //   applyGravity(time);
+
+        double xPos = ball.getPos().x();
+        double yPos = ball.getPos().y();
+        double xVelo = ball.getVelocity().x();
+        double yVelo = ball.getVelocity().y();
+
+       // if((xPos+ xVelo*time) >=0||yPos + yVelo*time>=0)
+        ball.setCircle(xPos+ xVelo*time,yPos + yVelo*time);
+      //  b.setxPosition(xPos + xVelo*time);
+      //  b.setyPosition(yPos + yVelo*time);
     }
     /**
      * @effects: Returns a CollisionDetails object which contains the minimum time until collision of the ball
@@ -157,13 +174,14 @@ public class Model extends Observable implements IModel {
         }
         for(Gizmo g: gizmoList){
 
-           // if(g.getClass().equals("GAbsorber")){
                 //Check TUC for all composing line segments
                 for(LineSegment l: g.getComposingLines()){
                     double current = Geometry.timeUntilWallCollision(l,ball.getCircle(), ball.getVelocity());
                     if(current<minTime){
                         minTime = current;
                         newVelocity = Geometry.reflectWall(l ,ball.getVelocity(),g.getReflectionCoef());
+//                        if(g.getGizmoType().equals("Absorber"))
+//                            newVelocity = new Vect(0.0,0.0);
                     }
 
                     for(Circle c: g.getComposingCircles()){
@@ -179,4 +197,6 @@ public class Model extends Observable implements IModel {
 
         return new CollisionDetails(minTime,newVelocity);
     }
+
+
 }

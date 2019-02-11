@@ -1,9 +1,6 @@
 package view;
 
-import ModelPackage.Ball;
-import ModelPackage.Gizmo;
-import ModelPackage.IBall;
-import ModelPackage.IGizmo;
+import ModelPackage.*;
 import Physics.Vect;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -11,8 +8,10 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 
 import java.util.HashSet;
+import java.util.Observable;
+import java.util.Observer;
 
-public class ResizableCanvas extends Canvas {
+public class ResizableCanvas extends Canvas implements Observer {
 
     private HashSet<Gizmo> gizmoList;
     private IBall ball;
@@ -73,8 +72,8 @@ public class ResizableCanvas extends Canvas {
 
         //TODO will need to change to use an Interface
         if(ball != null){
-            int wGridSquareSize = (int) width / 30;
-            int hGridSquareSize = (int) height / 30;
+            int wGridSquareSize = (int) width / 20;
+            int hGridSquareSize = (int) height / 20;
             gc.setFill(Color.YELLOW);
             gc.fillOval(ball.getXPosition() * wGridSquareSize, ball.getYPosition() * hGridSquareSize, wGridSquareSize, hGridSquareSize);
         }
@@ -102,5 +101,10 @@ public class ResizableCanvas extends Canvas {
     @Override
     public double prefHeight(double width) {
         return getHeight();
+    }
+    @Override
+    public void update(Observable o, Object arg) {
+
+        draw();
     }
 }
