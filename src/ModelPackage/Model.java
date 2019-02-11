@@ -96,20 +96,17 @@ public class Model extends Observable implements IModel {
         System.out.println("Tuc" + tuc);
 
         if(tuc>moveTime){
-            moveBallForTime(moveTime);
+           // moveBallForTime(moveTime);
+            ball.moveBall(moveTime);
             setChanged();
             notifyObservers();
-
         }
-
         else{
-
-            moveBallForTime(tuc);
+          //  moveBallForTime(tuc);
+            ball.moveBall(tuc);
+            ball.modifyVelocity(cd.getVelo());
             setChanged();
             notifyObservers();
-            ball.modifyVelocity(cd.getVelo());
-
-
         }
     }
 

@@ -41,7 +41,7 @@ public class GUIDriver extends Application implements Observer {
 
         setUpScenes();
         model.addObserver(this);
-        Timeline redraw = new Timeline(new KeyFrame(Duration.millis(50), new EventHandler<ActionEvent>() {
+        Timeline redraw = new Timeline(new KeyFrame(Duration.millis(500), new EventHandler<ActionEvent>() {
 
          @Override
             public void handle(ActionEvent event) {

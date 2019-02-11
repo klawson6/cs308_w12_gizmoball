@@ -75,7 +75,7 @@ public class ResizableCanvas extends Canvas implements Observer {
             int wGridSquareSize = (int) width / 20;
             int hGridSquareSize = (int) height / 20;
             gc.setFill(Color.YELLOW);
-            gc.fillOval(ball.getXPosition() * wGridSquareSize, ball.getYPosition() * hGridSquareSize, wGridSquareSize, hGridSquareSize);
+            gc.fillOval((ball.getXPosition() - 0.25) * wGridSquareSize, (ball.getYPosition() - 0.25) * hGridSquareSize, 0.5*wGridSquareSize, 0.5*hGridSquareSize);
         }
 
     }
