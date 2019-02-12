@@ -65,7 +65,14 @@ public class GFlipper implements Gizmo{
         }
     }
 
-    
+    public void toggle(){
+        isActivated = !isActivated;
+    }
+
+    public boolean isActivated() {
+        return isActivated;
+    }
+
     public int getStartxPosition() {
         return xPosition;
     }

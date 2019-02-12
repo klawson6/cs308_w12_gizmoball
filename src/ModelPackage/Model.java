@@ -113,6 +113,24 @@ public class Model extends Observable implements IModel {
         }
     }
 
+    @Override
+    public void activateLeftFlippers() {
+        for(Gizmo g : gizmoList){
+            if(g.getGizmoType().equals("LeftFlipper")){
+                ((GFlipper) g).toggle();
+            }
+        }
+    }
+
+    @Override
+    public void activateRightFlippers() {
+        for(Gizmo g : gizmoList){
+            if(g.getGizmoType().equals("RightFlipper")){
+                ((GFlipper) g).toggle();
+            }
+        }
+    }
+
     /**
      * @requires: time >= 0
      * @modifies: ball

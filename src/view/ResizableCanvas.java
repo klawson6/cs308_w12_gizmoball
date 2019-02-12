@@ -59,6 +59,24 @@ public class ResizableCanvas extends Canvas implements Observer {
                         double[] yPointsAbsorber = {startYAbsorber, endYAbsorber, endYAbsorber, startYAbsorber};
                         gc.fillPolygon(xPointsAbsorber, yPointsAbsorber, 4);
                         break;
+                    case "LeftFlipper":
+                        GFlipper leftFlipper = (GFlipper) iGizmo;
+                        gc.setFill(Color.YELLOW);
+                        if(leftFlipper.isActivated()){
+                            gc.fillRoundRect(iGizmo.getStartxPosition() * wGridSquareSize, iGizmo.getStartyPosition() * hGridSquareSize, hGridSquareSize*2, wGridSquareSize, wGridSquareSize, hGridSquareSize);
+                        }else {
+                            gc.fillRoundRect(iGizmo.getStartxPosition() * wGridSquareSize, iGizmo.getStartyPosition() * hGridSquareSize, wGridSquareSize, hGridSquareSize*2, wGridSquareSize, hGridSquareSize);
+                        }
+                        break;
+                    case "RightFlipper":
+                        GFlipper rightFlipper = (GFlipper) iGizmo;
+                        gc.setFill(Color.YELLOW);
+                        if(rightFlipper.isActivated()){
+                            gc.fillRoundRect(iGizmo.getStartxPosition() * wGridSquareSize, iGizmo.getStartyPosition() * hGridSquareSize, wGridSquareSize*2, hGridSquareSize, wGridSquareSize, hGridSquareSize);
+                        }else {
+                            gc.fillRoundRect((iGizmo.getStartxPosition()+1) * wGridSquareSize, iGizmo.getStartyPosition() * hGridSquareSize, wGridSquareSize, hGridSquareSize*2, wGridSquareSize, hGridSquareSize);
+                        }
+                        break;
                 }
             }
 

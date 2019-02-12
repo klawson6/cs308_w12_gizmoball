@@ -1,11 +1,14 @@
 package controller;
 
 import ModelPackage.*;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -19,8 +22,10 @@ import java.util.ResourceBundle;
 
 public class RunViewController implements Initializable {
 
+    private IModel model;
+
     private Stage stage;
-    private Scene buildScene;
+    private Scene buildScene, runScene;
     private BuildViewController buildController;
 
     @FXML private ResizableCanvas canvas;
@@ -33,15 +38,34 @@ public class RunViewController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         addButtonListeners();
-
-        canvas.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent ->
-                System.out.println(mouseEvent.getX() + " " + mouseEvent.getY()));
+        addKeyListeners();
 
     }
 
     private void addButtonListeners(){
         quitButton.setOnAction(event -> System.exit(0));
         buildButton.setOnAction(event -> stage.setScene(buildScene));
+    }
+
+    @FXML
+    void keyPressed(KeyEvent event) {
+        switch (event.getCode()) {
+            case LEFT:
+            case KP_LEFT:
+                model.activateLeftFlippers();
+                break;
+            case RIGHT:
+            case KP_RIGHT:
+                model.activateRightFlippers();
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void addKeyListeners(){
+        canvas.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent ->
+                System.out.println(mouseEvent.getX() + " " + mouseEvent.getY()));
     }
 
     public void setStage(Stage s){
@@ -59,7 +83,7 @@ public class RunViewController implements Initializable {
 
     public void update(Observable o){
 
-        Model model = (Model) o;
+        this.model = (Model) o;
         HashSet<Gizmo> gizmos = model.getGizmoList();
         Ball ball = model.getBall();
 
@@ -67,5 +91,9 @@ public class RunViewController implements Initializable {
         canvas.setBall(ball);
         canvas.draw();
 
+    }
+
+    public void setRunScene(Scene runScene) {
+        this.runScene = runScene;
     }
 }
