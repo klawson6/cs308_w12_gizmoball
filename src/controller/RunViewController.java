@@ -32,14 +32,16 @@ public class RunViewController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        quitButton.setOnAction(event -> System.exit(0));
-
+        addButtonListeners();
 
         canvas.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent ->
                 System.out.println(mouseEvent.getX() + " " + mouseEvent.getY()));
 
-        buildButton.setOnAction(event -> stage.setScene(buildScene));
+    }
 
+    private void addButtonListeners(){
+        quitButton.setOnAction(event -> System.exit(0));
+        buildButton.setOnAction(event -> stage.setScene(buildScene));
     }
 
     public void setStage(Stage s){
