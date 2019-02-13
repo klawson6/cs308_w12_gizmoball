@@ -22,7 +22,6 @@ public class SaveFile {
 
         ////////////////////////Gizmos//////////////////////////
         for(Gizmo gizmo: gizmos){
-            gizmo.Rotate(90);
             String toSave = gizmo.getGizmoType() + " " + gizmo.getId() + " " + gizmo.getStartxPosition() + " " + gizmo.getStartyPosition();
             infoToSave.add(toSave);
         }

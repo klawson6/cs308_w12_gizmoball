@@ -21,11 +21,11 @@ public class GTriangle implements Gizmo {
     private HashSet<LineSegment> composingLines = new HashSet<>();
     private HashSet<Circle> composingCircles = new HashSet<>();
 
+    // The enums to represent the fixed 90 degree rotations
+    // Specified by the corner that is opposite the triangle hypotenuse.
     private enum rotations {
         NWcorner, NEcorner, SEcorner, SWcorner
     }
-
-    //TODO Still to figure out how triangle line and circles will work
 
     public GTriangle(int xPosition, int yPosition) {
         this.xPosition = xPosition;
@@ -40,11 +40,15 @@ public class GTriangle implements Gizmo {
         this.xPosition = xPosition;
         this.yPosition = yPosition;
         this.id = id;
-        addLines();
-        addCircles();
+        orientation = rotations.NWcorner; // Default orientation should be corner opposite hypotenuse is in the NW corner.
+        addLines(); // Build composing lines
+        addCircles(); // Build composing circles
     }
 
-    public void rotateRight() {
+    // Cycle through the enum values for the orientation of this triangle.
+    // A rotation represents a 90 degree clockwise change.
+    // Calls methods to construct new composing shapes.
+    private void rotateRight() {
         switch (orientation) {
             case NWcorner:
                 orientation = rotations.NEcorner;
@@ -69,6 +73,7 @@ public class GTriangle implements Gizmo {
         }
     }
 
+    // Will likely never be used, but it is here for use if needed
     public void rotateLeft() {
         switch (orientation) {
             case NWcorner:
@@ -94,8 +99,9 @@ public class GTriangle implements Gizmo {
         }
     }
 
+    // Based on the orientation enum, construct new composing circles for this triangle to be represented by.
     private void addCircles() {
-        composingCircles.clear();
+        composingCircles.clear(); // Remove old composing circles
         switch (orientation) {
             case NWcorner:
                 composingCircles.add(new Circle(xPosition, yPosition, 0));
@@ -124,8 +130,9 @@ public class GTriangle implements Gizmo {
         }
     }
 
+    // Based on the orientation enum, construct new composing lines for this triangle to be represented by.
     private void addLines() {
-        composingLines.clear();
+        composingLines.clear(); // Remove old composing lines
         switch (orientation) {
             case NWcorner:
                 composingLines.add(new LineSegment(new Vect(xPosition, yPosition), new Vect(xPosition + 1, yPosition)));
@@ -184,6 +191,8 @@ public class GTriangle implements Gizmo {
     }
 
 
+    // Returns the relevant integer to represent the angle of rotation.
+    // Used for drawing the triangles on the GUI
     public int getRotation() {
         switch (orientation) {
             case NWcorner:
@@ -245,6 +254,7 @@ public class GTriangle implements Gizmo {
         return ids;
     }
 
+    // Default rotation action is to rotate the object 90 degrees clockwise.
     @Override
     public void Rotate() {
         rotateRight();

@@ -68,7 +68,6 @@ public class LoadFile {
                     String toRotate = scan.next();
 
                     System.out.println("Rotating object " + toRotate);
-                    //TODO: Implement rotation in model.
                     model.RotateGizmo(getGizmo(model,toRotate));
                 } else if (info.startsWith("LeftFlipper")) {
                     String type = scan.next();
@@ -147,10 +146,6 @@ public class LoadFile {
         for(Gizmo g :gizmoList ){
             if(g.getId().equals(name))
                 return g;
-//            if(name.equals("A")){ //TODO fix how absorber is given its name
-//                if(g.getId().startsWith("A"))
-//                    return g;
-//            }
         }
 
 
