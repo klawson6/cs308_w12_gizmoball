@@ -2,6 +2,8 @@ package ModelPackage;
 
 import javafx.scene.input.KeyEvent;
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.*;
 
 public class SaveFile {
@@ -27,6 +29,10 @@ public class SaveFile {
             infoToSave.add(toSave);
         }
         infoToSave.add("\n");
+
+        ////////////////////////Ball//////////////////////////
+        Ball ball = model.getBall();
+        infoToSave.add("Ball B " + ball.getXPosition() + " " + ball.getYPosition() + " " + ball.getVelocity().x() + " " + ball.getVelocity().y());
 
 
         ////////////////////////Rotation//////////////////////////
@@ -62,18 +68,28 @@ public class SaveFile {
 
 
 
-        ////////////////////////Ball//////////////////////////
-        Ball ball = model.getBall();
-        infoToSave.add("Ball B " + ball.getXPosition() + " " + ball.getYPosition() + " " + ball.getVelocity().x() + " " + ball.getVelocity().y());
-
 
         ////////////////////////Actually save//////////////////////////
         for(String i : infoToSave)
             System.out.println(i);
 
+        try {
+            saveToFile(infoToSave);
+        }catch(IOException e){
+            e.printStackTrace();
+        }
+
     }
 
-    private void save(List<String> toSave){
+    private void saveToFile  (List<String> toSave)throws IOException{
+        File file = new File(filename);
+
+        FileWriter fileWriter = new FileWriter(file);
+        for(String s: toSave){
+            fileWriter.write(s + "\n");
+        }
+
+        fileWriter.close();
 
     }
 
