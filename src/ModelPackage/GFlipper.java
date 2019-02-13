@@ -11,7 +11,7 @@ import java.util.Set;
 
 public class GFlipper implements Gizmo{
 
-    private double angleDegrees;
+    private int angleDegrees;
     private boolean isLeft;
     private boolean isActivated;
     private int xPosition;
@@ -52,7 +52,7 @@ public class GFlipper implements Gizmo{
 
     }
 
-    public void setAngleDegrees(double angleDegrees) {
+    public void setAngleDegrees(int angleDegrees) {
         this.angleDegrees = angleDegrees;
     }
 
@@ -91,7 +91,7 @@ public class GFlipper implements Gizmo{
     }
 
     
-    public double getRotation() {
+    public int getRotation() {
         return angleDegrees;
     }
 
@@ -142,7 +142,7 @@ public class GFlipper implements Gizmo{
     }
 
     @Override
-    public void Rotate(double degrees) {
+    public void Rotate() {
         //Does nothing for flipper
     }
 }

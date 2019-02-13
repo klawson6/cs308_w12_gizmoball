@@ -36,6 +36,10 @@ public class GCircle implements Gizmo {
 
     private void addCircles(){
 
+        Circle circle = new Circle(xPos + 0.5,yPos + 0.5,0.5);
+
+        composingCircles.add(circle);
+/*
         Circle topLeft = new Circle(xPos,yPos,0);
         Circle topRight = new Circle(xPos+1,yPos,0);
         Circle bottomLeft = new Circle(xPos,yPos+1,0);
@@ -45,7 +49,7 @@ public class GCircle implements Gizmo {
         composingCircles.add(topRight);
         composingCircles.add(bottomLeft);
         composingCircles.add(bottomRight);
-
+*/
     }
 
     public String getGizmoType() {
@@ -78,7 +82,7 @@ public class GCircle implements Gizmo {
     }
 
     
-    public double getRotation() {
+    public int getRotation() {
         return 0;
     }
 
@@ -130,7 +134,7 @@ public class GCircle implements Gizmo {
     }
 
     @Override
-    public void Rotate(double degrees) {
+    public void Rotate() {
         //Does Nothing for Circle
     }
 }

@@ -79,7 +79,7 @@ public class Ball implements IBall{
      * @param moveTime
      */
     public Vect moveBall (double moveTime){
-        if (0 < moveTime && moveTime < 0.05){
+        if (0 <= moveTime && moveTime <= 0.05){
             Vect distanceVector = new Vect(velocity.angle(), velocity.length()*moveTime);
             //circle = new Circle(circle.getCenter().x()+distanceVector.x(),circle.getCenter().y()+distanceVector.y(), 0.25);
             circle = new Circle(circle.getCenter().plus(distanceVector), 0.25);
