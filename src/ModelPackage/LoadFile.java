@@ -18,6 +18,7 @@ public class LoadFile {
     public LoadFile(){
         //Current file name, will want user prompt most likely in future
         filename = "Documents/example_file.txt";
+//        filename = "Documents/test.txt";
 
         //Check file exists
         file = new File(filename);
@@ -67,8 +68,6 @@ public class LoadFile {
                     String type = scan.next();
                     String toRotate = scan.next();
 
-                    System.out.println("Rotating object " + toRotate);
-                    //TODO: Implement rotation in model.
                     model.RotateGizmo(getGizmo(model,toRotate));
                 } else if (info.startsWith("LeftFlipper")) {
                     String type = scan.next();
@@ -92,9 +91,9 @@ public class LoadFile {
                     String toMove = scan.next();
 
 
-                    System.out.println("When " + toPress + " ID " + keyID + " is pressed " + toMove + " is triggered");
+//                    System.out.println("When " + toPress + " ID " + keyID + " is pressed " + toMove + " is triggered");
 
-
+                    //todo not sure this will work
                     KeyEvent k = new KeyEvent(KeyEvent.KEY_PRESSED, KeyEvent.CHAR_UNDEFINED, ""+keyID, KeyCode.getKeyCode(keyID),false,false,false,false);
                     model.addKeyConnection(k,getGizmo(model, toMove));
 
@@ -103,7 +102,6 @@ public class LoadFile {
                     String obj1 = scan.next();
                     String obj2 = scan.next();
 
-                    System.out.println("Connecting " + obj1 + " to " + obj2);
                     model.addGizmoConnection(getGizmo(model,obj1),getGizmo(model,obj2));
                 } else if (info.startsWith("Ball")) {
                     String type = scan.next();
@@ -124,9 +122,9 @@ public class LoadFile {
                     int y2 = scan.nextInt();
                     model.addGizmo(new GAbsorber(x1,y1,x2,y2,name));
                 } else if (info.equals("")) {
-                    System.out.print("\n"); //debug just to make look neater
+
                 } else {
-//                    System.out.println("\n\n\n\n\nStill to add " + scan.next()); //debug, to be removed
+                    System.out.println("\n\n\n\n\nStill to add " + scan.next()); //debug, to be removed
                 }
             }
             //close scanners
@@ -140,17 +138,21 @@ public class LoadFile {
         return new Model(); //return empty model
     }
 
+    /**
+     * @requires: The model is not null & the gizmo exists within the model
+     *
+     * @param: m The model that the gizmo should exist within
+     * @param: name The ID of the gizmo
+     * @return: The gizmo as a Gizmo object
+     */
     private Gizmo getGizmo(Model m, String name){
         //TODO add error handling
         HashSet<Gizmo> gizmoList = m.getGizmoList();
 
+        //Find the gizmo with the correct id
         for(Gizmo g :gizmoList ){
             if(g.getId().equals(name))
                 return g;
-//            if(name.equals("A")){ //TODO fix how absorber is given its name
-//                if(g.getId().startsWith("A"))
-//                    return g;
-//            }
         }
 
 

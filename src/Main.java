@@ -16,7 +16,7 @@ public class Main {
 //        model.addObserver(gui);
 //        model.addGizmo(new GTriangle(1,1));
 
-        SaveFile s = new SaveFile("test.txt");
+        SaveFile s = new SaveFile("Documents/test.txt");
         s.save(model);
 
     }
