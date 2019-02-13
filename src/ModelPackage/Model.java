@@ -66,9 +66,6 @@ public class Model extends Observable implements IModel {
     }
 
 
-
-
-
     public void addBall(Ball ball){
         this.ball = ball;
         setChanged();

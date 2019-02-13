@@ -1,8 +1,8 @@
 package ModelPackage;
 
+import javafx.scene.input.KeyEvent;
 import java.io.File;
-import java.util.HashSet;
-import java.util.Scanner;
+import java.util.*;
 
 public class SaveFile {
 
@@ -14,40 +14,66 @@ public class SaveFile {
     }
 
     public void save(Model model){
-        HashSet<Gizmo> gizmos = new HashSet<>();
-//        HashSet<Gizmo> gizmos = model.getGizmos();
-        for(Gizmo gizmo: gizmos){
-            String type  = "";
-//            String type = gizmo.getType();
+        HashSet<Gizmo> gizmos = model.getGizmoList();
 
-            switch(type){
-                case "Square":
-                    break;
-                case "Circle":
-                    break;
-                case "Triangle":
-                    break;
-                case "Left Flipper":
-                    break;
-                case "Right Flipper":
-                    break;
-                case "KeyConnect":
-                    break;
-                case "Connect":
-                    break;
-                case "Ball":
-                    break;
-                case "Absorber":
-                    break;
-                default:
-                    System.out.println("Shouldn't be possible");
-                    System.out.println("Type is " + type);
-                    break;
+
+
+        List<String> infoToSave = new ArrayList<String>();
+
+        ////////////////////////Gizmos//////////////////////////
+        for(Gizmo gizmo: gizmos){
+            gizmo.Rotate(90);
+            String toSave = gizmo.getGizmoType() + " " + gizmo.getId() + " " + gizmo.getStartxPosition() + " " + gizmo.getStartyPosition();
+            infoToSave.add(toSave);
+        }
+        infoToSave.add("\n");
+
+
+        ////////////////////////Rotation//////////////////////////
+        for(Gizmo gizmo: gizmos){
+            double rotation = gizmo.getRotation();
+            while(rotation >= 0)
+                rotation =- 90.0;
+                infoToSave.add("Rotate " + gizmo.getId());
+        }
+        infoToSave.add("\n");
+
+        ////////////////////////Gizmo Connection//////////////////////////
+        for(Gizmo gizmo: gizmos){
+            Set<String> connect = gizmo.getGizmoConnectionIds();
+            for(String c: connect){
+                infoToSave.add("Connect " + gizmo.getId() + " " + c);
             }
         }
+        infoToSave.add("\n");
+
+        ////////////////////////Key Connection//////////////////////////
+        for(Gizmo gizmo: gizmos){
+            HashSet<KeyEvent> connect = gizmo.getKeybindings();
+            for(KeyEvent c: connect){
+                //KeyConnect key 87 down RF137
+                infoToSave.add("KeyConnect key " + c.getText() + " down " + gizmo.getId());
+//                infoToSave.add();
+                System.out.println(c);
+            }
+        }
+        infoToSave.add("\n");
 
 
 
+
+        ////////////////////////Ball//////////////////////////
+        Ball ball = model.getBall();
+        infoToSave.add("Ball B " + ball.getXPosition() + " " + ball.getYPosition() + " " + ball.getVelocity().x() + " " + ball.getVelocity().y());
+
+
+        ////////////////////////Actually save//////////////////////////
+        for(String i : infoToSave)
+            System.out.println(i);
+
+    }
+
+    private void save(List<String> toSave){
 
     }
 
