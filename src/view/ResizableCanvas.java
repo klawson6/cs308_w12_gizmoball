@@ -16,15 +16,9 @@ public class ResizableCanvas extends Canvas implements Observer {
     private HashSet<Gizmo> gizmoList;
     private IBall ball;
 
-    public ResizableCanvas() {
-        // Redraw canvas when size changes.
-        widthProperty().addListener(evt -> draw());
-        heightProperty().addListener(evt -> draw());
-    }
-
     public void draw() {
-        double width = getWidth();
-        double height = getHeight();
+        double width = this.getWidth();
+        double height = this.getHeight();
 
         GraphicsContext gc = getGraphicsContext2D();
         gc.setFill(Color.BLACK);
@@ -58,9 +52,9 @@ public class ResizableCanvas extends Canvas implements Observer {
                     case "Absorber":
                         gc.setFill(Color.PURPLE);
                         double startXAbsorber = (double) iGizmo.getStartxPosition() * wGridSquareSize;
-                        double startYAbsorber = (double) iGizmo.getStartyPosition() * hGridSquareSize - hGridSquareSize;
+                        double startYAbsorber = (double) iGizmo.getStartyPosition() * hGridSquareSize;
                         double endXAbsorber = (double) iGizmo.getEndxPosition() * wGridSquareSize;
-                        double endYAbsorber = (double) iGizmo.getEndyPosition() * hGridSquareSize - hGridSquareSize;
+                        double endYAbsorber = (double) iGizmo.getEndyPosition() * hGridSquareSize;
                         double[] xPointsAbsorber = {startXAbsorber, startXAbsorber, endXAbsorber, endXAbsorber};
                         double[] yPointsAbsorber = {startYAbsorber, endYAbsorber, endYAbsorber, startYAbsorber};
                         gc.fillPolygon(xPointsAbsorber, yPointsAbsorber, 4);
@@ -88,20 +82,6 @@ public class ResizableCanvas extends Canvas implements Observer {
         this.ball = ball;
     }
 
-    @Override
-    public boolean isResizable() {
-        return true;
-    }
-
-    @Override
-    public double prefWidth(double height) {
-        return getWidth();
-    }
-
-    @Override
-    public double prefHeight(double width) {
-        return getHeight();
-    }
     @Override
     public void update(Observable o, Object arg) {
 
