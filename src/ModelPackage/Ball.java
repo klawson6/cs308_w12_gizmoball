@@ -52,7 +52,7 @@ public class Ball implements IBall{
 
     public void setCircle(double x, double y){
         circle = new Circle(x,y,ballRadius);
-        System.out.println("x=" + x + "y=" + y);
+        //System.out.println("x=" + x + "y=" + y);
 
     }
     /**

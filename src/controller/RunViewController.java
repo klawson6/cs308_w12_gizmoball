@@ -47,10 +47,10 @@ public class RunViewController implements Initializable {
     void keyPressed(KeyEvent event) {
         switch (event.getCode()) {
             case A:
-                model.toggleLeftFlippers();
+                model.activateLeftFlippers();
                 break;
             case D:
-                model.toggleRightFlippers();
+                model.activateRightFlippers();
                 break;
             default:
                 break;
@@ -61,10 +61,10 @@ public class RunViewController implements Initializable {
     void keyReleased(KeyEvent event) {
         switch (event.getCode()) {
             case A:
-                model.toggleLeftFlippers();
+                model.deactivateLeftFlippers();
                 break;
             case D:
-                model.toggleRightFlippers();
+                model.deactivateRightFlippers();
                 break;
             default:
                 break;

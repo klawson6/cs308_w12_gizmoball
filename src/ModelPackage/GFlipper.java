@@ -65,8 +65,12 @@ public class GFlipper implements Gizmo{
         }
     }
 
-    public void toggle(){
-        isActivated = !isActivated;
+    public void activate(){
+        isActivated = true;
+    }
+
+    public void deactivate(){
+        isActivated = false;
     }
 
     public boolean isActivated() {
@@ -152,7 +156,7 @@ public class GFlipper implements Gizmo{
     public void rotate() {
         double rotation = angleDegrees + 10;
         if(rotation > 90){
-            rotation = 90.0;
+            angleDegrees = 90.0;
         }else {
             angleDegrees = rotation;
         }
@@ -161,7 +165,7 @@ public class GFlipper implements Gizmo{
     public void antirotate(){
         double rotation = angleDegrees - 10;
         if(rotation < 0){
-            rotation = 0.0;
+            angleDegrees = 0.0;
         }else {
             angleDegrees = rotation;
         }

@@ -45,7 +45,8 @@ public class GUIDriver extends Application implements Observer {
 
          @Override
             public void handle(ActionEvent event) {
-                model.moveBall();
+                //model.moveBall();
+                model.checkFlippers();
             }
         }));
         redraw.setCycleCount(Timeline.INDEFINITE);

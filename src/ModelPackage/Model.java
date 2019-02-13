@@ -93,11 +93,10 @@ public class Model extends Observable implements IModel {
         double moveTime = 0.05; //20fps
         CollisionDetails cd = timeUntilCollision();
         double tuc = cd.getTuc();
-        System.out.println("Tuc" + tuc);
+        //System.out.println("Tuc" + tuc);
 
         if(tuc>moveTime){
             moveBallForTime(moveTime);
-            checkFlippers();
             setChanged();
             notifyObservers();
 
@@ -114,7 +113,7 @@ public class Model extends Observable implements IModel {
         }
     }
 
-    private void checkFlippers(){
+    public void checkFlippers(){
         for(Gizmo g : gizmoList){
             if(g.getGizmoType().equals("RightFlipper")){
                 GFlipper flipper = ((GFlipper) g);
@@ -132,22 +131,42 @@ public class Model extends Observable implements IModel {
                 }
             }
         }
+        setChanged();
+        notifyObservers();
     }
 
     @Override
-    public void toggleLeftFlippers() {
+    public void activateLeftFlippers() {
         for(Gizmo g : gizmoList){
             if(g.getGizmoType().equals("LeftFlipper")){
-                ((GFlipper) g).toggle();
+                ((GFlipper) g).activate();
             }
         }
     }
 
     @Override
-    public void toggleRightFlippers() {
+    public void activateRightFlippers() {
         for(Gizmo g : gizmoList){
             if(g.getGizmoType().equals("RightFlipper")){
-                ((GFlipper) g).toggle();
+                ((GFlipper) g).activate();
+            }
+        }
+    }
+
+    @Override
+    public void deactivateLeftFlippers() {
+        for(Gizmo g : gizmoList){
+            if(g.getGizmoType().equals("LeftFlipper")){
+                ((GFlipper) g).deactivate();
+            }
+        }
+    }
+
+    @Override
+    public void deactivateRightFlippers() {
+        for(Gizmo g : gizmoList){
+            if(g.getGizmoType().equals("RightFlipper")){
+                ((GFlipper) g).deactivate();
             }
         }
     }
