@@ -11,6 +11,8 @@ public class Ball implements IBall{
     // The velocity of the ball, has speed and direction.
     private Vect velocity;
 
+    private Boolean stopped;
+
     private static final double ballRadius = 0.25;
 
     public Ball(double xPosition, double yPosition, double xVelocity, double yVelocity) {
@@ -20,6 +22,7 @@ public class Ball implements IBall{
         // Pass in the x and y components of the velocity.
         // With this information it will calculate the resultant speed(length in the Vect class) and direction once relevant getters are called.
         velocity = new Vect(xVelocity, yVelocity);
+        stopped = false;
     }
 
     // Return the speed component of the velocity of this ball.
@@ -52,7 +55,7 @@ public class Ball implements IBall{
 
     public void setCircle(double x, double y){
         circle = new Circle(x,y,ballRadius);
-        System.out.println("x=" + x + "y=" + y);
+        //System.out.println("x=" + x + "y=" + y);
 
     }
     /**
@@ -79,7 +82,7 @@ public class Ball implements IBall{
      * @param moveTime
      */
     public Vect moveBall (double moveTime){
-        if (0 <= moveTime && moveTime <= 0.05){
+        if (0 < moveTime && moveTime < 0.05){
             Vect distanceVector = new Vect(velocity.angle(), velocity.length()*moveTime);
             //circle = new Circle(circle.getCenter().x()+distanceVector.x(),circle.getCenter().y()+distanceVector.y(), 0.25);
             circle = new Circle(circle.getCenter().plus(distanceVector), 0.25);
@@ -88,7 +91,16 @@ public class Ball implements IBall{
             return null;
         }
     }
+    public void stopBall(){
+        stopped = true;
+    }
+    public void startBall(){
+        stopped = false;
+    }
 
+    public boolean isStopped(){
+        return stopped;
+    }
     @Override
     public double getXPosition() {
        return circle.getCenter().x();

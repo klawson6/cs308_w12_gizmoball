@@ -15,7 +15,7 @@ public interface IGizmo {
 
     int getEndyPosition();
 
-    int getRotation();
+    double getRotation();
 
     Color getColour();
 

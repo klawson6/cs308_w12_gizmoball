@@ -89,7 +89,7 @@ public class GSquare implements Gizmo {
         return null;
     }
 
-    public int getRotation() {
+    public double getRotation() {
         return 0;
     }
 
@@ -130,7 +130,12 @@ public class GSquare implements Gizmo {
     }
 
     @Override
-    public void Rotate() {
+    public void Rotate(double degrees) {
         //Does nothing for square
     }
+    @Override
+    public void activate(){
+
+    }
+
 }

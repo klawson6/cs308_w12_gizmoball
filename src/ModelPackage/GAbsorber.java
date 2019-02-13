@@ -3,12 +3,11 @@ package ModelPackage;
 import Physics.Circle;
 import Physics.LineSegment;
 import Physics.Vect;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 public class GAbsorber implements Gizmo {
 
@@ -22,8 +21,11 @@ public class GAbsorber implements Gizmo {
     private HashSet<Gizmo> connections = new HashSet<>();
     private Set<LineSegment> composingLines = new HashSet<>();
     private Set<Circle> composingCircles = new HashSet<>();
+    private Queue<Ball> absorbedBalls;
+    private Ball absorbedBall;
 
     public GAbsorber(int xStart, int yStart, int xEnd, int yEnd){
+
 
         this.xStart = xStart;
         this.yStart = yStart;
@@ -31,9 +33,11 @@ public class GAbsorber implements Gizmo {
         this.yEnd = yEnd;
         id = "A" + xStart + yStart + xEnd + yEnd;
 
+        absorbedBall = null;
+        absorbedBalls = new PriorityQueue<>();
         addLines();
         addCircles();
-
+        addKeyBinding(new KeyEvent(KeyEvent.KEY_PRESSED,"c","c ", KeyCode.C,false,false,false,false));
     }
 
     public GAbsorber(int xStart, int yStart, int xEnd, int yEnd, String id){
@@ -104,7 +108,7 @@ public class GAbsorber implements Gizmo {
         return null;
     }
 
-    public int getRotation() {
+    public double getRotation() {
         return 0;
     }
 
@@ -146,8 +150,33 @@ public class GAbsorber implements Gizmo {
         return ids;
     }
 
+    public void setAbsorbedBall(Ball b){
+
+        absorbedBall = b;
+    }
+//    public void moveAbsorbedBall(){
+//        if(absorbedBall != null) {
+//
+//         //   absorbedBall.setCircle(getEndxPosition(), getStartyPosition() );
+//            absorbedBall.modifyVelocity(new Vect(0, 0));
+//           // absorbedBall.stopBall();
+//        }
+//    }
+
+
     @Override
-    public void Rotate() {
+    public void activate(){
+        if(absorbedBall != null) {
+            absorbedBall.setCircle(getEndxPosition()-0.5, getStartyPosition()-1);
+            absorbedBall.modifyVelocity(new Vect(0, -50));;
+            System.out.println( absorbedBall.getVelocity());
+            absorbedBall.startBall();
+            absorbedBall = null;
+        }
+    }
+
+    @Override
+    public void Rotate(double degrees) {
         //Does nothing for absorber
     }
 }

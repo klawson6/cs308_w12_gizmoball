@@ -2,16 +2,18 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.IllegalFormatException;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class GetConfig {
 
     /**
      * Class to read in config information from config file
-     *
+     * <p>
      * Currently in its own class, could be added to another class
      * at a later date. Separated just for ease.
-     *
+     * <p>
      * -Mark Falconer
      */
 

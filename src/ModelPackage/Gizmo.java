@@ -19,7 +19,7 @@ public interface Gizmo extends IGizmo{
 
     public int getEndyPosition();
 
-    public int getRotation();
+    public double getRotation();
 
     public Color getColour();
 
@@ -41,6 +41,8 @@ public interface Gizmo extends IGizmo{
 
     Set<String> getGizmoConnectionIds();
 
-    void Rotate();
+    void Rotate(double degrees);
+
+    void activate();
 
 }
