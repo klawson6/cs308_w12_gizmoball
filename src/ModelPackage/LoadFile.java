@@ -122,7 +122,7 @@ public class LoadFile {
                 } else if (info.equals("")) {
                     System.out.print("\n"); //debug just to make look neater
                 } else {
-                    System.out.println("\n\n\n\n\nStill to add " + scan.next()); //debug, to be removed
+//                    System.out.println("\n\n\n\n\nStill to add " + scan.next()); //debug, to be removed
                 }
             }
             //close scanners
