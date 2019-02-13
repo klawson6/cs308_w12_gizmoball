@@ -22,8 +22,8 @@ public interface IModel  {
 
     void moveBall();
 
-    void activateLeftFlippers();
+    void toggleLeftFlippers();
 
-    void activateRightFlippers();
+    void toggleRightFlippers();
 
 }

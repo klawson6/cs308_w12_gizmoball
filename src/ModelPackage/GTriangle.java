@@ -146,7 +146,7 @@ public class GTriangle implements Gizmo{
     }
 
     @Override
-    public void Rotate(double degrees) {
-        rotationDegrees = rotationDegrees + degrees;
+    public void rotate() {
+        rotationDegrees = rotationDegrees + 90;
     }
 }

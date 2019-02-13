@@ -147,7 +147,7 @@ public class GAbsorber implements Gizmo {
     }
 
     @Override
-    public void Rotate(double degrees) {
+    public void rotate() {
         //Does nothing for absorber
     }
 }

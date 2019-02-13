@@ -1,13 +1,10 @@
 package controller;
 
 import ModelPackage.*;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
@@ -17,7 +14,6 @@ import view.ResizableCanvas;
 import java.net.URL;
 import java.util.HashSet;
 import java.util.Observable;
-import java.util.Observer;
 import java.util.ResourceBundle;
 
 public class RunViewController implements Initializable {
@@ -50,13 +46,25 @@ public class RunViewController implements Initializable {
     @FXML
     void keyPressed(KeyEvent event) {
         switch (event.getCode()) {
-            case LEFT:
-            case KP_LEFT:
-                model.activateLeftFlippers();
+            case A:
+                model.toggleLeftFlippers();
                 break;
-            case RIGHT:
-            case KP_RIGHT:
-                model.activateRightFlippers();
+            case D:
+                model.toggleRightFlippers();
+                break;
+            default:
+                break;
+        }
+    }
+
+    @FXML
+    void keyReleased(KeyEvent event) {
+        switch (event.getCode()) {
+            case A:
+                model.toggleLeftFlippers();
+                break;
+            case D:
+                model.toggleRightFlippers();
                 break;
             default:
                 break;

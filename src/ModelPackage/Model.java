@@ -61,8 +61,8 @@ public class Model extends Observable implements IModel {
         gizmoFrom.addGizmoConnection(gizmoTo);
     }
 
-    public void RotateGizmo(Gizmo gizmo){
-        gizmo.getRotation();
+    public void rotateGizmo(Gizmo gizmo){
+        gizmo.rotate();
     }
 
 
@@ -97,6 +97,7 @@ public class Model extends Observable implements IModel {
 
         if(tuc>moveTime){
             moveBallForTime(moveTime);
+            checkFlippers();
             setChanged();
             notifyObservers();
 
@@ -113,8 +114,28 @@ public class Model extends Observable implements IModel {
         }
     }
 
+    private void checkFlippers(){
+        for(Gizmo g : gizmoList){
+            if(g.getGizmoType().equals("RightFlipper")){
+                GFlipper flipper = ((GFlipper) g);
+                if(flipper.isActivated()){
+                    flipper.rotate();
+                }else{
+                    flipper.antirotate();
+                }
+            }else if(g.getGizmoType().equals("LeftFlipper")){
+                GFlipper flipper = ((GFlipper) g);
+                if(flipper.isActivated()){
+                    flipper.rotate();
+                }else{
+                    flipper.antirotate();
+                }
+            }
+        }
+    }
+
     @Override
-    public void activateLeftFlippers() {
+    public void toggleLeftFlippers() {
         for(Gizmo g : gizmoList){
             if(g.getGizmoType().equals("LeftFlipper")){
                 ((GFlipper) g).toggle();
@@ -123,7 +144,7 @@ public class Model extends Observable implements IModel {
     }
 
     @Override
-    public void activateRightFlippers() {
+    public void toggleRightFlippers() {
         for(Gizmo g : gizmoList){
             if(g.getGizmoType().equals("RightFlipper")){
                 ((GFlipper) g).toggle();

@@ -11,6 +11,8 @@ public class LoadFile {
     private Scanner wholeLine, scan;
     private File file;
 
+    private Gizmo addedLast;
+
     public LoadFile(){
         //Current file name, will want user prompt most likely in future
         filename = "Documents/example_file.txt";
@@ -44,42 +46,47 @@ public class LoadFile {
                     int xPos = scan.nextInt();
                     int yPos = scan.nextInt();
 
-                    model.addGizmo(new GSquare(xPos,yPos));
+                    addedLast = new GSquare(xPos,yPos);
+                    model.addGizmo(addedLast);
                 } else if (info.startsWith("Circle")) {
                     String type = scan.next();
                     String name = scan.next(); //currently not included in gizmo setup, TODO: add this
                     int xPos = scan.nextInt();
                     int yPos = scan.nextInt();
 
-                    model.addGizmo(new GCircle(xPos,yPos));
+                    addedLast = new GCircle(xPos,yPos);
+                    model.addGizmo(addedLast);
                 } else if (info.startsWith("Triangle")) {
                     String type = scan.next();
                     String name = scan.next(); //currently not included in gizmo setup, TODO: add this
                     int xPos = scan.nextInt();
                     int yPos = scan.nextInt();
 
-                    model.addGizmo(new GTriangle(xPos,yPos));
+                    addedLast = new GTriangle(xPos,yPos);
+                    model.addGizmo(addedLast);
                 } else if (info.startsWith("Rotate")) {
                     String type = scan.next();
                     String toRotate = scan.next();
 
                     System.out.println("Rotating object " + toRotate);
                     //TODO: Implement rotation in model.
-                    //model.addRotation(toRotate); //or similar
+                    model.rotateGizmo(addedLast); //or similar
                 } else if (info.startsWith("LeftFlipper")) {
                     String type = scan.next();
                     String name = scan.next(); //currently not included in flipper setup, TODO: add this
                     int xPos = scan.nextInt();
                     int yPos = scan.nextInt();
 
-                    model.addGizmo(new GFlipper(xPos,yPos,true));
+                    addedLast = new GFlipper(xPos,yPos,true);
+                    model.addGizmo(addedLast);
                 } else if (info.startsWith("RightFlipper")) {
                     String type = scan.next();
                     String name = scan.next(); //currently not included in flipper setup, TODO: add this
                     int xPos = scan.nextInt();
                     int yPos = scan.nextInt();
 
-                    model.addGizmo(new GFlipper(xPos,yPos,false));
+                    addedLast = new GFlipper(xPos,yPos,false);
+                    model.addGizmo(addedLast);
                 } else if (info.startsWith("KeyConnect")) {
                     String type = scan.next();
                     String toPress = scan.next();
@@ -118,7 +125,8 @@ public class LoadFile {
                     int y2 = scan.nextInt();
 
 //                    System.out.println("Absorber called " + name + " goes from (" + x1 + ", " + y1 + ") to (" + x2 + ", " + y2 + ")");
-                    model.addGizmo(new GAbsorber(x1,y1,x2,y2));
+                    addedLast = new GAbsorber(x1,y1,x2,y2);
+                    model.addGizmo(addedLast);
                 } else if (info.equals("")) {
                     System.out.print("\n"); //debug just to make look neater
                 } else {
