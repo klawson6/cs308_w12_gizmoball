@@ -1,0 +1,55 @@
+Progress report (Week 4-5)
+
+Tasks done:
+- File loading fully implemented
+• -get gizmo function added which allows a gizmo to be returned using just a gizmo id.
+- File saving fully implemented
+- Drawing of gizmos and ball on GUI fully implemented.
+- Flipper demo complete.
+-Added composing lines and circles to all Square, Absorber and Circle Gizmos.
+- Composing lines and circles for Squares, Triangles and absorbers properly set and change on rotations
+where relevant
+- Gizmos drawn to the GUI to correct scale and collision calculations use correct position coordinates.
+• - This involved making sure the correct position coordinates for the ball and certain gizmos was
+correct for the back end collision calculations. The example file we load from, has the coordinates of
+the Gizmos saved as the top left point of the Gizmo by but calculations for circles use the center point
+of the circle so this had to be accounted for and will need to be accounted for when saving a board
+layout.
+• - The ball however has its coordinates saved and loaded as its composing circle's center point, this
+causes clipping issues as it cannot be drawn correctly using fillOval as that expects a top-left
+coordinate with respect to the gizmo's containing area. So the ball when drawn has to be shifted to the
+right and down by its radius.
+• - Rotation of triangles has been implemented to rotate in a fixed 90 degree fashion. Te rotation
+involves replacing the give triangle's composing circles and lines with ones that build it in its new
+orientation. This means that back end collision calculations are updated to work for the new
+orientation also.
+- Prototype for ball collisions with the circles, triangles and walls has bee completed, except for the ball
+sticking to the wall for a few ticks.
+- Finished Absorber prototype - absorbing the ball and firing it upwards using a keybinding
+- Added gravity and friction applied every time the ball moves
+
+Tasks to do next Week (Week 5-6):
+- Key Connects will need to be changed
+- Have the ball stick to the collided objects for a few ticks to show perfect collisions in prototype 3.
+- Revised class diagram
+• - Includes explanation of changes
+- Validation testing strategy.
+• - Based on use cases from previous deliverable.
+• - Includes reasons for tests and how the test is carried out.- JUnit testing strategy
+• - Includes how we identified test cases to use
+• - Includes how we are going to allocate testing to group members.
+- Update the project plan based on changes made over the past 3 weeks.
+- Create executable jar files for the 4 prototypes.
+
+Questions:
+What does up/down mean on key connects
+Can you have more than one absorber/ball
+Gizmo id, do we need to stick to Murray's file (i.e Triangle is T then T2, rather than the other gizmos which
+are co-ordinates S10 would be Square at position 1,0)
+
+Challenges:
+- Figuring out that some objects are loaded as having coordinates at the top-left of their containing area and
+some are centered. This affected collision detection calculations and how the objects were drawn.
+- On key pressed and on key released were bugging out the flippers, had to use a similar mechanism to the
+magic key listener.
+Changes:
