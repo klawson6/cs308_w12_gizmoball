@@ -2,8 +2,12 @@ package ModelPackage;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.HashSet;
 import java.util.Scanner;
 import Physics.Vect;
+import javafx.event.EventType;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 
 public class LoadFile {
 
@@ -40,46 +44,46 @@ public class LoadFile {
                 //The types could be parsed before this loop and used to compare instead if .startsWith.
                 if (info.startsWith("Square")) {
                     String type = scan.next();
-                    String name = scan.next(); //currently not included in gizmo setup, TODO: add this
+                    String name = scan.next();
                     int xPos = scan.nextInt();
                     int yPos = scan.nextInt();
 
-                    model.addGizmo(new GSquare(xPos,yPos));
+                    model.addGizmo(new GSquare(xPos,yPos,name));
                 } else if (info.startsWith("Circle")) {
                     String type = scan.next();
-                    String name = scan.next(); //currently not included in gizmo setup, TODO: add this
+                    String name = scan.next();
                     int xPos = scan.nextInt();
                     int yPos = scan.nextInt();
 
-                    model.addGizmo(new GCircle(xPos,yPos));
+                    model.addGizmo(new GCircle(xPos,yPos,name));
                 } else if (info.startsWith("Triangle")) {
                     String type = scan.next();
-                    String name = scan.next(); //currently not included in gizmo setup, TODO: add this
+                    String name = scan.next();
                     int xPos = scan.nextInt();
                     int yPos = scan.nextInt();
 
-                    model.addGizmo(new GTriangle(xPos,yPos));
+                    model.addGizmo(new GTriangle(xPos,yPos,name));
                 } else if (info.startsWith("Rotate")) {
                     String type = scan.next();
                     String toRotate = scan.next();
 
                     System.out.println("Rotating object " + toRotate);
                     //TODO: Implement rotation in model.
-                    //model.addRotation(toRotate); //or similar
+                    model.RotateGizmo(getGizmo(model,toRotate));
                 } else if (info.startsWith("LeftFlipper")) {
                     String type = scan.next();
-                    String name = scan.next(); //currently not included in flipper setup, TODO: add this
+                    String name = scan.next();
                     int xPos = scan.nextInt();
                     int yPos = scan.nextInt();
 
-                    model.addGizmo(new GFlipper(xPos,yPos,true));
+                    model.addGizmo(new GFlipper(xPos,yPos,true,name));
                 } else if (info.startsWith("RightFlipper")) {
                     String type = scan.next();
-                    String name = scan.next(); //currently not included in flipper setup, TODO: add this
+                    String name = scan.next();
                     int xPos = scan.nextInt();
                     int yPos = scan.nextInt();
 
-                    model.addGizmo(new GFlipper(xPos,yPos,false));
+                    model.addGizmo(new GFlipper(xPos,yPos,false,name));
                 } else if (info.startsWith("KeyConnect")) {
                     String type = scan.next();
                     String toPress = scan.next();
@@ -89,36 +93,36 @@ public class LoadFile {
 
 
                     System.out.println("When " + toPress + " ID " + keyID + " is pressed " + toMove + " is triggered");
-                    //TODO: Implement key connection in model.
+
+
+                    KeyEvent k = new KeyEvent(KeyEvent.KEY_PRESSED, KeyEvent.CHAR_UNDEFINED, ""+keyID, KeyCode.getKeyCode(keyID),false,false,false,false);
+                    model.addKeyConnection(k,getGizmo(model, toMove));
+
                 } else if (info.startsWith("Connect")) {
                     String type = scan.next();
                     String obj1 = scan.next();
                     String obj2 = scan.next();
 
                     System.out.println("Connecting " + obj1 + " to " + obj2);
-                    //TODO: Implement connection in model
-                    //model.addConnection(obj1,obj2); //or similar
+                    model.addGizmoConnection(getGizmo(model,obj1),getGizmo(model,obj2));
                 } else if (info.startsWith("Ball")) {
                     String type = scan.next();
-                    String name = scan.next(); //currently not included in ball setup, TODO: add this
+                    String name = scan.next();
                     double xPos = scan.nextDouble();
                     double yPos = scan.nextDouble();
                     double xVel = Double.parseDouble(scan.next());
                     double yVel = Double.parseDouble(scan.next());
 
 
-//                    System.out.println("Ball called " + name + " at (" + xPos + ", " + yPos + ") going at " + xVel + "L/sec on the x axis and " + yVel + "L/sec on the y axis");
                     model.addBall(new Ball(xPos,yPos,xVel, yVel));
                 } else if (info.startsWith("Absorber")) {
                     String type = scan.next();
-                    String name = scan.next(); //currently not included in gizmo setup, TODO: add this
+                    String name = scan.next();
                     int x1 = scan.nextInt();
                     int y1 = scan.nextInt();
                     int x2 = scan.nextInt();
                     int y2 = scan.nextInt();
-
-//                    System.out.println("Absorber called " + name + " goes from (" + x1 + ", " + y1 + ") to (" + x2 + ", " + y2 + ")");
-                    model.addGizmo(new GAbsorber(x1,y1,x2,y2));
+                    model.addGizmo(new GAbsorber(x1,y1,x2,y2,name));
                 } else if (info.equals("")) {
                     System.out.print("\n"); //debug just to make look neater
                 } else {
@@ -134,6 +138,23 @@ public class LoadFile {
             System.out.println("File doesn't exist");
         }
         return new Model(); //return empty model
+    }
+
+    private Gizmo getGizmo(Model m, String name){
+        //TODO add error handling
+        HashSet<Gizmo> gizmoList = m.getGizmoList();
+
+        for(Gizmo g :gizmoList ){
+            if(g.getId().equals(name))
+                return g;
+//            if(name.equals("A")){ //TODO fix how absorber is given its name
+//                if(g.getId().startsWith("A"))
+//                    return g;
+//            }
+        }
+
+
+        return null;
     }
 
 }
