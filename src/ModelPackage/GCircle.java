@@ -36,7 +36,7 @@ public class GCircle implements Gizmo {
 
     private void addCircles(){
 
-        Circle circle = new Circle(xPos,yPos,0.5);
+        Circle circle = new Circle(xPos + 0.5,yPos + 0.5,0.5);
 
         composingCircles.add(circle);
 /*
@@ -82,7 +82,7 @@ public class GCircle implements Gizmo {
     }
 
     
-    public double getRotation() {
+    public int getRotation() {
         return 0;
     }
 
@@ -134,7 +134,7 @@ public class GCircle implements Gizmo {
     }
 
     @Override
-    public void Rotate(double degrees) {
+    public void Rotate() {
         //Does Nothing for Circle
     }
 }
