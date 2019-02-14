@@ -68,6 +68,7 @@ public class LoadFile {
                     String type = scan.next();
                     String toRotate = scan.next();
 
+                    System.out.println("Rotating object " + toRotate);
                     model.RotateGizmo(getGizmo(model,toRotate));
                 } else if (info.startsWith("LeftFlipper")) {
                     String type = scan.next();

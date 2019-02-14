@@ -26,15 +26,7 @@ public class SaveFile {
         //Gizmos must be first.
         ////////////////////////Gizmos//////////////////////////
         for(Gizmo gizmo: gizmos){
-            String toSave;
-            //Should be in format Gizmo Gxy x y or Absorber A x1 y1 x2 y2
-
-            //Absorber has start and end coordinates.
-            if(gizmo.getGizmoType().equals("Absorber"))
-                toSave = gizmo.getGizmoType() + " " + gizmo.getId() + " " + gizmo.getStartxPosition() + " " + gizmo.getStartyPosition() + " " + gizmo.getEndxPosition() + " " + gizmo.getEndyPosition();
-            else
-                toSave = gizmo.getGizmoType() + " " + gizmo.getId() + " " + gizmo.getStartxPosition() + " " + gizmo.getStartyPosition();
-
+            String toSave = gizmo.getGizmoType() + " " + gizmo.getId() + " " + gizmo.getStartxPosition() + " " + gizmo.getStartyPosition();
             infoToSave.add(toSave);
         }
         //Add blank line to seperate.
