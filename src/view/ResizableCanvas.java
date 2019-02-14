@@ -44,28 +44,32 @@ public class ResizableCanvas extends Canvas implements Observer {
                         break;
                     case "Triangle":
                         gc.setFill(Color.BLUE);
+                        // Get the origin of the triangle in the top-left corner of the containing grid square
                         double startX = (double) iGizmo.getStartxPosition() * wGridSquareSize;
                         double startY = (double) iGizmo.getStartyPosition() * hGridSquareSize;
+                        // The coordinates of the 3 corners of the triangle, used for drawing the polygon to look like a triangle.
                         double[] xPoints = new double[3];
                         double[] yPoints = new double[3];
-                       /* double[] xPoints = {startX, startX, startX + (double) wGridSquareSize};
-                        double[] yPoints = {startY, startY + (double) hGridSquareSize, startY + (double) hGridSquareSize};*/
                         switch (iGizmo.getRotation()){
+                            // Corner opposite hypotenuse is in the NW corner of the containing grid square
                             case 0:
                                 xPoints[0] = startX; xPoints[1] = startX; xPoints[2] = startX + wGridSquareSize;
                                 yPoints[0] = startY; yPoints[1] = startY+hGridSquareSize; yPoints[2] = startY;
                                 gc.fillPolygon(xPoints, yPoints, 3);
                                 break;
+                            // Corner opposite hypotenuse is in the NE corner of the containing grid square
                             case 90:
                                 xPoints[0] = startX; xPoints[1] = startX+wGridSquareSize; xPoints[2] = startX + wGridSquareSize;
                                 yPoints[0] = startY; yPoints[1] = startY; yPoints[2] = startY+hGridSquareSize;
                                 gc.fillPolygon(xPoints, yPoints, 3);
                                 break;
+                            // Corner opposite hypotenuse is in the SE corner of the containing grid square
                             case 180:
                                 xPoints[0] = startX+wGridSquareSize; xPoints[1] = startX+wGridSquareSize; xPoints[2] = startX;
                                 yPoints[0] = startY; yPoints[1] = startY+hGridSquareSize; yPoints[2] = startY+hGridSquareSize;
                                 gc.fillPolygon(xPoints, yPoints, 3);
                                 break;
+                            // Corner opposite hypotenuse is in the SW corner of the containing grid square
                             case 270:
                                 xPoints[0] = startX; xPoints[1] = startX; xPoints[2] = startX + wGridSquareSize;
                                 yPoints[0] = startY; yPoints[1] = startY+hGridSquareSize; yPoints[2] = startY+hGridSquareSize;
@@ -93,6 +97,8 @@ public class ResizableCanvas extends Canvas implements Observer {
             double wGridSquareSize =  width / 20;
             double hGridSquareSize = height / 20;
             gc.setFill(Color.YELLOW);
+            // Ball is represented by a circle with a centered origin, but fillOval draws assuming it has an origin top-left.
+            // Calibrate ball position on the board by shifting the origin by the ball radius
             gc.fillOval((ball.getXPosition() - 0.25) * wGridSquareSize, (ball.getYPosition() - 0.25) * hGridSquareSize, 0.5*wGridSquareSize, 0.5*hGridSquareSize);
         }
 
@@ -107,8 +113,5 @@ public class ResizableCanvas extends Canvas implements Observer {
     }
 
     @Override
-    public void update(Observable o, Object arg) {
-
-        draw();
-    }
+    public void update(Observable o, Object arg) { draw(); }
 }

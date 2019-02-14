@@ -142,7 +142,7 @@ public class GFlipper implements Gizmo{
     }
 
     @Override
-    public void Rotate() {
+    public void rotate() {
         //Does nothing for flipper
     }
 }

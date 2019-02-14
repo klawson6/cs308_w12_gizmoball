@@ -60,7 +60,7 @@ public class Model extends Observable implements IModel {
     }
 
     public void RotateGizmo(Gizmo gizmo) {
-        gizmo.getRotation();
+        gizmo.rotate();
     }
 
 
@@ -88,16 +88,16 @@ public class Model extends Observable implements IModel {
         double moveTime = 0.05; //20fps
         CollisionDetails cd = timeUntilCollision();
         double tuc = cd.getTuc();
-        System.out.println("Tuc" + tuc);
+        //System.out.println("Tuc" + tuc);
 
         if (tuc > moveTime) {
-            // moveBallForTime(moveTime);
-            ball.moveBall(moveTime);
+            moveBallForTime(moveTime);
+            //ball.moveBall(moveTime);
             setChanged();
             notifyObservers();
         } else {
-            //  moveBallForTime(tuc);
-            ball.moveBall(tuc);
+            moveBallForTime(tuc);
+            //ball.moveBall(tuc);
             ball.modifyVelocity(cd.getVelo());
             setChanged();
             notifyObservers();
@@ -132,8 +132,8 @@ public class Model extends Observable implements IModel {
 
     public void moveBallForTime(double time) {
         //System.out.println("Initial ball - x=" +b.getPos().x()+ "y="+ b.getPos().y() );
-        // applyFriction(time);
-        //   applyGravity(time);
+        //applyFriction(time);
+        //applyGravity(time);
 
         double xPos = ball.getPos().x();
         double yPos = ball.getPos().y();

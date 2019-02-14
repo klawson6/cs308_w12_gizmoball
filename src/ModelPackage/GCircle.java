@@ -34,22 +34,10 @@ public class GCircle implements Gizmo {
         addCircles();
     }
 
+    // Create the composing circle for the circle Gizmo to be placed on screen and drawn.
     private void addCircles(){
-
-        Circle circle = new Circle(xPos + 0.5,yPos + 0.5,0.5);
-
+        Circle circle = new Circle(xPos + 0.5,yPos + 0.5,0.5); // For collision calculations in Physics, move the Circle xy position to the center.
         composingCircles.add(circle);
-/*
-        Circle topLeft = new Circle(xPos,yPos,0);
-        Circle topRight = new Circle(xPos+1,yPos,0);
-        Circle bottomLeft = new Circle(xPos,yPos+1,0);
-        Circle bottomRight = new Circle(xPos+1,yPos+1,0);
-
-        composingCircles.add(topLeft);
-        composingCircles.add(topRight);
-        composingCircles.add(bottomLeft);
-        composingCircles.add(bottomRight);
-*/
     }
 
     public String getGizmoType() {
@@ -134,7 +122,7 @@ public class GCircle implements Gizmo {
     }
 
     @Override
-    public void Rotate() {
+    public void rotate() {
         //Does Nothing for Circle
     }
 }
