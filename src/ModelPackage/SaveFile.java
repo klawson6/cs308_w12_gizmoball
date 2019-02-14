@@ -45,7 +45,7 @@ public class SaveFile {
             //Rotations are stored as an integer between 0 and 360 but file wants each rotation line to be 90 degrees.
             while(rotation >= 0)
                 rotation =- 90.0;
-                infoToSave.add("Rotate " + gizmo.getId());
+                infoToSave.add("rotate " + gizmo.getId());
         }
         infoToSave.add("");
 

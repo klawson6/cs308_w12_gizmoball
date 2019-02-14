@@ -256,7 +256,7 @@ public class GTriangle implements Gizmo {
 
     // Default rotation action is to rotate the object 90 degrees clockwise.
     @Override
-    public void Rotate() {
+    public void rotate() {
         rotateRight();
     }
 }

@@ -60,7 +60,7 @@ public class Model extends Observable implements IModel {
     }
 
     public void RotateGizmo(Gizmo gizmo) {
-        gizmo.Rotate();
+        gizmo.rotate();
     }
 
 
@@ -88,7 +88,7 @@ public class Model extends Observable implements IModel {
         double moveTime = 0.05; //20fps
         CollisionDetails cd = timeUntilCollision();
         double tuc = cd.getTuc();
-        System.out.println("Tuc" + tuc);
+        //System.out.println("Tuc" + tuc);
 
         if (tuc > moveTime) {
             moveBallForTime(moveTime);
