@@ -6,6 +6,8 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
+import javafx.scene.transform.Affine;
+import javafx.scene.transform.Rotate;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -30,8 +32,7 @@ public class ResizableCanvas extends Canvas implements Observer {
             double hGridSquareSize = height / 20;
 
 
-            for (Gizmo gizmo : gizmoList) {
-                IGizmo iGizmo = (IGizmo) gizmo;
+            for (IGizmo iGizmo : gizmoList) {
                 String type = iGizmo.getGizmoType();
                 switch (type) {
                     case "Circle":
@@ -43,39 +44,15 @@ public class ResizableCanvas extends Canvas implements Observer {
                         gc.fillRect(iGizmo.getStartxPosition() * wGridSquareSize, iGizmo.getStartyPosition() * hGridSquareSize, wGridSquareSize, hGridSquareSize);
                         break;
                     case "Triangle":
+                        gc.save();
                         gc.setFill(Color.BLUE);
-                        // Get the origin of the triangle in the top-left corner of the containing grid square
                         double startX = (double) iGizmo.getStartxPosition() * wGridSquareSize;
                         double startY = (double) iGizmo.getStartyPosition() * hGridSquareSize;
-                        // The coordinates of the 3 corners of the triangle, used for drawing the polygon to look like a triangle.
-                        double[] xPoints = new double[3];
-                        double[] yPoints = new double[3];
-                        switch (iGizmo.getRotation()){
-                            // Corner opposite hypotenuse is in the NW corner of the containing grid square
-                            case 0:
-                                xPoints[0] = startX; xPoints[1] = startX; xPoints[2] = startX + wGridSquareSize;
-                                yPoints[0] = startY; yPoints[1] = startY+hGridSquareSize; yPoints[2] = startY;
-                                gc.fillPolygon(xPoints, yPoints, 3);
-                                break;
-                            // Corner opposite hypotenuse is in the NE corner of the containing grid square
-                            case 90:
-                                xPoints[0] = startX; xPoints[1] = startX+wGridSquareSize; xPoints[2] = startX + wGridSquareSize;
-                                yPoints[0] = startY; yPoints[1] = startY; yPoints[2] = startY+hGridSquareSize;
-                                gc.fillPolygon(xPoints, yPoints, 3);
-                                break;
-                            // Corner opposite hypotenuse is in the SE corner of the containing grid square
-                            case 180:
-                                xPoints[0] = startX+wGridSquareSize; xPoints[1] = startX+wGridSquareSize; xPoints[2] = startX;
-                                yPoints[0] = startY; yPoints[1] = startY+hGridSquareSize; yPoints[2] = startY+hGridSquareSize;
-                                gc.fillPolygon(xPoints, yPoints, 3);
-                                break;
-                            // Corner opposite hypotenuse is in the SW corner of the containing grid square
-                            case 270:
-                                xPoints[0] = startX; xPoints[1] = startX; xPoints[2] = startX + wGridSquareSize;
-                                yPoints[0] = startY; yPoints[1] = startY+hGridSquareSize; yPoints[2] = startY+hGridSquareSize;
-                                gc.fillPolygon(xPoints, yPoints, 3);
-                                break;
-                        }
+                        double[] xPoints = {startX, startX, startX + wGridSquareSize};
+                        double[] yPoints = {startY, startY + hGridSquareSize, startY};
+                        gc.transform(new Affine(new Rotate(iGizmo.getRotation(), startX+(wGridSquareSize/2), startY+(hGridSquareSize/2))));
+                        gc.fillPolygon(xPoints, yPoints, 3);
+                        gc.restore();
                         break;
                     case "Absorber":
                         gc.setFill(Color.PURPLE);
@@ -87,6 +64,21 @@ public class ResizableCanvas extends Canvas implements Observer {
                         double[] yPointsAbsorber = {startYAbsorber, endYAbsorber, endYAbsorber, startYAbsorber};
                         gc.fillPolygon(xPointsAbsorber, yPointsAbsorber, 4);
                         break;
+                    case "LeftFlipper":
+                        gc.save();
+                        gc.setFill(Color.YELLOW);
+                        gc.transform(new Affine(new Rotate(-iGizmo.getRotation(), (iGizmo.getStartxPosition()+0.5)*wGridSquareSize, (iGizmo.getStartyPosition()+0.5)*hGridSquareSize)));
+                        gc.fillRoundRect(iGizmo.getStartxPosition() * wGridSquareSize, iGizmo.getStartyPosition() * hGridSquareSize, wGridSquareSize, hGridSquareSize*2, wGridSquareSize, hGridSquareSize);
+                        gc.restore();
+                        break;
+                    case "RightFlipper":
+                        gc.save();
+                        gc.setFill(Color.YELLOW);
+                        gc.transform(new Affine(new Rotate(iGizmo.getRotation(), (iGizmo.getStartxPosition()+1.5)*wGridSquareSize, (iGizmo.getStartyPosition()+0.5)*hGridSquareSize)));
+                        gc.fillRoundRect((iGizmo.getStartxPosition()+1) * wGridSquareSize, iGizmo.getStartyPosition() * hGridSquareSize, wGridSquareSize, hGridSquareSize*2, wGridSquareSize, hGridSquareSize);
+                        gc.restore();
+                        break;
+
                 }
             }
 
