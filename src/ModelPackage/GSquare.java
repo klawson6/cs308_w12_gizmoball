@@ -133,4 +133,9 @@ public class GSquare implements Gizmo {
     public void rotate() {
         //Does nothing for square
     }
+
+    @Override
+    public void activate(){
+        //Does nothing for Square
+    }
 }

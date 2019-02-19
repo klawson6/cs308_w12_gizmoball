@@ -125,4 +125,8 @@ public class GCircle implements Gizmo {
     public void rotate() {
         //Does Nothing for Circle
     }
+    @Override
+    public void activate(){
+        //Does nothing for Circle
+    }
 }

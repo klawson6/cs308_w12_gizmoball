@@ -43,4 +43,6 @@ public interface Gizmo extends IGizmo{
 
     void rotate();
 
+    void activate();
+
 }

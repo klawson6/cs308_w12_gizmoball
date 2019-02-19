@@ -40,6 +40,7 @@ public class GTriangle implements Gizmo {
         this.xPosition = xPosition;
         this.yPosition = yPosition;
         this.id = id;
+
         orientation = rotations.NWcorner; // Default orientation should be corner opposite hypotenuse is in the NW corner.
         addLines(); // Build composing lines
         addCircles(); // Build composing circles
@@ -258,5 +259,10 @@ public class GTriangle implements Gizmo {
     @Override
     public void rotate() {
         rotateRight();
+    }
+
+    @Override
+    public void activate(){
+        //Does nothing for Triangle
     }
 }
