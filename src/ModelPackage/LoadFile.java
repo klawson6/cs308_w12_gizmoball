@@ -17,7 +17,7 @@ public class LoadFile {
     private Scanner wholeLine, scan;
     private File file;
 
-    public LoadFile(){
+    public LoadFile(File fileArg){
         //Current file name, will want user prompt most likely in future
 //        filename = "Documents/example_file.txt";
         filename = "Documents/test.txt";
