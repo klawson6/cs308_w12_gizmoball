@@ -35,7 +35,7 @@ public class RunViewController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-       c canvas.widthProperty().bind(rootPane.widthProperty());
+        canvas.widthProperty().bind(rootPane.widthProperty());
         canvas.heightProperty().bind(rootPane.heightProperty());
 
         quitButton.setOnAction(event -> System.exit(0));
