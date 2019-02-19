@@ -15,13 +15,13 @@ public class LoadFile {
     private Scanner wholeLine, scan;
     private File file;
 
-    public LoadFile(){
+    public LoadFile(File fileArg){
         //Current file name, will want user prompt most likely in future
-        filename = "Documents/example_file.txt";
+        //filename = "Documents/example_file.txt";
 //        filename = "Documents/test.txt";
 
         //Check file exists
-        file = new File(filename);
+        file = fileArg;
         try {
             wholeLine = new Scanner(file);
             wholeLine.useDelimiter("\n");

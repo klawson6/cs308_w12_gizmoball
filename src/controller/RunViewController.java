@@ -8,15 +8,18 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import view.ResizableCanvas;
 
+import java.io.File;
 import java.net.URL;
 import java.util.HashSet;
 import java.util.Observable;
@@ -88,10 +91,20 @@ public class RunViewController implements Initializable, Observer {
     }
 
     private void loadFile(){
-        LoadFile r = new LoadFile();
-        model = r.run();
-        model.addObserver(this);
-        update((Observable) model, null);
+        File file = new FileChooser().showOpenDialog(stage);
+        if(file != null){
+            LoadFile r = new LoadFile(file);
+            model = r.run();
+            model.addObserver(this);
+            update((Observable) model, null);
+        }else{
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText("The file that was picked is either non-existent or is corrupted.");
+            alert.showAndWait();
+        }
+
     }
 
     private void startTimeline(){
