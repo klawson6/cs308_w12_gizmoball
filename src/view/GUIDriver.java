@@ -36,7 +36,7 @@ public class GUIDriver extends Application implements Observer {
     public void start(Stage pStage){
         this.primaryStage = pStage;
 
-        LoadFile r = new LoadFile();
+        //LoadFile r = new LoadFile();
         model = new Model();
         model.addGizmo(new GAbsorber(0,19,20,20));
         model.addBall(new Ball(19,19,20,20));
@@ -53,7 +53,7 @@ public class GUIDriver extends Application implements Observer {
         redraw.setCycleCount(Timeline.INDEFINITE);
         redraw.play();
 
-        primaryStage.setTitle("Gizmoball");
+        primaryStage.setTitle("Absorber Demo - Gizmoball");
         primaryStage.setScene(runScene);
         primaryStage.show();
 

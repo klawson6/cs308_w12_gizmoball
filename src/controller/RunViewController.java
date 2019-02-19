@@ -4,6 +4,7 @@ import ModelPackage.*;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyEvent;
@@ -40,8 +41,16 @@ public class RunViewController implements Initializable {
 
         quitButton.setOnAction(event -> System.exit(0));
 
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setHeaderText(null);
+        alert.setTitle("Absorber Demo");
+        alert.setContentText("We have bound the C key to trigger the Absorber.");
 
-      //  buildButton.setOnAction(event -> stage.setScene(buildScene));
+        alert.showAndWait();
+
+
+
+        //  buildButton.setOnAction(event -> stage.setScene(buildScene));
 
     }
 
