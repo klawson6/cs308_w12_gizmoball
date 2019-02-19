@@ -1,6 +1,10 @@
 package controller;
 
 import ModelPackage.*;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
@@ -10,6 +14,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import view.ResizableCanvas;
 
 import java.net.URL;
@@ -18,14 +23,12 @@ import java.util.Observable;
 import java.util.Observer;
 import java.util.ResourceBundle;
 
-public class RunViewController implements Initializable {
+public class RunViewController implements Initializable, Observer {
 
     private Stage stage;
     private Scene buildScene;
     private BuildViewController buildController;
     private IModel model;
-
-
 
     @FXML private ResizableCanvas canvas;
     @FXML private VBox rootPane;
@@ -34,6 +37,7 @@ public class RunViewController implements Initializable {
     @FXML private Button buildButton;
     @FXML private Button saveButton;
     @FXML private Button loadButton;
+    @FXML private Button startButton, stopButton, tickButton, buildButton, saveButton, loadButton, quitButton ;
 
 
 
@@ -48,7 +52,7 @@ public class RunViewController implements Initializable {
     }
 
     private void addButtonListeners(){
-        quitButton.setOnAction(event -> System.exit(0));
+        startButton.setOnAction(event -> startTimeline());
         buildButton.setOnAction(event -> stage.setScene(buildScene));
         saveButton.setOnAction(event -> save());
         loadButton.setOnAction(event -> load());
@@ -64,6 +68,7 @@ public class RunViewController implements Initializable {
         model.getBall().stopBall();
         model.changeModel(new LoadFile(stage).run());
         model.getBall().startBall();
+        quitButton.setOnAction(event -> System.exit(0));
     }
 
     public void setStage(Stage s){
@@ -87,16 +92,30 @@ public class RunViewController implements Initializable {
         rootPane.addEventHandler(KeyEvent.KEY_PRESSED, new KeyBindingHandler(model));
     }
 
-    public void update(Observable o){
 
-        Model model = (Model) o;
-        HashSet<Gizmo> gizmos = model.getGizmoList();
-        Ball ball = model.getBall();
+    @Override
+    public void update(Observable o, Object arg){
+            Model model = (Model) o;
+            HashSet<Gizmo> gizmos = model.getGizmoList();
+            Ball ball = model.getBall();
 
-        canvas.setGizmoList(gizmos);
-        canvas.setBall(ball);
-        canvas.draw();
+            canvas.setGizmoList(gizmos);
+            canvas.setBall(ball);
+            canvas.draw();
 
-        this.model = model;
+            this.model = model;
+        }
+
+    private void startTimeline(){
+        setHandlers();
+        Timeline redraw = new Timeline(new KeyFrame(Duration.millis(50), new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                model.moveBall();
+            }
+        }));
+        redraw.setCycleCount(Timeline.INDEFINITE);
+        redraw.play();
     }
 }
