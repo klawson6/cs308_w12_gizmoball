@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.VBox?>
 <VBox onKeyPressed="#keyPressed" onKeyReleased="#keyReleased" xmlns="http://javafx.com/javafx/9.0.4" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.RunViewController" fx:id="rootPane">
 
-    <ToolBar maxHeight="35">
+    <ToolBar fx:id="toolbar" maxHeight="35">
             <Button text="Start" />
             <Button text="Stop" />
             <Button text="Tick" />
@@ -17,6 +17,6 @@
             <Button text="Load" />
             <Button fx:id="quitButton" text="Quit" />
     </ToolBar>
-    <ResizableCanvas fx:id="canvas" width="700" height="665">
+    <ResizableCanvas fx:id="canvas">
     </ResizableCanvas>
 </VBox>

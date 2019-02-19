@@ -4,7 +4,9 @@ import ModelPackage.*;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ToolBar;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
@@ -30,11 +32,27 @@ public class RunViewController implements Initializable {
     @FXML private Button quitButton;
     @FXML private Button buildButton;
 
+    @FXML ToolBar toolbar;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
+        toolbar.setManaged(false);
+
+        canvas.widthProperty().bind(rootPane.widthProperty());
+        canvas.heightProperty().bind(rootPane.heightProperty());
+        canvas.widthProperty().addListener(observable -> canvas.draw());
+        canvas.heightProperty().addListener(observable -> canvas.draw());
+
         addButtonListeners();
         addKeyListeners();
+
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setHeaderText(null);
+        alert.setTitle("Flipper Demo");
+        alert.setContentText("We have bound the A and D keys for the left and right flippers.");
+
+        alert.showAndWait();
 
     }
 

@@ -154,7 +154,7 @@ public class GFlipper implements Gizmo{
 
     @Override
     public void rotate() {
-        double rotation = angleDegrees + 10;
+        double rotation = angleDegrees + 5;
         if(rotation > 90){
             angleDegrees = 90.0;
         }else {
@@ -163,7 +163,7 @@ public class GFlipper implements Gizmo{
     }
 
     public void antirotate(){
-        double rotation = angleDegrees - 10;
+        double rotation = angleDegrees - 5;
         if(rotation < 0){
             angleDegrees = 0.0;
         }else {

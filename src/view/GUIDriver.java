@@ -11,14 +11,12 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.IOException;
 import java.util.Observable;
 import java.util.Observer;
-import java.util.concurrent.RunnableScheduledFuture;
 
 public class GUIDriver extends Application implements Observer {
 
@@ -36,8 +34,12 @@ public class GUIDriver extends Application implements Observer {
     public void start(Stage pStage){
         this.primaryStage = pStage;
 
-        LoadFile r = new LoadFile();
-        model = r.run();
+        //LoadFile r = new LoadFile();
+        //model = r.run();
+
+        model = new Model();
+        model.addGizmo(new GFlipper(5, 10, true));
+        model.addGizmo(new GFlipper(13, 10, false));
 
         setUpScenes();
         model.addObserver(this);
@@ -52,7 +54,7 @@ public class GUIDriver extends Application implements Observer {
         redraw.setCycleCount(Timeline.INDEFINITE);
         redraw.play();
 
-        primaryStage.setTitle("Gizmoball");
+        primaryStage.setTitle("Gizmoball - Flipper Demo");
         primaryStage.setScene(runScene);
         primaryStage.show();
 
