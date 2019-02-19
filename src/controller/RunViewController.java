@@ -101,7 +101,7 @@ public class RunViewController implements Initializable, Observer {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Error");
             alert.setHeaderText(null);
-            alert.setContentText("The file that was picked is either non-existent or is corrupted.");
+            alert.setContentText("Please pick a file.");
             alert.showAndWait();
         }
 
