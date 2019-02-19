@@ -37,7 +37,9 @@ public class GUIDriver extends Application implements Observer {
         this.primaryStage = pStage;
 
         LoadFile r = new LoadFile();
-        model = r.run();
+        model = new Model();
+        model.addGizmo(new GAbsorber(0,19,20,20));
+        model.addBall(new Ball(19,19,20,20));
 
         setUpScenes();
         model.addObserver(this);
