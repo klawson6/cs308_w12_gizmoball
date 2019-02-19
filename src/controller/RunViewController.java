@@ -98,17 +98,18 @@ public class RunViewController implements Initializable, Observer {
 
 
     @Override
-    public void update(Observable o, Object arg){
-            Model model = (Model) o;
-            HashSet<Gizmo> gizmos = model.getGizmoList();
-            Ball ball = model.getBall();
+    public void update(Observable o, Object arg) {
+        Model model = (Model) o;
+        HashSet<Gizmo> gizmos = model.getGizmoList();
+        Ball ball = model.getBall();
 
-            canvas.setGizmoList(gizmos);
-            canvas.setBall(ball);
-            canvas.draw();
+        canvas.setGizmoList(gizmos);
+        canvas.setBall(ball);
+        canvas.draw();
+    }
 
             this.model = model;
-        }
+
 
     private void startTimeline(){
         setHandlers();
