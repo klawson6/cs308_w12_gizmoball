@@ -1,26 +1,16 @@
 package view;
 
-import ModelPackage.*;
 import controller.BuildViewController;
 import controller.RunViewController;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 
 import java.io.IOException;
-import java.util.Observable;
-import java.util.Observer;
-import java.util.concurrent.RunnableScheduledFuture;
 
-public class GUIDriver extends Application implements Observer {
+public class GUIDriver extends Application{
 
     final static int WINDOW_SIZE = 700;
 
@@ -29,28 +19,11 @@ public class GUIDriver extends Application implements Observer {
     private Scene runScene, buildScene;
     private Stage primaryStage;
 
-    private static IModel model;
-
 
     @Override
     public void start(Stage pStage){
         this.primaryStage = pStage;
-
-        LoadFile r = new LoadFile();
-        model = r.run();
-
         setUpScenes();
-        model.addObserver(this);
-        Timeline redraw = new Timeline(new KeyFrame(Duration.millis(50), new EventHandler<ActionEvent>() {
-
-         @Override
-            public void handle(ActionEvent event) {
-                model.moveBall();
-            }
-        }));
-        redraw.setCycleCount(Timeline.INDEFINITE);
-        redraw.play();
-
         primaryStage.setTitle("Gizmoball");
         primaryStage.setScene(runScene);
         primaryStage.show();
@@ -65,8 +38,6 @@ public class GUIDriver extends Application implements Observer {
             runScene = new Scene(root, WINDOW_SIZE, WINDOW_SIZE);
             runViewController = loader.getController();
             runViewController.setStage(primaryStage);
-            runViewController.setModel(model);
-            runViewController.setHandlers();
 
 
             loader = new FXMLLoader(getClass().getResource("buildView.fxml"));
@@ -90,10 +61,5 @@ public class GUIDriver extends Application implements Observer {
         launch(args);
 
 
-    }
-
-    @Override
-    public void update(Observable o, Object arg) {
-        runViewController.update(o);
     }
 }
