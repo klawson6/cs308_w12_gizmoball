@@ -23,11 +23,15 @@ public class RunViewController implements Initializable {
     private Scene buildScene;
     private BuildViewController buildController;
 
+    private Model model;
+
     @FXML private ResizableCanvas canvas;
     @FXML private VBox rootPane;
   //  @FXML private Label speed;
     @FXML private Button quitButton;
     @FXML private Button buildButton;
+    @FXML private Button saveButton;
+    @FXML private Button loadButton;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -42,6 +46,8 @@ public class RunViewController implements Initializable {
     private void addButtonListeners(){
         quitButton.setOnAction(event -> System.exit(0));
         buildButton.setOnAction(event -> stage.setScene(buildScene));
+        saveButton.setOnAction(event -> new SaveFile(stage).save(model));
+        loadButton.setOnAction(event -> model.changeModel(new LoadFile(stage).run()));
     }
 
     public void setStage(Stage s){
@@ -67,5 +73,6 @@ public class RunViewController implements Initializable {
         canvas.setBall(ball);
         canvas.draw();
 
+        this.model = model;
     }
 }

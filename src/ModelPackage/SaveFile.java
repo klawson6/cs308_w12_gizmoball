@@ -1,6 +1,9 @@
 package ModelPackage;
 
 import javafx.scene.input.KeyEvent;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -9,9 +12,14 @@ import java.util.*;
 public class SaveFile {
 
     private String filename;
+    private Stage stage;
 
     public SaveFile(String filename){
         this.filename = filename;
+    }
+
+    public SaveFile(Stage stage){
+        this.stage = stage;
     }
 
     public void save(Model model){
@@ -26,7 +34,11 @@ public class SaveFile {
         //Gizmos must be first.
         ////////////////////////Gizmos//////////////////////////
         for(Gizmo gizmo: gizmos){
-            String toSave = gizmo.getGizmoType() + " " + gizmo.getId() + " " + gizmo.getStartxPosition() + " " + gizmo.getStartyPosition();
+            String toSave;
+            if(gizmo.getGizmoType().equals("Absorber"))
+                toSave =  gizmo.getGizmoType() + " " + gizmo.getId() + " " + gizmo.getStartxPosition() + " " + gizmo.getStartyPosition() + " " + gizmo.getEndxPosition() + " " + gizmo.getEndyPosition();
+            else
+                toSave = gizmo.getGizmoType() + " " + gizmo.getId() + " " + gizmo.getStartxPosition() + " " + gizmo.getStartyPosition();
             infoToSave.add(toSave);
         }
         //Add blank line to seperate.
@@ -41,11 +53,12 @@ public class SaveFile {
 
         ////////////////////////Rotation//////////////////////////
         for(Gizmo gizmo: gizmos){
-            double rotation = gizmo.getRotation();
+            int rotation = gizmo.getRotation();
+            int rotates = rotation/90;
             //Rotations are stored as an integer between 0 and 360 but file wants each rotation line to be 90 degrees.
-            while(rotation >= 0)
-                rotation =- 90.0;
+            for(int i = 0; i < rotates; i++)
                 infoToSave.add("Rotate " + gizmo.getId());
+
         }
         infoToSave.add("");
 
@@ -87,14 +100,21 @@ public class SaveFile {
      * @throws IOException if file does not exist.
      */
     private void saveToFile  (List<String> toSave)throws IOException{
-        File file = new File(filename);
 
-        FileWriter fileWriter = new FileWriter(file);
-        for(String s: toSave){
-            fileWriter.write(s + "\n");
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Load file");
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("TXT",".txt"));
+        fileChooser.setInitialDirectory(new File(System.getProperty("user.dir")));
+        File file = fileChooser.showSaveDialog(stage);
+
+        if(file != null) {
+            FileWriter fileWriter = new FileWriter(file);
+            for (String s : toSave) {
+                fileWriter.write(s + "\n");
+            }
+
+            fileWriter.close();
         }
-
-        fileWriter.close();
 
     }
 

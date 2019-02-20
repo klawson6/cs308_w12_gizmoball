@@ -38,6 +38,11 @@ public class Model extends Observable implements IModel {
         //addGizmo(new GAbsorber(1,18,18,18));
     }
 
+    public void changeModel(Model m){
+        gizmoList = m.getGizmoList();
+        ball = m.getBall();
+    }
+
 
     public void addGizmo(Gizmo gizmo) {
 

@@ -36,7 +36,7 @@ public class GUIDriver extends Application implements Observer {
     public void start(Stage pStage){
         this.primaryStage = pStage;
 
-        LoadFile r = new LoadFile();
+        LoadFile r = new LoadFile(primaryStage);
         model = r.run();
 
         setUpScenes();
