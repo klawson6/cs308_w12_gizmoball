@@ -11,6 +11,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ToolBar;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
@@ -36,18 +37,28 @@ public class RunViewController implements Initializable, Observer {
     @FXML private ResizableCanvas canvas;
     @FXML private VBox rootPane;
   //  @FXML private Label speed;
-    @FXML private Button startButton, stopButton, tickButton, buildButton, saveButton, loadButton, quitButton ;
+    @FXML private Button startButton, stopButton, tickButton, buildButton, saveButton, loadButton, quitButton;
+    @FXML private ToolBar toolBar;
 
 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
+        initialiseCanvas();
+
         addButtonListeners();
 
         canvas.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent ->
                 System.out.println(mouseEvent.getX() + " " + mouseEvent.getY()));
 
+    }
+
+    private void initialiseCanvas(){
+        canvas.widthProperty().bind(rootPane.widthProperty());
+        canvas.heightProperty().bind(rootPane.heightProperty().subtract(toolBar.heightProperty()));
+        canvas.widthProperty().addListener(observable -> canvas.draw());
+        canvas.heightProperty().addListener(observable -> canvas.draw());
     }
 
     private void addButtonListeners(){

@@ -19,6 +19,12 @@ public class ResizableCanvas extends Canvas implements Observer {
     private HashSet<Gizmo> gizmoList;
     private IBall ball;
 
+    @Override
+    public boolean isResizable()
+    {
+        return true;
+    }
+
     public void draw() {
         double width = this.getWidth();
         double height = this.getHeight();
