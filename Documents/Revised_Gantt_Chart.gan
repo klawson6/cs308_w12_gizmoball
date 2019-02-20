@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?><project name="CS308 Gizmoball Group W12 Updated Gantt Chart" company="" webLink="http://" view-date="2019-02-20" view-index="0" gantt-divider-location="872" resource-divider-location="300" version="2.8.10" locale="en_US">
+    <description/>
+    <view zooming-state="default:2" id="gantt-chart">
+        <field id="tpd3" name="Name" width="528" order="0"/>
+        <field id="tpd4" name="Begin date" width="184" order="1"/>
+        <field id="tpd5" name="End date" width="156" order="2"/>
+        <option id="taskLabelUp" value=""/>
+        <option id="taskLabelRight" value="name"/>
+        <option id="color.recent"><![CDATA[#66ff66 #ffcc33 #ffff66 #33ffff #ff9999 #cccccc]]></option>
+    </view>
+    <view id="resource-table">
+        <field id="0" name="Name" width="210" order="0"/>
+        <field id="1" name="Default role" width="86" order="1"/>
+    </view>
+    <!-- -->
+    <calendars>
+        <day-types>
+            <day-type id="0"/>
+            <day-type id="1"/>
+            <default-week id="1" name="default" sun="0" mon="0" tue="0" wed="0" thu="0" fri="0" sat="0"/>
+            <only-show-weekends value="false"/>
+            <overriden-day-types/>
+            <days/>
+        </day-types>
+    </calendars>
+    <tasks empty-milestones="true">
+        <taskproperties>
+            <taskproperty id="tpd0" name="type" type="default" valuetype="icon"/>
+            <taskproperty id="tpd1" name="priority" type="default" valuetype="icon"/>
+            <taskproperty id="tpd2" name="info" type="default" valuetype="icon"/>
+            <taskproperty id="tpd3" name="name" type="default" valuetype="text"/>
+            <taskproperty id="tpd4" name="begindate" type="default" valuetype="date"/>
+            <taskproperty id="tpd5" name="enddate" type="default" valuetype="date"/>
+            <taskproperty id="tpd6" name="duration" type="default" valuetype="int"/>
+            <taskproperty id="tpd7" name="completion" type="default" valuetype="int"/>
+            <taskproperty id="tpd8" name="coordinator" type="default" valuetype="text"/>
+            <taskproperty id="tpd9" name="predecessorsr" type="default" valuetype="text"/>
+        </taskproperties>
+        <task id="6" name="Combining prototypes to work in one run mode." color="#66ff66" meeting="false" start="2019-02-20" duration="3" complete="0" thirdDate="2019-02-19" thirdDate-constraint="0" expand="true"/>
+        <task id="0" name="Run Mode: Modify tick timer to implement a tick button (including pause)." color="#ffff66" meeting="false" start="2019-02-20" duration="2" complete="0" thirdDate="2019-02-20" thirdDate-constraint="0" expand="true"/>
+        <task id="1" name="Switching mode functionality (does not include board content, only menu)." color="#ffcc33" meeting="false" start="2019-02-20" duration="5" complete="0" thirdDate="2019-02-19" thirdDate-constraint="0" expand="true"/>
+        <task id="4" name="Collision with flippers. Includes refining the physics loop." color="#33ffff" meeting="false" start="2019-02-20" duration="7" complete="0" thirdDate="2019-02-19" thirdDate-constraint="0" expand="true"/>
+        <task id="9" name="Build the Build Mode GUI (not including listeners and drawing elements)" color="#ff9999" meeting="false" start="2019-02-20" duration="5" complete="0" thirdDate="2019-02-19" thirdDate-constraint="0" expand="true"/>
+        <task id="11" name="Listeners to add gizmos and balls in build mode." color="#ffff66" meeting="false" start="2019-02-25" duration="3" complete="0" thirdDate="2019-02-19" thirdDate-constraint="0" expand="true"/>
+        <task id="14" name="Listeners to rotate gizmos, add connections and key bindings in build mode." color="#33ffff" meeting="false" start="2019-02-28" duration="6" complete="0" thirdDate="2019-02-19" thirdDate-constraint="0" expand="true"/>
+        <task id="19" name="Save the current board in build mode." color="#66ff66" meeting="false" start="2019-02-28" duration="9" complete="0" thirdDate="2019-02-19" thirdDate-constraint="0" expand="true"/>
+        <task id="67" name="Load a board layout in the functioning build mode." color="#66ff66" meeting="false" start="2019-02-28" duration="9" complete="0" thirdDate="2019-02-19" thirdDate-constraint="0" expand="true"/>
+        <task id="21" name="Implement the triggering system that fires when connected elements are activated." color="#ffff66" meeting="false" start="2019-03-03" duration="3" complete="0" thirdDate="2019-02-19" thirdDate-constraint="0" expand="true"/>
+        <task id="23" name="Defining some events to occur when connected elements trigger" color="#ff9999" meeting="false" start="2019-02-28" duration="6" complete="0" thirdDate="2019-02-19" thirdDate-constraint="0" expand="true"/>
+        <task id="26" name="Switch modes, maintain the board layout to be edited/run" color="#ffcc33" meeting="false" start="2019-02-28" duration="9" complete="0" thirdDate="2019-02-19" thirdDate-constraint="0" expand="true"/>
+        <task id="30" name="Write the Blackbox JUnit tests for Model/Ball/Gizmo interface's prototype functionality" color="#cccccc" meeting="false" start="2019-02-20" duration="9" complete="0" thirdDate="2019-02-19" thirdDate-constraint="0" expand="true"/>
+        <task id="37" name="Write the Whitebox JUnit tests for Model/Ball/Gizmo's prototype functionality" color="#cccccc" meeting="false" start="2019-02-20" duration="9" complete="0" thirdDate="2019-02-19" thirdDate-constraint="0" expand="true"/>
+        <task id="59" name="Conduct validation tests on use cases where prototype functionality is sufficient." color="#cccccc" meeting="false" start="2019-02-20" duration="9" complete="0" thirdDate="2019-02-19" thirdDate-constraint="0" expand="true"/>
+        <task id="41" name="Write the Blackbox JUnit tests for Model/Ball/Gizmo interface's final base functionality" color="#cccccc" meeting="false" start="2019-03-01" duration="9" complete="0" thirdDate="2019-02-19" thirdDate-constraint="0" expand="true"/>
+        <task id="47" name="Write the Whitebox JUnit tests for Model/Ball/Gizmo's final base functionality" color="#cccccc" meeting="false" start="2019-03-01" duration="9" complete="0" thirdDate="2019-02-19" thirdDate-constraint="0" expand="true"/>
+        <task id="62" name="Conduct validation tests on the remainin use cases" color="#cccccc" meeting="false" start="2019-03-01" duration="9" complete="0" thirdDate="2019-02-19" thirdDate-constraint="0" expand="true"/>
+        <task id="33" name="Document progress and results of JUnit and Validation tests" color="#cccccc" meeting="false" start="2019-02-20" duration="18" complete="0" thirdDate="2019-02-19" thirdDate-constraint="0" expand="true"/>
+        <task id="71" name="Discuss and plan visual changes" color="#cccccc" meeting="false" start="2019-03-06" duration="5" complete="0" thirdDate="2019-02-19" thirdDate-constraint="0" expand="true"/>
+        <task id="73" name="Discuss and plan additional features" color="#cccccc" meeting="false" start="2019-03-06" duration="5" complete="0" thirdDate="2019-02-19" thirdDate-constraint="0" expand="true"/>
+        <task id="77" name="Implement visual changes" color="#cccccc" meeting="false" start="2019-03-11" duration="5" complete="0" thirdDate="2019-02-19" thirdDate-constraint="0" expand="true"/>
+        <task id="79" name="Implement additional features" color="#cccccc" meeting="false" start="2019-03-11" duration="5" complete="0" thirdDate="2019-02-19" thirdDate-constraint="0" expand="true"/>
+        <task id="81" name="Revisit and document testing to ensure base functionality integrity is unaffected by changes" color="#cccccc" meeting="false" start="2019-03-11" duration="5" complete="0" thirdDate="2019-02-19" thirdDate-constraint="0" expand="true"/>
+        <task id="85" name="Final changes and buffer time." color="#cccccc" meeting="false" start="2019-03-16" duration="4" complete="0" thirdDate="2019-02-19" thirdDate-constraint="0" expand="true"/>
+    </tasks>
+    <resources/>
+    <allocations/>
+    <vacations/>
+    <previous/>
+    <roles roleset-name="Default"/>
+    <roles roleset-name="SoftwareDevelopment"/>
+</project>

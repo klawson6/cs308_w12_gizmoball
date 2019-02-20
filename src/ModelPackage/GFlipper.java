@@ -11,7 +11,7 @@ import java.util.Set;
 
 public class GFlipper implements Gizmo{
 
-    private double angleDegrees;
+    private int angleDegrees;
     private boolean isLeft;
     private boolean isActivated;
     private int xPosition;
@@ -20,6 +20,11 @@ public class GFlipper implements Gizmo{
     private HashSet<KeyEvent> keyBindings = new HashSet<>();
     private String id;
     private HashSet<Gizmo> connections = new HashSet<>();
+
+    private HashSet<LineSegment> composingLines = new HashSet<>();
+    private HashSet<Circle> composingCircles = new HashSet<>();
+
+    //TODO Still to figure out how flipper line and circles will work
 
     public GFlipper(int xPosition, int yPosition, boolean isLeft){
         this.xPosition = xPosition;
@@ -39,16 +44,24 @@ public class GFlipper implements Gizmo{
         this.id = id;
     }
 
-    public void setAngleDegrees(double angleDegrees) {
+    private void addCircles(){
+
+    }
+
+    private void addLines(){
+
+    }
+
+    public void setAngleDegrees(int angleDegrees) {
         this.angleDegrees = angleDegrees;
     }
 
     
     public String getGizmoType() {
         if(isLeft) {
-            return "Left Flipper";
+            return "LeftFlipper";
         }else{
-            return "Right Flipper";
+            return "RightFlipper";
         }
     }
 
@@ -78,13 +91,13 @@ public class GFlipper implements Gizmo{
     }
 
     
-    public double getRotation() {
+    public int getRotation() {
         return angleDegrees;
     }
 
     
     public Set<LineSegment> getComposingLines() {
-        return null;
+        return composingLines;
     }
 
     
@@ -94,7 +107,7 @@ public class GFlipper implements Gizmo{
 
     
     public Set<Circle> getComposingCircles() {
-        return null;
+        return composingCircles;
     }
 
     public void addKeyBinding(KeyEvent key) {
@@ -129,7 +142,12 @@ public class GFlipper implements Gizmo{
     }
 
     @Override
-    public void Rotate(double degrees) {
+    public void rotate() {
         //Does nothing for flipper
+    }
+
+    @Override
+    public void activate(){
+        //FIXME rotate flipper?
     }
 }

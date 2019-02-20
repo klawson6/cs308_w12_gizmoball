@@ -6,12 +6,12 @@ import Physics.LineSegment;
 import Physics.Vect;
 import javafx.scene.input.KeyEvent;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Observable;
-import java.util.Observer;
 
-public class Model extends Observable {
+import static java.lang.Math.abs;
+
+public class Model extends Observable implements IModel {
 
     private double gravity = 25;
     private double friction = 10;
@@ -21,76 +21,98 @@ public class Model extends Observable {
     private LineSegment[] borders = new LineSegment[4];
     private HashSet<Gizmo> gizmoList = new HashSet<>();
     private Ball ball;
-    private HashSet<Observer> observer;
 
-    public Model(){
-        observer = new HashSet<>();
+
+    public Model() {
+
+        //TopLine
+        borders[0] = new LineSegment(0, 0, 20, 0);
+        //LeftSide
+        borders[1] = new LineSegment(0, 0, 0, 20);
+        //RightSide
+        borders[2] = new LineSegment(20, 0, 20, 20);
+        //BottomLine
+        borders[3] = new LineSegment(0, 20, 20, 20);
+
+        //   ball = new Ball(15,15,45,50);
+        //   addGizmo(new GAbsorber(0,0,20,4));
+
+        //addGizmo(new GAbsorber(1,18,18,18));
     }
 
-    public void addObserver(Observer o){
-        observer.add(o);
-    }
 
-
-    public void addGizmo(Gizmo gizmo){
+    public void addGizmo(Gizmo gizmo) {
 
         gizmoList.add(gizmo);
         setChanged();
+        notifyObservers();
     }
 
     //TODO: should this be a return type of IGizmo?
-    public HashSet<Gizmo> getGizmoList(){
+    public HashSet<Gizmo> getGizmoList() {
         return gizmoList;
     }
 
-    public void addKeyConnection(KeyEvent keyEvent, Gizmo gizmo){
+    public void addKeyConnection(KeyEvent keyEvent, Gizmo gizmo) {
         gizmo.addKeyBinding(keyEvent);
     }
 
-    public void addGizmoConnection(Gizmo gizmoFrom, Gizmo gizmoTo){
+    public void addGizmoConnection(Gizmo gizmoFrom, Gizmo gizmoTo) {
         gizmoFrom.addGizmoConnection(gizmoTo);
     }
 
-    public void RotateGizmo(Gizmo gizmo){
-        gizmo.getRotation();
+    public void RotateGizmo(Gizmo gizmo) {
+        gizmo.rotate();
     }
 
 
-
-
-
-    public void addBall(Ball ball){
+    public void addBall(Ball ball) {
         this.ball = ball;
+        setChanged();
+        notifyObservers();
     }
 
-    public Ball getBall(){
+    public Ball getBall() {
         return ball;
     }
 
     /**
      * @modifies: ball
      * @effects: if timeUntilCollision is less than 0.05(the move time for 20 fps),
-     *              ball moves for 0.05 seconds
-     *          else if timeUntilCollision is greater than or equal to 0.05
-     *              ball moves for 0.05 seconds and the ball velocity is modified by the collision
+     * ball moves for 0.05 seconds
+     * else if timeUntilCollision is greater than or equal to 0.05
+     * ball moves for 0.05 seconds and the ball velocity is modified by the collision
      */
-    public void moveBall() {
 
+    public void moveBall()  {
         double moveTime = 0.05; //20fps
+        if(!ball.isStopped()) {
         CollisionDetails cd = timeUntilCollision();
         double tuc = cd.getTuc();
+        // System.out.println("Tuc" + tuc);
 
-        if(tuc<moveTime){
-            moveBallForTime(ball,moveTime);
-            setChanged();
-        }
+        if (tuc > moveTime) {
+            moveBallForTime(moveTime);
 
-        else{
-            moveBallForTime(ball,moveTime);
+
+        } else {
+
+            moveBallForTime(tuc);
             ball.modifyVelocity(cd.getVelo());
-            setChanged();
-        }
+            if (cd.getCollisionGizmo() != null) {
+                if (cd.getCollisionGizmo().getGizmoType().equals("Absorber")) {
 
+                    GAbsorber absorber =  (GAbsorber) cd.getCollisionGizmo();
+                    ball = new Ball(absorber.getEndxPosition()-0.75,absorber.getStartyPosition()+0.75,0,0);
+                    ball.stopBall();
+                    absorber.setAbsorbedBall(ball);
+                }
+            }
+
+        }
+    }
+    setChanged();
+    notifyObservers();
     }
 
     /**
@@ -99,8 +121,8 @@ public class Model extends Observable {
      * @effects: Modifies the ball velocity by applying gravity for the specified duration 'time' in seconds
      * @param: time
      */
-    public void applyGravity(double time){
-        Vect newVelo = new Vect(ball.getVelocity().x(),(ball.getVelocity().y() + gravity*time));
+    public void applyGravity(double time) {
+        Vect newVelo = new Vect(ball.getVelocity().x(), (ball.getVelocity().y() + gravity * time));
         ball.modifyVelocity(newVelo);
     }
 
@@ -110,26 +132,27 @@ public class Model extends Observable {
      * @effects: Modifies the ball velocity by applying friction for the specified duration 'time' in seconds
      * @param: time
      */
-    public void applyFriction(double time){
+    public void applyFriction(double time) {
 
-         double fricX = ((1-mu*time) - (mu2*ball.getVelocity().x()*time));
-         double fricY = ((1-mu*time) - (mu2*ball.getVelocity().y()*time));
+        double fricX =1 - (mu * time) - (mu2 *abs( ball.getVelocity().x())) * time;
+        double fricY = 1 - (mu * time) - (mu2 *abs(ball.getVelocity().y())) * time;
 
-         Vect newVelo = new Vect(ball.getVelocity().x()*fricX, ball.getVelocity().y()*fricY);
-         ball.modifyVelocity(newVelo);
+        Vect newVelo = new Vect(ball.getVelocity().x()*fricX, ball.getVelocity().y()*fricY);
+        ball.modifyVelocity(newVelo);
     }
 
-    public void moveBallForTime(Ball b,double time){
+    public void moveBallForTime(double time) {
         applyFriction(time);
         applyGravity(time);
-        double xPos = b.getPos().x();
-        double yPos = b.getPos().y();
-        double xVelo = b.getVelocity().x();
-        double yVelo = b.getVelocity().y();
-      //  b.setxPosition(xPos + xVelo*time);
-       // b.setyPosition(yPos + yVelo*time);
+
+        double xPos = ball.getPos().x();
+        double yPos = ball.getPos().y();
+        double xVelo = ball.getVelocity().x();
+        double yVelo = ball.getVelocity().y();
+        ball.setCircle(xPos + xVelo * time, yPos + yVelo * time);
 
     }
+
     /**
      * @effects: Returns a CollisionDetails object which contains the minimum time until collision of the ball
      *               with any of the Gizmos on the board or any of the walls. The CollisionDetails object also contains
@@ -140,6 +163,7 @@ public class Model extends Observable {
 
         double minTime = Double.MAX_VALUE;
         Vect newVelocity = ball.getVelocity();
+        Gizmo collisionGizmo = null;
 
         for(int i = 0 ;i< borders.length ; i++){
             double current = Geometry.timeUntilWallCollision(borders[i],ball.getCircle(),ball.getVelocity());
@@ -150,26 +174,26 @@ public class Model extends Observable {
         }
         for(Gizmo g: gizmoList){
 
-           // if(g.getClass().equals("GAbsorber")){
-                //Check TUC for all composing line segments
-                for(LineSegment l: g.getComposingLines()){
-                    double current = Geometry.timeUntilWallCollision(l,ball.getCircle(), ball.getVelocity());
-                    if(current<minTime){
-                        minTime = current;
-                        newVelocity = Geometry.reflectWall(l ,ball.getVelocity(),g.getReflectionCoef());
-                    }
-
-                    for(Circle c: g.getComposingCircles()){
-                        current = Geometry.timeUntilCircleCollision(c, ball.getCircle(),ball.getVelocity());
-                        if(current<minTime){
-                            minTime = current;
-                            newVelocity = Geometry.reflectCircle(c.getCenter(),ball.getPos(),ball.getVelocity(),g.getReflectionCoef());
-                        }
-                    }
+            //Check TUC for all composing line segments
+            for(LineSegment l: g.getComposingLines()) {
+                double current = Geometry.timeUntilWallCollision(l, ball.getCircle(), ball.getVelocity());
+                if (current < minTime) {
+                    minTime = current;
+                    newVelocity = Geometry.reflectWall(l, ball.getVelocity(), g.getReflectionCoef());
+                    collisionGizmo = g;
                 }
+            }
+            for(Circle c: g.getComposingCircles()){
+                double current = Geometry.timeUntilCircleCollision(c, ball.getCircle(),ball.getVelocity());
+                if(current<minTime){
+                    minTime = current;
+                    newVelocity = Geometry.reflectCircle(c.getCenter(),ball.getPos(),ball.getVelocity(),g.getReflectionCoef());
+                    collisionGizmo = g;
+                }
+            }
 
         }
-
-        return new CollisionDetails(minTime,newVelocity);
+        return new CollisionDetails(minTime,newVelocity,collisionGizmo);
     }
+
 }

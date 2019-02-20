@@ -18,19 +18,28 @@ public class GCircle implements Gizmo {
     private HashSet<KeyEvent> keyBindings = new HashSet<>();
     private String id;
     private HashSet<Gizmo> connections = new HashSet<>();
+    private HashSet<Circle> composingCircles = new HashSet<>();
 
     public GCircle(int xPos, int yPos){
         this.xPos = xPos;
         this.yPos = yPos;
         id = "C" + xPos + yPos;
+        addCircles();
     }
 
     public GCircle(int xPos, int yPos, String id){
         this.xPos = xPos;
         this.yPos = yPos;
         this.id = id;
+        addCircles();
     }
-    
+
+    // Create the composing circle for the circle Gizmo to be placed on screen and drawn.
+    private void addCircles(){
+        Circle circle = new Circle(xPos + 0.5,yPos + 0.5,0.5); // For collision calculations in Physics, move the Circle xy position to the center.
+        composingCircles.add(circle);
+    }
+
     public String getGizmoType() {
         return "Circle";
     }
@@ -61,13 +70,14 @@ public class GCircle implements Gizmo {
     }
 
     
-    public double getRotation() {
+    public int getRotation() {
         return 0;
     }
 
     
     public Set<LineSegment> getComposingLines() {
-        return null;
+        //Circles doesn't need any lines so empty list
+        return new HashSet<>();
     }
 
     
@@ -77,7 +87,7 @@ public class GCircle implements Gizmo {
 
     
     public Set<Circle> getComposingCircles() {
-        return null;
+        return composingCircles;
     }
 
     public void addKeyBinding(KeyEvent key) {
@@ -112,7 +122,11 @@ public class GCircle implements Gizmo {
     }
 
     @Override
-    public void Rotate(double degrees) {
+    public void rotate() {
         //Does Nothing for Circle
+    }
+    @Override
+    public void activate(){
+        //Does nothing for Circle
     }
 }
