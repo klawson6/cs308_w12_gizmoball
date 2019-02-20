@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+
+<?import view.ResizableCanvas?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ChoiceBox?>
+<VBox xmlns="http://javafx.com/javafx/9.0.4" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Controller" fx:id="rootPane">
+    <ToolBar fx:id="commonToolBar">
+        <Button fx:id="saveButton" text="Save" />
+        <Button fx:id="loadButton" text="Load" />
+        <Button fx:id="quitButton" text="Quit" />
+    </ToolBar>
+    <ToolBar fx:id="buildToolBar">
+        <Button fx:id="runButton" text="Run Mode" />
+        <Separator orientation="VERTICAL"></Separator>
+        <Label text="Add Gizmo:"></Label>
+        <ChoiceBox fx:id="gizmoChoiceBox"></ChoiceBox>
+        <Separator orientation="VERTICAL"></Separator>
+        <Button text="Key connect" />
+        <Button text="Key disconnect" />
+        <Button text="Rotate" />
+        <Separator orientation="VERTICAL"></Separator>
+        <Button text="Connect" />
+        <Button text="Disconnect" />
+        <Button text="Delete" />
+    </ToolBar>
+    <ToolBar fx:id="runToolBar" >
+        <Button fx:id="buildButton" text="Build Mode" />
+        <Separator orientation="VERTICAL"></Separator>
+        <Button fx:id="startButton" text="Start" />
+        <Button fx:id="stopButton" text="Stop" />
+        <Button fx:id="tickButton" text="Tick" />
+    </ToolBar>
+    <ResizableCanvas fx:id="canvas">
+    </ResizableCanvas>
+</VBox>

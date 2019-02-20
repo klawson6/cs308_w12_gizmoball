@@ -1,32 +1,20 @@
 package view;
 
-import ModelPackage.*;
-import controller.BuildViewController;
-import controller.RunViewController;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
+import controller.Controller;
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 
 import java.io.IOException;
-import java.util.Observable;
-import java.util.Observer;
-import java.util.concurrent.RunnableScheduledFuture;
 
 public class GUIDriver extends Application implements Observer {
 
     final static int WINDOW_SIZE = 700;
 
-    private  RunViewController runViewController;
-    private  BuildViewController buildViewController;
-    private Scene runScene, buildScene;
+    private Controller controller;
+    private Scene runScene;
     private Stage primaryStage;
 
     private static IModel model;
@@ -60,26 +48,14 @@ public class GUIDriver extends Application implements Observer {
 
     private void setUpScenes(){
         try{
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("runView.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("View.fxml"));
             Parent root = loader.load();
             runScene = new Scene(root, WINDOW_SIZE, WINDOW_SIZE);
-            runViewController = loader.getController();
-            runViewController.setStage(primaryStage);
-            runViewController.setModel(model);
-            runViewController.setHandlers();
-
-
-            loader = new FXMLLoader(getClass().getResource("buildView.fxml"));
-            root = loader.load();
-            buildScene = new Scene(root, WINDOW_SIZE, WINDOW_SIZE);
-            buildViewController = loader.getController();
-            buildViewController.setStage(primaryStage);
-
-            runViewController.setBuildScene(buildScene);
-            buildViewController.setRunScene(runScene);
+            controller = loader.getController();
+            controller.setStage(primaryStage);
 
         }catch (IOException e){
-            System.err.println("Error when loading the views! Please check the FXML files doesn't have any errors!");
+            System.err.println("Error when loading the view! Please check the FXML file doesn't have any errors!");
             System.exit(-1);
         }
     }
@@ -92,8 +68,5 @@ public class GUIDriver extends Application implements Observer {
 
     }
 
-    @Override
-    public void update(Observable o, Object arg) {
-        runViewController.update(o);
-    }
+
 }
