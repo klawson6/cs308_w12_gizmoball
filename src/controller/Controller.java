@@ -7,7 +7,6 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ToolBar;
@@ -21,6 +20,7 @@ import view.ResizableCanvas;
 
 import java.io.File;
 import java.net.URL;
+import java.sql.Time;
 import java.util.HashSet;
 import java.util.Observable;
 import java.util.Observer;
@@ -30,6 +30,8 @@ public class Controller implements Initializable, Observer {
 
     private Stage stage;
     private IModel model;
+    private Timeline timeline;
+    private KeyBindingHandler keyBindHandler;
 
     @FXML private ResizableCanvas canvas;
     @FXML private VBox rootPane;
@@ -43,8 +45,8 @@ public class Controller implements Initializable, Observer {
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         initialiseToolBars();
-
         initialiseCanvas();
+        initialiseTimeline();
     }
 
     private void initialiseToolBars(){
@@ -65,8 +67,20 @@ public class Controller implements Initializable, Observer {
                 System.out.println(mouseEvent.getX() + " " + mouseEvent.getY()));
     }
 
+    private void initialiseTimeline(){
+        timeline = new Timeline(new KeyFrame(Duration.millis(50), new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                model.moveBall();
+            }
+        }));
+    }
+
     private void addButtonListeners(){
         startButton.setOnAction(event -> startTimeline());
+        stopButton.setOnAction(event -> stopTimeline());
+        tickButton.setOnAction(event -> tick());
         loadButton.setOnAction(event -> loadFile());
         runButton.setOnAction(event -> toggleModes());
         buildButton.setOnAction(event -> toggleModes());
@@ -112,7 +126,8 @@ public class Controller implements Initializable, Observer {
     }
 
     public void setHandlers(){
-        rootPane.addEventHandler(KeyEvent.KEY_PRESSED, new KeyBindingHandler(model));
+        keyBindHandler = new KeyBindingHandler(model);
+        rootPane.addEventHandler(KeyEvent.KEY_PRESSED, keyBindHandler);
     }
 
 
@@ -121,6 +136,8 @@ public class Controller implements Initializable, Observer {
         Model model = (Model) o;
         HashSet<Gizmo> gizmos = model.getGizmoList();
         Ball ball = model.getBall();
+
+        setHandlers();
 
         canvas.setGizmoList(gizmos);
         canvas.setBall(ball);
@@ -145,15 +162,17 @@ public class Controller implements Initializable, Observer {
     }
 
     private void startTimeline(){
-        setHandlers();
-        Timeline redraw = new Timeline(new KeyFrame(Duration.millis(50), new EventHandler<ActionEvent>() {
+        timeline.setCycleCount(Timeline.INDEFINITE);
+        timeline.play();
+    }
 
-            @Override
-            public void handle(ActionEvent event) {
-                model.moveBall();
-            }
-        }));
-        redraw.setCycleCount(Timeline.INDEFINITE);
-        redraw.play();
+    private void stopTimeline(){
+        timeline.stop();
+    }
+
+    private void tick(){
+        timeline.stop();
+        timeline.setCycleCount(1);
+        timeline.play();
     }
 }
