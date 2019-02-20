@@ -1,7 +1,6 @@
 package view;
 
-import controller.BuildViewController;
-import controller.RunViewController;
+import controller.Controller;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -14,9 +13,8 @@ public class GUIDriver extends Application{
 
     final static int WINDOW_SIZE = 700;
 
-    private  RunViewController runViewController;
-    private  BuildViewController buildViewController;
-    private Scene runScene, buildScene;
+    private Controller controller;
+    private Scene runScene;
     private Stage primaryStage;
 
 
@@ -33,24 +31,14 @@ public class GUIDriver extends Application{
 
     private void setUpScenes(){
         try{
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("runView.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("View.fxml"));
             Parent root = loader.load();
             runScene = new Scene(root, WINDOW_SIZE, WINDOW_SIZE);
-            runViewController = loader.getController();
-            runViewController.setStage(primaryStage);
-
-
-            loader = new FXMLLoader(getClass().getResource("buildView.fxml"));
-            root = loader.load();
-            buildScene = new Scene(root, WINDOW_SIZE, WINDOW_SIZE);
-            buildViewController = loader.getController();
-            buildViewController.setStage(primaryStage);
-
-            runViewController.setBuildScene(buildScene);
-            buildViewController.setRunScene(runScene);
+            controller = loader.getController();
+            controller.setStage(primaryStage);
 
         }catch (IOException e){
-            System.err.println("Error when loading the views! Please check the FXML files doesn't have any errors!");
+            System.err.println("Error when loading the view! Please check the FXML file doesn't have any errors!");
             System.exit(-1);
         }
     }

@@ -10,7 +10,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.ToolBar;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -27,57 +26,69 @@ import java.util.Observable;
 import java.util.Observer;
 import java.util.ResourceBundle;
 
-public class RunViewController implements Initializable, Observer {
+public class Controller implements Initializable, Observer {
 
     private Stage stage;
-    private Scene buildScene;
-    private BuildViewController buildController;
     private IModel model;
 
     @FXML private ResizableCanvas canvas;
     @FXML private VBox rootPane;
   //  @FXML private Label speed;
-    @FXML private Button startButton, stopButton, tickButton, buildButton, saveButton, loadButton, quitButton;
-    @FXML private ToolBar toolBar;
+    @FXML private Button startButton, stopButton, tickButton, buildButton, runButton, saveButton, loadButton, quitButton;
+    @FXML private ToolBar commonToolBar, runToolBar, buildToolBar;
 
 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
+        initialiseToolBars();
+
         initialiseCanvas();
+    }
 
+    private void initialiseToolBars(){
+        buildToolBar.setManaged(false);
+        buildToolBar.setVisible(false);
         addButtonListeners();
-
-        canvas.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent ->
-                System.out.println(mouseEvent.getX() + " " + mouseEvent.getY()));
-
     }
 
     private void initialiseCanvas(){
         canvas.widthProperty().bind(rootPane.widthProperty());
-        canvas.heightProperty().bind(rootPane.heightProperty().subtract(toolBar.heightProperty()));
+        canvas.heightProperty().bind(rootPane.heightProperty().subtract(buildToolBar.heightProperty()).subtract(commonToolBar.heightProperty()));
+        canvas.heightProperty().bind(rootPane.heightProperty().subtract(runToolBar.heightProperty()).subtract(commonToolBar.heightProperty()));
         canvas.widthProperty().addListener(observable -> canvas.draw());
         canvas.heightProperty().addListener(observable -> canvas.draw());
+
+        //TODO Remove in final release
+        canvas.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent ->
+                System.out.println(mouseEvent.getX() + " " + mouseEvent.getY()));
     }
 
     private void addButtonListeners(){
         startButton.setOnAction(event -> startTimeline());
         loadButton.setOnAction(event -> loadFile());
-        buildButton.setOnAction(event -> stage.setScene(buildScene));
+        runButton.setOnAction(event -> toggleModes());
+        buildButton.setOnAction(event -> toggleModes());
         quitButton.setOnAction(event -> System.exit(0));
+    }
+
+    private void toggleModes(){
+        if(runToolBar.isManaged()){
+            runToolBar.setManaged(false);
+            runToolBar.setVisible(false);
+            buildToolBar.setManaged(true);
+            buildToolBar.setVisible(true);
+        }else{
+            runToolBar.setManaged(true);
+            runToolBar.setVisible(true);
+            buildToolBar.setManaged(false);
+            buildToolBar.setVisible(false);
+        }
     }
 
     public void setStage(Stage s){
         stage = s;
-    }
-
-    public void setBuildScene(Scene buildScene) {
-        this.buildScene = buildScene;
-    }
-
-    public void setBuildController(BuildViewController buildController) {
-        this.buildController = buildController;
     }
 
 
