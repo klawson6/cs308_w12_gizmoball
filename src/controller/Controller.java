@@ -3,12 +3,15 @@ package controller;
 import ModelPackage.*;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ToolBar;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -38,6 +41,7 @@ public class Controller implements Initializable, Observer {
   //  @FXML private Label speed;
     @FXML private Button startButton, stopButton, tickButton, buildButton, runButton, saveButton, loadButton, quitButton;
     @FXML private ToolBar commonToolBar, runToolBar, buildToolBar;
+    @FXML ChoiceBox<String> gizmoChoiceBox;
 
 
 
@@ -52,7 +56,14 @@ public class Controller implements Initializable, Observer {
     private void initialiseToolBars(){
         buildToolBar.setManaged(false);
         buildToolBar.setVisible(false);
+        populateChoiceBox();
         addButtonListeners();
+    }
+
+    private void populateChoiceBox(){
+        ObservableList<String> gizmoTypes = FXCollections.observableArrayList("Absorber", "Circle", "Square","Triangle","Left Flipper", "Right Flipper");
+        gizmoChoiceBox.setItems(gizmoTypes);
+        gizmoChoiceBox.setValue(gizmoTypes.get(0));
     }
 
     private void initialiseCanvas(){
