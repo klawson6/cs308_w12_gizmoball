@@ -123,4 +123,8 @@ public class Ball implements IBall{
     public boolean isStopped(){
         return stopped;
     }
+
+    public void setVelocity(int xVelocity, int yVelocity) {
+        velocity = new Vect(xVelocity,yVelocity);
+    }
 }

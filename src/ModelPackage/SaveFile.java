@@ -62,6 +62,19 @@ public class SaveFile {
         ///////////////////////////////////////////// Key Connects /////////////////////////////////////////////
         //todo add key connects
 
+        ////////////////////////Key Connection//////////////////////////
+        for(Gizmo gizmo: gizmos){
+            HashMap<KeyEvent,String> allconnections = gizmo.getKeybindings();
+            Set<KeyEvent> connect = allconnections.keySet();
+            for(KeyEvent c: connect){
+                //In format KeyConnect key 87 down RF137
+                infoToSave.add("KeyConnect key " + c.getText() + " down " + gizmo.getId()); //todo: not sure this will properly work
+            }
+        }
+        infoToSave.add("");
+
+
+
 
 
         ////////////////////////Actually save//////////////////////////

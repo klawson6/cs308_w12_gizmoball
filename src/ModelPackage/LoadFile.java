@@ -65,41 +65,46 @@ public class LoadFile {
                     int xPos = scan.nextInt();
                     int yPos = scan.nextInt();
 
-                    model.addGizmo(new GSquare(xPos,yPos,name));
+                    //model.addGizmo(new GSquare(xPos,yPos,name));
+                    model.createGizmo("Square",xPos,yPos,xPos,yPos,name);
                 } else if (info.startsWith("Circle")) {
                     String type = scan.next();
                     String name = scan.next();
                     int xPos = scan.nextInt();
                     int yPos = scan.nextInt();
 
-                    model.addGizmo(new GCircle(xPos,yPos,name));
+                    //model.addGizmo(new GCircle(xPos,yPos,name));
+                    model.createGizmo("Circle",xPos,yPos,xPos,yPos,name);
                 } else if (info.startsWith("Triangle")) {
                     String type = scan.next();
                     String name = scan.next();
                     int xPos = scan.nextInt();
                     int yPos = scan.nextInt();
 
-                    model.addGizmo(new GTriangle(xPos,yPos,name));
+                    //model.addGizmo(new GTriangle(xPos,yPos,name));
+                    model.createGizmo("Triangle",xPos,yPos,xPos,yPos,name);
                 } else if (info.startsWith("Rotate")) {
                     String type = scan.next();
                     String toRotate = scan.next();
 
                     System.out.println("Rotating object " + toRotate);
-                    model.RotateGizmo(getGizmo(model,toRotate));
+                    model.RotateGizmo(model.getGizmo(toRotate));
                 } else if (info.startsWith("LeftFlipper")) {
                     String type = scan.next();
                     String name = scan.next();
                     int xPos = scan.nextInt();
                     int yPos = scan.nextInt();
 
-                    model.addGizmo(new GFlipper(xPos,yPos,true,name));
+                    //model.addGizmo(new GFlipper(xPos,yPos,true,name));
+                    model.createGizmo("LeftFlipper",xPos,yPos,xPos,yPos,name);
                 } else if (info.startsWith("RightFlipper")) {
                     String type = scan.next();
                     String name = scan.next();
                     int xPos = scan.nextInt();
                     int yPos = scan.nextInt();
 
-                    model.addGizmo(new GFlipper(xPos,yPos,false,name));
+                    //model.addGizmo(new GFlipper(xPos,yPos,false,name));
+                    model.createGizmo("RightFlipper",xPos,yPos,xPos,yPos,name);
                 } else if (info.startsWith("KeyConnect")) {
                     String type = scan.next();
                     String toPress = scan.next();
@@ -112,14 +117,14 @@ public class LoadFile {
 
                     //todo not sure this will work
                     KeyEvent k = new KeyEvent(KeyEvent.KEY_PRESSED, KeyEvent.CHAR_UNDEFINED, ""+keyID, KeyCode.getKeyCode(keyID),false,false,false,false);
-                    model.addKeyConnection(k,getGizmo(model, toMove));
+                    model.addKeyConnection(k,model.getGizmo(toMove));
 
                 } else if (info.startsWith("Connect")) {
                     String type = scan.next();
                     String obj1 = scan.next();
                     String obj2 = scan.next();
 
-                    model.addGizmoConnection(getGizmo(model,obj1),getGizmo(model,obj2));
+                    model.addGizmoConnection(model.getGizmo(obj1),model.getGizmo(obj2));
                 } else if (info.startsWith("Ball")) {
                     String type = scan.next();
                     String name = scan.next();
@@ -137,7 +142,8 @@ public class LoadFile {
                     int y1 = scan.nextInt();
                     int x2 = scan.nextInt();
                     int y2 = scan.nextInt();
-                    model.addGizmo(new GAbsorber(x1,y1,x2,y2,name));
+                    //model.addGizmo(new GAbsorber(x1,y1,x2,y2,name));
+                    model.createGizmo("Absorber",x1,y1,x2,y2,name);
                 } else if (info.equals("")) {
 
                 } else {

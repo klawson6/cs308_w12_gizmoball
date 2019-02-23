@@ -21,13 +21,11 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import view.ResizableCanvas;
 
+import javax.swing.*;
 import java.io.File;
 import java.net.URL;
 import java.sql.Time;
-import java.util.HashSet;
-import java.util.Observable;
-import java.util.Observer;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class Controller implements Initializable, Observer {
 
@@ -138,20 +136,23 @@ public class Controller implements Initializable, Observer {
 
     public void setHandlers(){
         keyBindHandler = new KeyBindingHandler(model);
-        rootPane.addEventHandler(KeyEvent.KEY_PRESSED, keyBindHandler);
+        //rootPane.addEventHandler(KeyEvent.ANY,keyBindHandler);
+        rootPane.setOnKeyReleased(keyBindHandler);
     }
 
 
     @Override
     public void update(Observable o, Object arg) {
         Model model = (Model) o;
-        HashSet<Gizmo> gizmos = model.getGizmoList();
-        Ball ball = model.getBall();
+        Set<IGizmo> gizmos = model.getGizmoList();
+        List<IBall> balls = model.getBalls();
 
         setHandlers();
 
         canvas.setGizmoList(gizmos);
-        canvas.setBall(ball);
+
+        canvas.setBalls(balls);
+
         canvas.draw();
     }
 
