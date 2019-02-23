@@ -1,6 +1,9 @@
 package ModelPackage;
 
+import javafx.scene.input.KeyEvent;
+
 import java.awt.*;
+import java.util.HashMap;
 import java.util.HashSet;
 
 public interface IGizmo {
@@ -18,5 +21,11 @@ public interface IGizmo {
     int getRotation();
 
     Color getColour();
+
+    void activate();
+
+    void deactivate();
+
+    HashMap<KeyEvent, String> getKeybindings();
 
 }

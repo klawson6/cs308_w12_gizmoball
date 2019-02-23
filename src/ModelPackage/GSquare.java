@@ -3,38 +3,78 @@ package ModelPackage;
 import Physics.Circle;
 import Physics.LineSegment;
 import javafx.scene.input.KeyEvent;
+import sun.plugin2.util.ParameterNames;
 
 import java.awt.*;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
-public class GSquare implements Gizmo {
+public class GSquare extends Gizmo {
 
-    final private double coefficent = 1;
+    private final double coefficent = 1;
     private int xPos;
     private int yPos;
-    private HashSet<KeyEvent> keyBindings = new HashSet<>();
-    private String id;
-    private HashSet<Gizmo> connections = new HashSet<>();
-    private Set<LineSegment> composingLines = new HashSet<>();
-    private Set<Circle> composingCircles = new HashSet<>();
+    private Set<LineSegment> composingLines = super.composingLines;
+    private Set<Circle> composingCircles = super.composingCircles;
+    private Color defaultColor = Color.RED;
 
+    //Constructor that gives id, if none given
     public GSquare(int xPos, int yPos){
+        setxPosition(xPos);
+        setyPosition(yPos);
+        setCoefficent(coefficent);
+        setColor(defaultColor);
         this.xPos = xPos;
         this.yPos = yPos;
         id = "S" + xPos + yPos;
+        setId(id);
         addLines();
         addCircles();
     }
 
+    //Constructor that sets all fields
     public GSquare(int xPos, int yPos, String id){
+        setxPosition(xPos);
+        setyPosition(yPos);
+        setCoefficent(coefficent);
+        setColor(defaultColor);
+        setId(id);
         this.xPos = xPos;
         this.yPos = yPos;
-        this.id = id;
         addLines();
         addCircles();
     }
+
+    //Returns type of gizmo
+    public String getGizmoType() {
+        return "Square";
+    }
+
+    //Returns end positions of current gizmo
+    public int getEndxPosition() {
+        return xPos;
+    }
+    public int getEndyPosition() {
+        return yPos;
+    }
+
+    //TODO carry out actions
+    //Will carry out gizmo's standard action
+    public void activate() {}
+
+    //TODO stop actions
+    //Will stop gizmo's action
+    public void deactivate() {}
+
+    @Override
+    //gets current rotation of gizmo
+    public int getRotation() {
+        return 0;
+    }
+
+    //Does nothing for square
+    public boolean rotate() {return false;}
 
     private void addLines(){
         //Add one to end as we get top left co-ordinate which will be one short of draw
@@ -63,79 +103,5 @@ public class GSquare implements Gizmo {
         composingCircles.add(bottomLeft);
         composingCircles.add(bottomRight);
 
-    }
-
-    public String getGizmoType() {
-        return "Square";
-    }
-
-    public int getStartxPosition() {
-        return xPos;
-    }
-
-    public int getStartyPosition() {
-        return yPos;
-    }
-
-    public int getEndxPosition() {
-        return xPos;
-    }
-
-    public int getEndyPosition() {
-        return yPos;
-    }
-
-    public Color getColour() {
-        return null;
-    }
-
-    public int getRotation() {
-        return 0;
-    }
-
-    public Set<LineSegment> getComposingLines() {
-        return composingLines;
-    }
-
-    public double getReflectionCoef() {
-        return coefficent;
-    }
-
-    public Set<Circle> getComposingCircles() {
-        return composingCircles;
-    }
-
-    public void addKeyBinding(KeyEvent key) {keyBindings.add(key);}
-
-    public HashSet<KeyEvent> getKeybindings() {return keyBindings;}
-
-    public String getId() {
-        return id;
-    }
-
-    public void addGizmoConnection(Gizmo gizmo) {
-        connections.add(gizmo);
-    }
-
-    public void removeGizmoConnection(Gizmo gizmo) {
-        connections.remove(gizmo);
-    }
-
-    public Set<String> getGizmoConnectionIds() {
-        Set<String> ids = new HashSet<>();
-        for(Gizmo gizmos: connections){
-            ids.add(gizmos.getId());
-        }
-        return ids;
-    }
-
-    @Override
-    public void rotate() {
-        //Does nothing for square
-    }
-
-    @Override
-    public void activate(){
-        //Does nothing for Square
     }
 }

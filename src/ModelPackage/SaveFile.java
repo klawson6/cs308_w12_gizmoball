@@ -17,7 +17,7 @@ public class SaveFile {
     public void save(Model model){
 
         //Get all gizmos.
-        HashSet<Gizmo> gizmos = model.getGizmoList();
+        Set<Gizmo> gizmos = model.getModelGizmoList();
 
         //Where all formatted information will be held
         List<String> infoToSave = new ArrayList<String>();
@@ -34,9 +34,10 @@ public class SaveFile {
 
         ////////////////////////Ball//////////////////////////
         //Currently only one ball, will need to be altered if more than one ball is used.
-        Ball ball = model.getBall();
-        infoToSave.add("Ball B " + ball.getXPosition() + " " + ball.getYPosition() + " " + ball.getVelocity().x() + " " + ball.getVelocity().y());
-
+        List<Ball> balls = model.getModelBalls();
+        for(Ball ball: balls) {
+            infoToSave.add("Ball B " + ball.getXPosition() + " " + ball.getYPosition() + " " + ball.getVelocity().x() + " " + ball.getVelocity().y());
+        }
         infoToSave.add("");
 
         ////////////////////////Rotation//////////////////////////
@@ -60,7 +61,8 @@ public class SaveFile {
 
         ////////////////////////Key Connection//////////////////////////
         for(Gizmo gizmo: gizmos){
-            HashSet<KeyEvent> connect = gizmo.getKeybindings();
+            HashMap<KeyEvent,String> allconnections = gizmo.getKeybindings();
+            Set<KeyEvent> connect = allconnections.keySet();
             for(KeyEvent c: connect){
                 //In format KeyConnect key 87 down RF137
                 infoToSave.add("KeyConnect key " + c.getText() + " down " + gizmo.getId()); //todo: not sure this will properly work

@@ -1,26 +1,38 @@
 package ModelPackage;
 
-import javafx.beans.Observable;
+import javafx.scene.input.KeyEvent;
 
-import java.util.HashSet;
-import java.util.List;
+import java.io.File;
 import java.util.Observer;
 import java.util.Set;
 
 public interface IModel  {
 
-    HashSet<Gizmo> getGizmoList();
+    boolean createGizmo(String type, int xStart, int yStart, int xEnd, int yEnd,String id);
+    boolean createGizmo(String type, int xStart, int yStart, int xEnd, int yEnd);
+    Set<IGizmo> getGizmoList();
+    IGizmo getGizmo(int xPos, int yPos);
+    boolean moveGizmo(int xPos, int yPos, int newxPos, int newyPos);
+    void deleteGizmo(int xPos, int yPos);
+    boolean rotate(int xPos, int yPos);
 
-    Ball getBall();
+    boolean createBall(double xPos, double yPos,double xVelocity, double yVelocity);
+    IBall getBall();
+    void moveBall();
+    boolean moveBallPostion(IBall ball, double newxPos, double newyPos);
+
+    boolean addKeyConnection(int xPos, int Pos, KeyEvent key);
+    boolean addGizmoConnection(int xPosofSelectedGizmo, int yPosfSelectedGizmo, int xPosofTargetGizmo, int yPosofTargetGizmo);
+    boolean removeKeyConnection(int xPos,int yPos, KeyEvent key);
+    boolean removeGizmoConnection(int xPosofSelectedGizmo, int yPosfSelectedGizmo, int xPosofTargetGizmo, int yPosofTargetGizmo);
 
     void addObserver(Observer observer);
-   void  deleteObserver(Observer o);
 
-    void addBall(Ball ball);
+    void save(File path);
+    void load(File path);
 
-    void addGizmo(Gizmo g);
-
-    void moveBall();
-
+    void play();
+    void stop();
+    void tick();
 
 }

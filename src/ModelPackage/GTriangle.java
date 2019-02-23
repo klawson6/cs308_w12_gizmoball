@@ -9,17 +9,16 @@ import java.awt.*;
 import java.util.HashSet;
 import java.util.Set;
 
-public class GTriangle implements Gizmo {
+public class GTriangle extends Gizmo {
 
     private rotations orientation;
     final private double coefficent = 1;
     private int xPosition;
     private int yPosition;
-    private HashSet<KeyEvent> keyBindings = new HashSet<>();
+    private Set<LineSegment> composingLines = super.composingLines;
+    private Set<Circle> composingCircles = super.composingCircles;
+    private Color defaultColor = Color.BLUE;
     private String id;
-    private HashSet<Gizmo> connections = new HashSet<>();
-    private HashSet<LineSegment> composingLines = new HashSet<>();
-    private HashSet<Circle> composingCircles = new HashSet<>();
 
     // The enums to represent the fixed 90 degree rotations
     // Specified by the corner that is opposite the triangle hypotenuse.
@@ -28,15 +27,27 @@ public class GTriangle implements Gizmo {
     }
 
     public GTriangle(int xPosition, int yPosition) {
+        setxPosition(xPosition);
+        setyPosition(yPosition);
+        setCoefficent(coefficent);
+        setColor(defaultColor);
         this.xPosition = xPosition;
         this.yPosition = yPosition;
         id = "T" + xPosition + yPosition;
+        setId(id);
         orientation = rotations.NWcorner;
         addLines();
         addCircles();
     }
 
     public GTriangle(int xPosition, int yPosition, String id) {
+
+        setxPosition(xPosition);
+        setyPosition(yPosition);
+        setCoefficent(coefficent);
+        setColor(defaultColor);
+        setId(id);
+
         this.xPosition = xPosition;
         this.yPosition = yPosition;
         this.id = id;
@@ -44,6 +55,18 @@ public class GTriangle implements Gizmo {
         orientation = rotations.NWcorner; // Default orientation should be corner opposite hypotenuse is in the NW corner.
         addLines(); // Build composing lines
         addCircles(); // Build composing circles
+    }
+
+    public String getGizmoType() {
+        return "Triangle";
+    }
+
+    public int getEndxPosition() {
+        return xPosition;
+    }
+
+    public int getEndyPosition() {
+        return yPosition;
     }
 
     // Cycle through the enum values for the orientation of this triangle.
@@ -161,37 +184,6 @@ public class GTriangle implements Gizmo {
                 break;
         }
     }
-
-    public String getGizmoType() {
-        return "Triangle";
-    }
-
-
-    public int getStartxPosition() {
-        return xPosition;
-    }
-
-
-    public int getStartyPosition() {
-        return yPosition;
-    }
-
-
-    public int getEndxPosition() {
-        return xPosition;
-    }
-
-
-    public int getEndyPosition() {
-        return yPosition;
-    }
-
-
-    public Color getColour() {
-        return null;
-    }
-
-
     // Returns the relevant integer to represent the angle of rotation.
     // Used for drawing the triangles on the GUI
     public int getRotation() {
@@ -209,60 +201,20 @@ public class GTriangle implements Gizmo {
         }
     }
 
-
-    public Set<LineSegment> getComposingLines() {
-        return composingLines;
-    }
-
-
-    public double getReflectionCoef() {
-        return coefficent;
-    }
-
-
-    public Set<Circle> getComposingCircles() {
-        return composingCircles;
-    }
-
-    public void addKeyBinding(KeyEvent key) {
-        keyBindings.add(key);
-    }
-
-    public HashSet<KeyEvent> getKeybindings() {
-        return keyBindings;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    @Override
-    public void addGizmoConnection(Gizmo gizmo) {
-        connections.add(gizmo);
-    }
-
-    @Override
-    public void removeGizmoConnection(Gizmo gizmo) {
-        connections.remove(gizmo);
-    }
-
-    @Override
-    public Set<String> getGizmoConnectionIds() {
-        Set<String> ids = new HashSet<>();
-        for (Gizmo gizmos : connections) {
-            ids.add(gizmos.getId());
-        }
-        return ids;
-    }
-
     // Default rotation action is to rotate the object 90 degrees clockwise.
     @Override
-    public void rotate() {
+    public boolean rotate() {
         rotateRight();
+        return true;
     }
 
     @Override
     public void activate(){
         //Does nothing for Triangle
+    }
+
+    @Override
+    public void deactivate() {
+
     }
 }
