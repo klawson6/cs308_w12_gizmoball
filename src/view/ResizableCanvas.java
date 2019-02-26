@@ -22,13 +22,17 @@ public class ResizableCanvas extends Canvas implements Observer {
         return true;
     }
 
-    public void draw() {
+    public void draw(boolean isBuilding) {
         double width = this.getWidth();
         double height = this.getHeight();
 
         GraphicsContext gc = getGraphicsContext2D();
         gc.setFill(Color.BLACK);
         gc.fillRect(0, 0, width, height);
+
+        if(isBuilding){
+            drawGrid();
+        }
 
         if (gizmoList != null) {
             double wGridSquareSize = width / 20;
@@ -100,6 +104,31 @@ public class ResizableCanvas extends Canvas implements Observer {
         }
     }
 
+    private void drawGrid(){
+        double width = this.getWidth();
+        double height = this.getHeight();
+
+        GraphicsContext gc = getGraphicsContext2D();
+
+        double wGridSquareSize = width / 20;
+        double hGridSquareSize = height / 20;
+
+        gc.save();
+        gc.setStroke(Color.WHITE);
+
+        // Vertical lines
+        for(int i = 0; i <= width; i += wGridSquareSize){
+            gc.strokeLine(i, 0, i, height);
+        }
+
+        // Horizontal lines
+        for(int i = 0; i <= height; i += hGridSquareSize){
+            gc.strokeLine(0, i, width, i);
+        }
+
+        gc.restore();
+    }
+
     public void setGizmoList(Set<IGizmo> gizmoList) {
         this.gizmoList = gizmoList;
     }
@@ -109,5 +138,8 @@ public class ResizableCanvas extends Canvas implements Observer {
     }
 
     @Override
-    public void update(Observable o, Object arg) { draw(); }
+    public void update(Observable o, Object arg) {
+        boolean isBuilding = (boolean) arg;
+        draw(isBuilding);
+    }
 }

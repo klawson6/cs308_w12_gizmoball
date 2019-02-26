@@ -34,6 +34,8 @@ public class Controller implements Initializable, Observer {
     private Timeline timeline;
     private KeyBindingHandler keyBindHandler;
 
+    private boolean isBuilding = false;
+
     @FXML private ResizableCanvas canvas;
     @FXML private VBox rootPane;
   //  @FXML private Label speed;
@@ -68,8 +70,8 @@ public class Controller implements Initializable, Observer {
         canvas.widthProperty().bind(rootPane.widthProperty());
         canvas.heightProperty().bind(rootPane.heightProperty().subtract(buildToolBar.heightProperty()).subtract(commonToolBar.heightProperty()));
         canvas.heightProperty().bind(rootPane.heightProperty().subtract(runToolBar.heightProperty()).subtract(commonToolBar.heightProperty()));
-        canvas.widthProperty().addListener(observable -> canvas.draw());
-        canvas.heightProperty().addListener(observable -> canvas.draw());
+        canvas.widthProperty().addListener(observable -> canvas.draw(isBuilding));
+        canvas.heightProperty().addListener(observable -> canvas.draw(isBuilding));
 
         //TODO Remove in final release
         canvas.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent ->
@@ -98,16 +100,20 @@ public class Controller implements Initializable, Observer {
     }
 
     private void toggleModes(){
-        if(runToolBar.isManaged()){
+        if(runToolBar.isManaged()){ // From run to build mode
+            isBuilding = true;
             runToolBar.setManaged(false);
             runToolBar.setVisible(false);
             buildToolBar.setManaged(true);
             buildToolBar.setVisible(true);
-        }else{
+            canvas.draw(isBuilding);
+        }else{ // From build to run mode
+            isBuilding = false;
             runToolBar.setManaged(true);
             runToolBar.setVisible(true);
             buildToolBar.setManaged(false);
             buildToolBar.setVisible(false);
+            canvas.draw(isBuilding);
         }
     }
 
@@ -139,7 +145,7 @@ public class Controller implements Initializable, Observer {
 
         canvas.setBalls(balls);
 
-        canvas.draw();
+        canvas.draw(isBuilding);
     }
 
     private void loadFile(){
@@ -148,7 +154,7 @@ public class Controller implements Initializable, Observer {
             LoadFile r = new LoadFile(file);
             model = r.run();
             model.addObserver(this);
-            update((Observable) model, null);
+            update((Observable) model, isBuilding);
         }else{
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Error");
