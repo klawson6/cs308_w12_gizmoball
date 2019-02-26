@@ -3,16 +3,15 @@ package controller;
 import ModelPackage.*;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.ToolBar;
+import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
@@ -41,7 +40,8 @@ public class Controller implements Initializable, Observer {
   //  @FXML private Label speed;
     @FXML private Button startButton, stopButton, tickButton, buildButton, runButton, saveButton, loadButton, quitButton;
     @FXML private ToolBar commonToolBar, runToolBar, buildToolBar;
-    @FXML ChoiceBox<String> gizmoChoiceBox;
+    @FXML private ChoiceBox<String> gizmoChoiceBox;
+    @FXML private Label infoLabel;
 
 
 
@@ -73,9 +73,6 @@ public class Controller implements Initializable, Observer {
         canvas.widthProperty().addListener(observable -> canvas.draw(isBuilding));
         canvas.heightProperty().addListener(observable -> canvas.draw(isBuilding));
 
-        //TODO Remove in final release
-        canvas.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent ->
-                System.out.println(mouseEvent.getX() + " " + mouseEvent.getY()));
     }
 
     private void initialiseTimeline(){
@@ -112,6 +109,20 @@ public class Controller implements Initializable, Observer {
         model.changeModel(new LoadFile(stage).run());
         model.getBall().startBall();
         quitButton.setOnAction(event -> System.exit(0));
+
+        addChoiceBoxListener();
+    }
+
+    private void addChoiceBoxListener(){
+        gizmoChoiceBox.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+            @Override public void changed(ObservableValue<? extends String> selected, String oldGizmo, String newGizmo) {
+                if (newGizmo != null) {
+                    infoLabel.setText("Click on grid to add " + newGizmo);
+                    //canvas.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent ->
+                      //      System.out.println(mouseEvent.getX() + " " + mouseEvent.getY()));
+                }
+            }
+        });
     }
 
     private void toggleModes(){

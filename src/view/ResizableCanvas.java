@@ -121,12 +121,12 @@ public class ResizableCanvas extends Canvas implements Observer {
         gc.setStroke(Color.WHITE);
 
         // Vertical lines
-        for(int i = 0; i <= width; i += wGridSquareSize){
+        for(int i = 0; i < width; i += wGridSquareSize){
             gc.strokeLine(i, 0, i, height);
         }
 
         // Horizontal lines
-        for(int i = 0; i <= height; i += hGridSquareSize){
+        for(int i = 0; i < height; i += hGridSquareSize){
             gc.strokeLine(0, i, width, i);
         }
 
