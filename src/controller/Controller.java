@@ -90,6 +90,7 @@ public class Controller implements Initializable, Observer {
         startButton.setOnAction(event -> startTimeline());
         stopButton.setOnAction(event -> stopTimeline());
         tickButton.setOnAction(event -> tick());
+        saveButton.setOnAction(event -> saveFile());
         loadButton.setOnAction(event -> loadFile());
         runButton.setOnAction(event -> toggleModes());
         buildButton.setOnAction(event -> toggleModes());
@@ -156,6 +157,31 @@ public class Controller implements Initializable, Observer {
             alert.showAndWait();
         }
 
+    }
+
+    private void saveFile(){
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Text doc(*.txt)", "*.txt"));
+        fileChooser.setInitialFileName("Gizmoball.txt");
+        fileChooser.setTitle("Save Game");
+        File file = fileChooser.showSaveDialog(stage);
+        if(file != null) {
+            if(model != null){
+                model.save(file);
+            }else{
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Error");
+                alert.setHeaderText(null);
+                alert.setContentText("Empty game! Nothing to save!");
+                alert.showAndWait();
+            }
+        }else{
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText("Please pick a place to save the game at.");
+            alert.showAndWait();
+        }
     }
 
     private void startTimeline(){
