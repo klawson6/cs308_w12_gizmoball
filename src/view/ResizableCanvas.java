@@ -25,7 +25,7 @@ public class ResizableCanvas extends Canvas implements Observer {
         return true;
     }
 
-    public void draw() {
+    public void draw(boolean isBuilding) {
         double width = this.getWidth();
         double height = this.getHeight();
 
@@ -33,7 +33,11 @@ public class ResizableCanvas extends Canvas implements Observer {
         gc.setFill(Color.BLACK);
         gc.fillRect(0, 0, width, height);
 
-        if(gizmoList != null) {
+        if(isBuilding){
+            drawGrid();
+        }
+
+        if (gizmoList != null) {
             double wGridSquareSize = width / 20;
             double hGridSquareSize = height / 20;
 
@@ -43,26 +47,26 @@ public class ResizableCanvas extends Canvas implements Observer {
                 switch (type) {
                     case "Circle":
                         gc.setFill(Color.GREEN);
-                        gc.fillOval(iGizmo.getStartXPosition() * wGridSquareSize, iGizmo.getStartyPosition() * hGridSquareSize, wGridSquareSize, hGridSquareSize);
+                        gc.fillOval(iGizmo.getStartxPosition() * wGridSquareSize, iGizmo.getStartyPosition() * hGridSquareSize, wGridSquareSize, hGridSquareSize);
                         break;
                     case "Square":
                         gc.setFill(Color.RED);
-                        gc.fillRect(iGizmo.getStartXPosition() * wGridSquareSize, iGizmo.getStartyPosition() * hGridSquareSize, wGridSquareSize, hGridSquareSize);
+                        gc.fillRect(iGizmo.getStartxPosition() * wGridSquareSize, iGizmo.getStartyPosition() * hGridSquareSize, wGridSquareSize, hGridSquareSize);
                         break;
                     case "Triangle":
                         gc.save();
                         gc.setFill(Color.BLUE);
-                        double startX = (double) iGizmo.getStartXPosition() * wGridSquareSize;
+                        double startX = (double) iGizmo.getStartxPosition() * wGridSquareSize;
                         double startY = (double) iGizmo.getStartyPosition() * hGridSquareSize;
                         double[] xPoints = {startX, startX, startX + wGridSquareSize};
                         double[] yPoints = {startY, startY + hGridSquareSize, startY};
-                        gc.transform(new Affine(new Rotate(iGizmo.getRotation(), startX+(wGridSquareSize/2), startY+(hGridSquareSize/2))));
+                        gc.transform(new Affine(new Rotate(iGizmo.getRotation(), startX + (wGridSquareSize / 2), startY + (hGridSquareSize / 2))));
                         gc.fillPolygon(xPoints, yPoints, 3);
                         gc.restore();
                         break;
                     case "Absorber":
                         gc.setFill(Color.PURPLE);
-                        double startXAbsorber = (double) iGizmo.getStartXPosition() * wGridSquareSize;
+                        double startXAbsorber = (double) iGizmo.getStartxPosition() * wGridSquareSize;
                         double startYAbsorber = (double) iGizmo.getStartyPosition() * hGridSquareSize;
                         double endXAbsorber = (double) iGizmo.getEndxPosition() * wGridSquareSize;
                         double endYAbsorber = (double) iGizmo.getEndyPosition() * hGridSquareSize;
@@ -73,15 +77,15 @@ public class ResizableCanvas extends Canvas implements Observer {
                     case "LeftFlipper":
                         gc.save();
                         gc.setFill(Color.YELLOW);
-                        gc.transform(new Affine(new Rotate(-iGizmo.getRotation(), (iGizmo.getStartXPosition()+0.5)*wGridSquareSize, (iGizmo.getStartyPosition()+0.5)*hGridSquareSize)));
-                        gc.fillRoundRect(iGizmo.getStartXPosition() * wGridSquareSize, iGizmo.getStartyPosition() * hGridSquareSize, wGridSquareSize, hGridSquareSize*2, wGridSquareSize, hGridSquareSize);
+                        gc.transform(new Affine(new Rotate(-iGizmo.getRotation(), (iGizmo.getStartxPosition() + 0.5) * wGridSquareSize, (iGizmo.getStartyPosition() + 0.5) * hGridSquareSize)));
+                        gc.fillRoundRect(iGizmo.getStartxPosition() * wGridSquareSize, iGizmo.getStartyPosition() * hGridSquareSize, wGridSquareSize, hGridSquareSize * 2, wGridSquareSize, hGridSquareSize);
                         gc.restore();
                         break;
                     case "RightFlipper":
                         gc.save();
                         gc.setFill(Color.YELLOW);
-                        gc.transform(new Affine(new Rotate(iGizmo.getRotation(), (iGizmo.getStartXPosition()+1.5)*wGridSquareSize, (iGizmo.getStartyPosition()+0.5)*hGridSquareSize)));
-                        gc.fillRoundRect((iGizmo.getStartXPosition()+1) * wGridSquareSize, iGizmo.getStartyPosition() * hGridSquareSize, wGridSquareSize, hGridSquareSize*2, wGridSquareSize, hGridSquareSize);
+                        gc.transform(new Affine(new Rotate(iGizmo.getRotation(), (iGizmo.getStartxPosition() + 1.5) * wGridSquareSize, (iGizmo.getStartyPosition() + 0.5) * hGridSquareSize)));
+                        gc.fillRoundRect((iGizmo.getStartxPosition() + 1) * wGridSquareSize, iGizmo.getStartyPosition() * hGridSquareSize, wGridSquareSize, hGridSquareSize * 2, wGridSquareSize, hGridSquareSize);
                         gc.restore();
                         break;
 
@@ -91,25 +95,55 @@ public class ResizableCanvas extends Canvas implements Observer {
         }
 
         //TODO will need to change to use an Interface
-        if(ball != null){
-            double wGridSquareSize =  width / 20;
-            double hGridSquareSize = height / 20;
-            gc.setFill(Color.YELLOW);
-            // Ball is represented by a circle with a centered origin, but fillOval draws assuming it has an origin top-left.
-            // Calibrate ball position on the board by shifting the origin by the ball radius
-            gc.fillOval((ball.getXPosition() - 0.25) * wGridSquareSize, (ball.getYPosition() - 0.25) * hGridSquareSize, 0.5*wGridSquareSize, 0.5*hGridSquareSize);
+        if(balls!=null) {
+            for (IBall ball : balls) {
+                double wGridSquareSize = width / 20;
+                double hGridSquareSize = height / 20;
+                gc.setFill(Color.YELLOW);
+                // Ball is represented by a circle with a centered origin, but fillOval draws assuming it has an origin top-left.
+                // Calibrate ball position on the board by shifting the origin by the ball radius
+                gc.fillOval((ball.getXPosition() - 0.25) * wGridSquareSize, (ball.getYPosition() - 0.25) * hGridSquareSize, 0.5 * wGridSquareSize, 0.5 * hGridSquareSize);
+            }
         }
 
     }
 
-    public void setGizmoList(HashSet<Gizmo> gizmoList) {
+    private void drawGrid(){
+        double width = this.getWidth();
+        double height = this.getHeight();
+
+        GraphicsContext gc = getGraphicsContext2D();
+
+        double wGridSquareSize = width / 20;
+        double hGridSquareSize = height / 20;
+
+        gc.save();
+        gc.setStroke(Color.WHITE);
+
+        // Vertical lines
+        for(int i = 0; i <= width; i += wGridSquareSize){
+            gc.strokeLine(i, 0, i, height);
+        }
+
+        // Horizontal lines
+        for(int i = 0; i <= height; i += hGridSquareSize){
+            gc.strokeLine(0, i, width, i);
+        }
+
+        gc.restore();
+    }
+
+    public void setGizmoList(Set<IGizmo> gizmoList) {
         this.gizmoList = gizmoList;
     }
 
-    public void setBall(IBall ball){
-        this.ball = ball;
+    public void setBalls(List<IBall> balls){
+        this.balls = balls;
     }
 
     @Override
-    public void update(Observable o, Object arg) { draw(); }
+    public void update(Observable o, Object arg) {
+        boolean isBuilding = (boolean) arg;
+        draw(isBuilding);
+    }
 }
