@@ -1,3 +1,10 @@
+Prototypes:
+
+Flippers - John
+Collisions - Kyle & Cameron
+Absorber - Aleksi
+Load & Save - Mark
+
 Tasks done:
 
 Reworked entire model, now closer to class diagram
@@ -9,8 +16,31 @@ Added basic functionality for adding gizmo to board
 
 Tasks to do next Week (Week 7-8):
 
-Rotate Gizmos, Add connections, Add Key bindings
-Absorber move ball to lower
+Build Mode GUI - John
+
+Load & Save fixes - Mark
+Move Play mode to Model , i.e Play/Pause Game - Mark
+Rotate Gizmos, - Cameron
+Delete Gizmo, - Cameron
+Add Key bindings - Alexi
+Absorber move ball to lower - Alexi
+Updated Physics Loop (Bug found) - Kyle
+
+Tasks To Complete (For Final Week):
+
+Build GUI
+
+Rotate Gizmo
+Add Connections
+Add KeyBindings
+Delete Gizmo
+Updated Physics Loop (Bug found)
+
+
+JUnits
+
+Validation Testing
+
 
 Questions:
 
