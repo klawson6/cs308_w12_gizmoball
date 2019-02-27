@@ -2,12 +2,8 @@ package ModelPackage;
 
 import Physics.Circle;
 import Physics.LineSegment;
-import javafx.scene.input.KeyEvent;
-import sun.plugin2.util.ParameterNames;
 
 import java.awt.*;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Set;
 
 public class GSquare extends Gizmo {

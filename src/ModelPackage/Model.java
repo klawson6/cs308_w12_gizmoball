@@ -42,6 +42,10 @@ public class Model extends Observable implements IModel {
 
     public boolean createGizmo(String type, int xStart, int yStart, int xEnd, int yEnd, String id) {
         Gizmo gizmo;
+        Gizmo location = (Gizmo) getGizmo(xStart, yStart);
+        if (location != null) {
+            return false;
+        }
         switch (type) {
             case "Square":
                 gizmo = new GSquare(xStart, yStart, id);
@@ -71,6 +75,10 @@ public class Model extends Observable implements IModel {
 
     public boolean createGizmo(String type, int xStart, int yStart, int xEnd, int yEnd) {
         Gizmo gizmo;
+        Gizmo location = (Gizmo) getGizmo(xStart, yStart);
+        if (location != null) {
+            return false;
+        }
         switch (type) {
             case "Square":
                 gizmo = new GSquare(xStart, yStart);
@@ -95,6 +103,10 @@ public class Model extends Observable implements IModel {
         }
 
         gizmoList.add(gizmo);
+
+        setChanged();
+        notifyObservers();
+
         return true;
     }
 
