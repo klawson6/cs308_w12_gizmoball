@@ -8,8 +8,6 @@ import Physics.Vect;
 import javafx.event.EventType;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.stage.FileChooser;
-import javafx.stage.Stage;
 
 public class LoadFile {
 
@@ -19,24 +17,11 @@ public class LoadFile {
 
     public LoadFile(File fileArg){
         //Current file name, will want user prompt most likely in future
-//        filename = "Documents/example_file.txt";
-        filename = "Documents/test.txt";
+        //filename = "Documents/example_file.txt";
+//        filename = "Documents/test.txt";
 
         //Check file exists
-        file = new File(filename);
-        try {
-            wholeLine = new Scanner(file);
-            wholeLine.useDelimiter("\n");
-        }catch(FileNotFoundException e){
-            System.out.println("Error. File " + filename + " not found");
-        }
-    }
-
-    public LoadFile(Stage stage){
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Load file");
-        fileChooser.setInitialDirectory(new File(System.getProperty("user.dir")));
-        file = fileChooser.showOpenDialog(stage);
+        file = fileArg;
 
         try {
             wholeLine = new Scanner(file);
@@ -168,18 +153,5 @@ public class LoadFile {
      * @param: name The ID of the gizmo
      * @return: The gizmo as a Gizmo object
      */
-    private Gizmo getGizmo(Model m, String name){
-        //TODO add error handling
-        HashSet<Gizmo> gizmoList = m.getGizmoList();
-
-        //Find the gizmo with the correct id
-        for(Gizmo g :gizmoList ){
-            if(g.getId().equals(name))
-                return g;
-        }
-
-
-        return null;
-    }
 
 }

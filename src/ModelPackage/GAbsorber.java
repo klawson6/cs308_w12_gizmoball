@@ -7,41 +7,52 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
+import java.util.List;
 
-public class GAbsorber implements Gizmo {
+public class GAbsorber extends Gizmo {
 
     private int xStart;
     private int yStart;
     private int xEnd;
     private int yEnd;
-    final private double coefficent = 1;
-    private HashSet<KeyEvent> keyBindings = new HashSet<>();
+    final private double coefficent = 0;
+    private Set<LineSegment> composingLines = super.composingLines;
+    private Set<Circle> composingCircles = super.composingCircles;
+    private LinkedList<Ball> absorbedBall = new LinkedList<>();
+    private Color defaultColor = Color.magenta;
     private String id;
-    private HashSet<Gizmo> connections = new HashSet<>();
-    private Set<LineSegment> composingLines = new HashSet<>();
-    private Set<Circle> composingCircles = new HashSet<>();
-    private Ball absorbedBall;
 
+    //Constructor that gives id, if none given
     public GAbsorber(int xStart, int yStart, int xEnd, int yEnd){
+
+        setxPosition(xStart);
+        setyPosition(yStart);
+        setCoefficent(coefficent);
+        setColor(defaultColor);
 
         this.xStart = xStart;
         this.yStart = yStart;
         this.xEnd = xEnd;
         this.yEnd = yEnd;
         id = "A" + xStart + yStart + xEnd + yEnd;
+        setId(id);
 
-        absorbedBall = null;
         addLines();
         addCircles();
         //FIXME - adding a default key binding for the absorber to shoot the ball?
-        addKeyBinding(new KeyEvent(KeyEvent.KEY_PRESSED,"c","c ", KeyCode.C,false,false,false,false));
+        addKeyBinding(new KeyEvent(KeyEvent.KEY_PRESSED,"c","c ", KeyCode.C,false,false,false,false),"Shoot Ball");
 
     }
 
+    //Constructor that sets all fields
     public GAbsorber(int xStart, int yStart, int xEnd, int yEnd, String id){
+
+        setxPosition(xStart);
+        setyPosition(yStart);
+        setCoefficent(coefficent);
+        setColor(defaultColor);
+        setId(id);
 
         this.xStart = xStart;
         this.yStart = yStart;
@@ -49,13 +60,41 @@ public class GAbsorber implements Gizmo {
         this.yEnd = yEnd;
         this.id = id;
 
-        absorbedBall = null;
         //FIXME - adding a default key binding for the absorber to shoot the ball?
-        addKeyBinding(new KeyEvent(KeyEvent.KEY_PRESSED,"c","c ", KeyCode.C,false,false,false,false));
+        addKeyBinding(new KeyEvent(KeyEvent.KEY_PRESSED,"c","c ", KeyCode.C,false,false,false,false),"Shoot Ball");
         addLines();
         addCircles();
 
     }
+
+
+    //Getters
+
+    public String getGizmoType() {
+        return "Absorber";
+    }
+
+    public int getEndxPosition() {
+        return xEnd;
+    }
+
+    public int getEndyPosition() {
+        return yEnd;
+    }
+
+    @Override
+    public int getRotation() {
+        return 0;
+    }
+
+    @Override
+    //Rotates gizmo 90 degrees
+    public boolean rotate() {
+        //Does nothing for absorber
+        return false;
+    }
+
+
 
     private void addCircles(){
 
@@ -86,100 +125,46 @@ public class GAbsorber implements Gizmo {
         composingLines.add(bottomLine);
     }
     
-    public String getGizmoType() {
-        return "Absorber";
-    }
 
-    
-    public int getStartXPosition() {
-        return xStart;
-    }
-
-    
-    public int getStartyPosition() {
-        return yStart;
-    }
-
-    public int getEndxPosition() {
-        return xEnd;
-    }
-
-    public int getEndyPosition() {
-        return yEnd;
-    }
-
-    public Color getColour() {
-        return null;
-    }
-
-    public int getRotation() {
-        return 0;
-    }
-
-    public Set<LineSegment> getComposingLines() {
-        return composingLines;
-    }
-
-    public double getReflectionCoef() {
-        return coefficent;
-    }
-
-    public Set<Circle> getComposingCircles() {
-        return composingCircles;
-    }
-
-    public void addKeyBinding(KeyEvent key) {
-        keyBindings.add(key);
-    }
-
-    public HashSet<KeyEvent> getKeybindings() {return keyBindings;}
-
-    public String getId() {
-        return id;
-    }
-
-    public void addGizmoConnection(Gizmo gizmo) {
-        connections.add(gizmo);
-    }
-
-    public void removeGizmoConnection(Gizmo gizmo) {
-        connections.remove(gizmo);
-    }
-
-    public Set<String> getGizmoConnectionIds() {
-        Set<String> ids = new HashSet<>();
-        for(Gizmo gizmos: connections){
-            ids.add(gizmos.getId());
-        }
-        return ids;
-    }
-
-    @Override
-    public void rotate() {
-        //Does nothing for absorber
-    }
-
+    //Sets ball currently in the absorber
     public void setAbsorbedBall(Ball b){
 
-        absorbedBall = b;
+        absorbedBall.addLast(b);
+
     }
 
     public void moveAbsorbedBall(){
-        if(absorbedBall != null) {
 
-               absorbedBall.setCircle(getEndxPosition(), getStartyPosition() );
+        Ball ball = absorbedBall.removeFirst();
+
+        if(ball != null) {
+
+               ball.setCircle(getEndxPosition(), getStartyPosition() );
           //  absorbedBall.modifyVelocity(new Vect(0, 0));
-             absorbedBall.stopBall();
+             ball.stopBall();
         }
     }
     @Override
-    public void activate(){
-        if(absorbedBall != null) {
-            absorbedBall.setCircle(getEndxPosition()-0.5, getEndyPosition()-1);
-            absorbedBall.modifyVelocity(new Vect(0, -50));;
-            System.out.println( absorbedBall.getVelocity());
-            absorbedBall.startBall();
-            absorbedBall = null;
+    //Launches ball on absorber
+    public void activate() {
+        if (!absorbedBall.isEmpty()) {
+            Ball ball = absorbedBall.removeFirst();
+
+                ball.setCircle(getEndxPosition() - 0.5, getEndyPosition() - 1);
+                ball.modifyVelocity(new Vect(0, -50));
+                System.out.println(ball.getVelocity());
+                ball.startBall();
+
         }
+    }
+
+    public LinkedList<Ball> getAbsorberBalls(){
+        return absorbedBall;
+    }
+
+    @Override
+    //Stops action
+    public void deactivate() {
+
     }
 }

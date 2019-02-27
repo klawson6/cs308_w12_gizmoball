@@ -1,66 +1,63 @@
 package ModelPackage;
 
-import javafx.stage.FileChooser;
-import javafx.stage.Stage;
-
+import javafx.scene.input.KeyEvent;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 
 public class SaveFile {
 
     private String filename;
-    private Stage stage;
 
     public SaveFile(String filename){
         this.filename = filename;
-        System.out.println("Saving to file " + filename);
     }
 
-    public SaveFile(Stage stage){
-        this.stage = stage;
-    }
+    public void save(Model model){
 
-    public void save(IModel model){
-        List<String> infoToSave = new ArrayList<>();
-        ///////////////////////////////////////////// General Gizmos /////////////////////////////////////////////
-        HashSet<Gizmo> gizmos = model.getGizmoList();
+        //Get all gizmos.
+        Set<Gizmo> gizmos = model.getModelGizmoList();
+
+        //Where all formatted information will be held
+        List<String> infoToSave = new ArrayList<String>();
+
+
+        //Gizmos must be first.
+        ////////////////////////Gizmos//////////////////////////
         for(Gizmo gizmo: gizmos){
-            String toSave;
-            if(gizmo.getGizmoType().equals("Absorber"))
-                toSave =  gizmo.getGizmoType() + " " + gizmo.getId() + " " + gizmo.getStartXPosition() + " " + gizmo.getStartyPosition() + " " + gizmo.getEndxPosition() + " " + gizmo.getEndyPosition();
-            else
-                toSave = gizmo.getGizmoType() + " " + gizmo.getId() + " " + gizmo.getStartXPosition() + " " + gizmo.getStartyPosition();
+            String toSave = gizmo.getGizmoType() + " " + gizmo.getId() + " " + gizmo.getStartxPosition() + " " + gizmo.getStartyPosition();
             infoToSave.add(toSave);
         }
         //Add blank line to seperate.
         infoToSave.add("");
 
-
-
-        ////////////////////////Rotation//////////////////////////
-        for(Gizmo gizmo: gizmos){
-            int rotation = gizmo.getRotation();
-            int rotates = rotation/90;
-            //Rotations are stored as an integer between 0 and 360 but file wants each rotation line to be 90 degrees.
-            for(int i = 0; i < rotates; i++)
-                infoToSave.add("Rotate " + gizmo.getId());
-
+        ////////////////////////Ball//////////////////////////
+        //Currently only one ball, will need to be altered if more than one ball is used.
+        List<Ball> balls = model.getModelBalls();
+        for(Ball ball: balls) {
+            infoToSave.add("Ball B " + ball.getXPosition() + " " + ball.getYPosition() + " " + ball.getVelocity().x() + " " + ball.getVelocity().y());
         }
         infoToSave.add("");
 
-
-        String toSave;
-        ///////////////////////////////////////////// Ball /////////////////////////////////////////////
-        Ball ball = model.getBall();
-        toSave = "Ball B " + ball.getPos().x() + " " + ball.getPos().y() + " " + ball.getVelocity().x() + " " + ball.getVelocity().y();
-        infoToSave.add(toSave);
+        ////////////////////////Rotation//////////////////////////
+        for(Gizmo gizmo: gizmos){
+            double rotation = gizmo.getRotation();
+            //Rotations are stored as an integer between 0 and 360 but file wants each rotation line to be 90 degrees.
+            while(rotation >= 0)
+                rotation =- 90.0;
+                infoToSave.add("rotate " + gizmo.getId());
+        }
         infoToSave.add("");
-        ///////////////////////////////////////////// Key Connects /////////////////////////////////////////////
-        //todo add key connects
+
+        ////////////////////////Gizmo Connection//////////////////////////
+        for(Gizmo gizmo: gizmos){
+            Set<String> connect = gizmo.getGizmoConnectionIds();
+            for(String c: connect){
+                infoToSave.add("Connect " + gizmo.getId() + " " + c);
+            }
+        }
+        infoToSave.add("");
 
         ////////////////////////Key Connection//////////////////////////
         for(Gizmo gizmo: gizmos){
@@ -92,21 +89,14 @@ public class SaveFile {
      * @throws IOException if file does not exist.
      */
     private void saveToFile  (List<String> toSave)throws IOException{
+        File file = new File(filename);
 
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Load file");
-        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("TXT",".txt"));
-        fileChooser.setInitialDirectory(new File(System.getProperty("user.dir")));
-        File file = fileChooser.showSaveDialog(stage);
-
-        if(file != null) {
-            FileWriter fileWriter = new FileWriter(file);
-            for (String s : toSave) {
-                fileWriter.write(s + "\n");
-            }
-
-            fileWriter.close();
+        FileWriter fileWriter = new FileWriter(file);
+        for(String s: toSave){
+            fileWriter.write(s + "\n");
         }
+
+        fileWriter.close();
 
     }
 

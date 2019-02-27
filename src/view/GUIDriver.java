@@ -9,7 +9,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class GUIDriver extends Application implements Observer {
+public class GUIDriver extends Application{
 
     final static int WINDOW_SIZE = 700;
 
@@ -17,28 +17,11 @@ public class GUIDriver extends Application implements Observer {
     private Scene runScene;
     private Stage primaryStage;
 
-    private static IModel model;
-
 
     @Override
     public void start(Stage pStage){
         this.primaryStage = pStage;
-
-        LoadFile r = new LoadFile(primaryStage);
-        model = r.run();
-
         setUpScenes();
-        model.addObserver(this);
-        Timeline redraw = new Timeline(new KeyFrame(Duration.millis(50), new EventHandler<ActionEvent>() {
-
-         @Override
-            public void handle(ActionEvent event) {
-                model.moveBall();
-            }
-        }));
-        redraw.setCycleCount(Timeline.INDEFINITE);
-        redraw.play();
-
         primaryStage.setTitle("Gizmoball");
         primaryStage.setScene(runScene);
         primaryStage.show();
@@ -67,6 +50,4 @@ public class GUIDriver extends Application implements Observer {
 
 
     }
-
-
 }

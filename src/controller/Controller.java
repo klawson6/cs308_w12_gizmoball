@@ -7,12 +7,10 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
@@ -20,10 +18,8 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import view.ResizableCanvas;
 
-import javax.swing.*;
 import java.io.File;
 import java.net.URL;
-import java.sql.Time;
 import java.util.*;
 
 public class Controller implements Initializable, Observer {
@@ -32,6 +28,7 @@ public class Controller implements Initializable, Observer {
     private IModel model;
     private Timeline timeline;
     private KeyBindingHandler keyBindHandler;
+    private MouseEventHandler mouseHandler;
 
     private boolean isBuilding = false;
 
@@ -47,6 +44,11 @@ public class Controller implements Initializable, Observer {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        model = new Model();
+        model.addObserver(this);
+
+        mouseHandler = new RunMouseEventHandler(model);
 
         initialiseToolBars();
         initialiseCanvas();
@@ -73,16 +75,12 @@ public class Controller implements Initializable, Observer {
         canvas.widthProperty().addListener(observable -> canvas.draw(isBuilding));
         canvas.heightProperty().addListener(observable -> canvas.draw(isBuilding));
 
+        canvas.addEventHandler(MouseEvent.ANY, mouseHandler);
+
     }
 
     private void initialiseTimeline(){
-        timeline = new Timeline(new KeyFrame(Duration.millis(50), new EventHandler<ActionEvent>() {
-
-            @Override
-            public void handle(ActionEvent event) {
-                model.moveBall();
-            }
-        }));
+        timeline = new Timeline(new KeyFrame(Duration.millis(50), event -> model.moveBall()));
     }
 
     private void addButtonListeners(){
@@ -93,21 +91,6 @@ public class Controller implements Initializable, Observer {
         loadButton.setOnAction(event -> loadFile());
         runButton.setOnAction(event -> toggleModes());
         buildButton.setOnAction(event -> toggleModes());
-        buildButton.setOnAction(event -> stage.setScene(buildScene));
-        saveButton.setOnAction(event -> save());
-        loadButton.setOnAction(event -> load());
-    }
-
-    private void save(){
-        model.getBall().stopBall();
-        new SaveFile(stage).save(model);
-        model.getBall().startBall();
-    }
-
-    private void load(){
-        model.getBall().stopBall();
-        model.changeModel(new LoadFile(stage).run());
-        model.getBall().startBall();
         quitButton.setOnAction(event -> System.exit(0));
 
         addChoiceBoxListener();
@@ -118,8 +101,7 @@ public class Controller implements Initializable, Observer {
             @Override public void changed(ObservableValue<? extends String> selected, String oldGizmo, String newGizmo) {
                 if (newGizmo != null) {
                     infoLabel.setText("Click on grid to add " + newGizmo);
-                    //canvas.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent ->
-                      //      System.out.println(mouseEvent.getX() + " " + mouseEvent.getY()));
+                    mouseHandler.addGizmo(newGizmo);
                 }
             }
         });
@@ -132,6 +114,11 @@ public class Controller implements Initializable, Observer {
             runToolBar.setVisible(false);
             buildToolBar.setManaged(true);
             buildToolBar.setVisible(true);
+
+            canvas.removeEventHandler(MouseEvent.ANY, mouseHandler);
+            mouseHandler = new BuildMouseEventHandler(model, canvas);
+            canvas.addEventHandler(MouseEvent.ANY, mouseHandler);
+
             canvas.draw(isBuilding);
         }else{ // From build to run mode
             isBuilding = false;
@@ -139,6 +126,11 @@ public class Controller implements Initializable, Observer {
             runToolBar.setVisible(true);
             buildToolBar.setManaged(false);
             buildToolBar.setVisible(false);
+
+            canvas.removeEventHandler(MouseEvent.ANY, mouseHandler);
+            mouseHandler = new RunMouseEventHandler(model);
+            canvas.addEventHandler(MouseEvent.ANY, mouseHandler);
+
             canvas.draw(isBuilding);
         }
     }

@@ -9,15 +9,12 @@ import javafx.scene.shape.Polygon;
 import javafx.scene.transform.Affine;
 import javafx.scene.transform.Rotate;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Observable;
-import java.util.Observer;
+import java.util.*;
 
 public class ResizableCanvas extends Canvas implements Observer {
 
-    private HashSet<Gizmo> gizmoList;
-    private IBall ball;
+    private Set<IGizmo> gizmoList;
+    private List<IBall> balls;
 
     @Override
     public boolean isResizable()
@@ -105,7 +102,6 @@ public class ResizableCanvas extends Canvas implements Observer {
                 gc.fillOval((ball.getXPosition() - 0.25) * wGridSquareSize, (ball.getYPosition() - 0.25) * hGridSquareSize, 0.5 * wGridSquareSize, 0.5 * hGridSquareSize);
             }
         }
-
     }
 
     private void drawGrid(){

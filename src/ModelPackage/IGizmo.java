@@ -10,7 +10,7 @@ public interface IGizmo {
 
     String getGizmoType();
 
-    int getStartXPosition();
+    int getStartxPosition();
 
     int getStartyPosition();
 

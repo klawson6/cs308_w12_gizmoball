@@ -2,6 +2,7 @@ package ModelPackage;
 
 import Physics.Circle;
 import Physics.LineSegment;
+import Physics.Vect;
 import javafx.scene.input.KeyEvent;
 
 import java.awt.*;
@@ -9,7 +10,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
-public class GFlipper implements Gizmo{
+public class GFlipper extends Gizmo{
 
     private int angleDegrees;
     private boolean isLeft;
@@ -17,16 +18,24 @@ public class GFlipper implements Gizmo{
     private int xPosition;
     private int yPosition;
     final private double coefficent = 1;
-    private HashSet<KeyEvent> keyBindings = new HashSet<>();
     private String id;
-    private HashSet<Gizmo> connections = new HashSet<>();
 
-    private HashSet<LineSegment> composingLines = new HashSet<>();
-    private HashSet<Circle> composingCircles = new HashSet<>();
+    private Set<LineSegment> composingLines = super.composingLines;
+    private Set<Circle> composingCircles = super.composingCircles;
+
+    private Color defaultColor = Color.yellow;
+
+    //Flippers are split into left or right flippers through boolean parameter
 
     //TODO Still to figure out how flipper line and circles will work
-
+    //Constructor that gives id, if none given
     public GFlipper(int xPosition, int yPosition, boolean isLeft){
+
+        setxPosition(xPosition);
+        setyPosition(yPosition);
+        setCoefficent(coefficent);
+        setColor(defaultColor);
+
         this.xPosition = xPosition;
         this.yPosition = yPosition;
         this.isLeft = isLeft;
@@ -35,15 +44,26 @@ public class GFlipper implements Gizmo{
         }else{
             id = "RF" + xPosition + yPosition;
         }
-    }
 
+        setId(id);
+
+    }
+    //Constructor that sets all fields
     public GFlipper(int xPosition, int yPosition, boolean isLeft, String id){
+
+        setxPosition(xPosition);
+        setyPosition(yPosition);
+        setCoefficent(coefficent);
+        setColor(defaultColor);
+        setId(id);
+
         this.xPosition = xPosition;
         this.yPosition = yPosition;
         this.isLeft = isLeft;
         this.id = id;
     }
 
+    //TODO add flipper collision detection
     private void addCircles(){
 
     }
@@ -56,7 +76,7 @@ public class GFlipper implements Gizmo{
         this.angleDegrees = angleDegrees;
     }
 
-    
+
     public String getGizmoType() {
         if(isLeft) {
             return "LeftFlipper";
@@ -65,89 +85,34 @@ public class GFlipper implements Gizmo{
         }
     }
 
-    
-    public int getStartXPosition() {
-        return xPosition;
-    }
 
-    
-    public int getStartyPosition() {
-        return yPosition;
-    }
-
-    
     public int getEndxPosition() {
         return xPosition;
     }
 
-    
+
     public int getEndyPosition() {
         return yPosition;
     }
 
-    
-    public Color getColour() {
-        return null;
-    }
-
-    
     public int getRotation() {
         return angleDegrees;
     }
 
-    
-    public Set<LineSegment> getComposingLines() {
-        return composingLines;
-    }
-
-    
-    public double getReflectionCoef() {
-        return coefficent;
-    }
-
-    
-    public Set<Circle> getComposingCircles() {
-        return composingCircles;
-    }
-
-    public void addKeyBinding(KeyEvent key) {
-        keyBindings.add(key);
-    }
-
-    public HashSet<KeyEvent> getKeybindings() {
-        return keyBindings;
-    }
-
-    public String getId() {
-        return id;
-    }
 
     @Override
-    public void addGizmoConnection(Gizmo gizmo) {
-        connections.add(gizmo);
-    }
-
-    @Override
-    public void removeGizmoConnection(Gizmo gizmo) {
-        connections.remove(gizmo);
-    }
-
-    @Override
-    public Set<String> getGizmoConnectionIds() {
-        Set<String> ids = new HashSet<>();
-        for(Gizmo gizmos: connections){
-            ids.add(gizmos.getId());
-        }
-        return ids;
-    }
-
-    @Override
-    public void rotate() {
+    public boolean rotate() {
         //Does nothing for flipper
+        return false;
     }
 
     @Override
     public void activate(){
         //FIXME rotate flipper?
+    }
+
+    @Override
+    public void deactivate() {
+
     }
 }
