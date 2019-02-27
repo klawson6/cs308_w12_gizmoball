@@ -1,0 +1,21 @@
+Tasks done:
+
+Reworked entire model, now closer to class diagram
+Split Listeners from the View
+Added some more listeners
+Added Grid for build mode
+Added Gizmo combobox for adding to the board
+Added basic functionality for adding gizmo to board
+
+Tasks to do next Week (Week 7-8):
+
+Rotate Gizmos, Add connections, Add Key bindings
+Absorber move ball to lower
+
+Questions:
+
+Challenges:
+
+Changes:
+
+Model Re-work due to week 6 submission
