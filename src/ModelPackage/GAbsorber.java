@@ -70,8 +70,8 @@ public class GAbsorber extends Gizmo {
 
     //Getters
 
-    public String getGizmoType() {
-        return "Absorber";
+    public GizmoType getGizmoType() {
+        return GizmoType.ABSORBER;
     }
 
     public int getEndxPosition() {

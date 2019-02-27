@@ -77,11 +77,11 @@ public class GFlipper extends Gizmo{
     }
 
 
-    public String getGizmoType() {
+    public GizmoType getGizmoType() {
         if(isLeft) {
-            return "LeftFlipper";
+            return GizmoType.LEFTFLIPPER;
         }else{
-            return "RightFlipper";
+            return GizmoType.RIGHTFLIPPER;
         }
     }
 

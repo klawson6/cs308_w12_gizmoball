@@ -1,5 +1,6 @@
 package controller;
 
+import ModelPackage.GizmoType;
 import ModelPackage.IModel;
 import javafx.event.EventHandler;
 import javafx.scene.canvas.Canvas;
@@ -9,7 +10,8 @@ public class BuildMouseEventHandler implements MouseEventHandler{
 
     private IModel model;
     private Canvas canvas;
-    private String actionType, gizmoType;
+    private String actionType;
+    private GizmoType gizmoType;
     public BuildMouseEventHandler(IModel m, Canvas c){
         model = m;
         canvas = c;
@@ -26,7 +28,7 @@ public class BuildMouseEventHandler implements MouseEventHandler{
         }
     }
 
-    private void addGizmoInternal(MouseEvent e, String gizmoType){
+    private void addGizmoInternal(MouseEvent e, GizmoType gizmoType){
 
         double width = canvas.getWidth();
         double height = canvas.getHeight();
@@ -40,7 +42,7 @@ public class BuildMouseEventHandler implements MouseEventHandler{
     }
 
     @Override
-    public void addGizmo(String gizmoType) {
+    public void addGizmo(GizmoType gizmoType) {
         this.actionType = "AddGizmo";
         this.gizmoType = gizmoType;
     }

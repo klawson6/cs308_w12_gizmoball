@@ -57,8 +57,8 @@ public class GTriangle extends Gizmo {
         addCircles(); // Build composing circles
     }
 
-    public String getGizmoType() {
-        return "Triangle";
+    public GizmoType getGizmoType() {
+        return GizmoType.TRIANGLE;
     }
 
     public int getEndxPosition() {

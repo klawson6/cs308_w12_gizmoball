@@ -53,8 +53,8 @@ public class GCircle extends Gizmo {
     }
 
     //Returns Gizmo Type
-    public String getGizmoType() {
-        return "Circle";
+    public GizmoType getGizmoType() {
+        return GizmoType.CIRCLE;
     }
 
     //Getters

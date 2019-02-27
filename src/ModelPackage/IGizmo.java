@@ -8,7 +8,7 @@ import java.util.HashSet;
 
 public interface IGizmo {
 
-    String getGizmoType();
+    GizmoType getGizmoType();
 
     int getStartxPosition();
 

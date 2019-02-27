@@ -22,7 +22,7 @@ public abstract class Gizmo implements IGizmo {
     String id;
 
     //Will be different for each sub-class
-    public abstract String getGizmoType();
+    public abstract GizmoType getGizmoType();
 
     //some gizmo's may have different end positions from start
     public abstract int getEndxPosition();

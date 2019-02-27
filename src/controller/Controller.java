@@ -63,9 +63,18 @@ public class Controller implements Initializable, Observer {
     }
 
     private void populateChoiceBox(){
-        ObservableList<String> gizmoTypes = FXCollections.observableArrayList("Absorber", "Circle", "Square","Triangle","Left Flipper", "Right Flipper");
+        ObservableList<String> gizmoTypes = FXCollections.observableArrayList(getGizmoTypeStringArray());
         gizmoChoiceBox.setItems(gizmoTypes);
         gizmoChoiceBox.setValue(gizmoTypes.get(0));
+    }
+
+    private static String[] getGizmoTypeStringArray() {
+        GizmoType[] array = GizmoType.values();
+        String[] stringArray = new String[array.length];
+        for(int i = 0; i < array.length; i++){
+            stringArray[i] = array[i].toString();
+        }
+        return stringArray;
     }
 
     private void initialiseCanvas(){
@@ -101,7 +110,7 @@ public class Controller implements Initializable, Observer {
             @Override public void changed(ObservableValue<? extends String> selected, String oldGizmo, String newGizmo) {
                 if (newGizmo != null) {
                     infoLabel.setText("Click on grid to add " + newGizmo);
-                    mouseHandler.addGizmo(newGizmo);
+                    mouseHandler.addGizmo(GizmoType.fromString(newGizmo));
                 }
             }
         });
