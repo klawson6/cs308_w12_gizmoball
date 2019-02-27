@@ -8,8 +8,8 @@ import java.util.Set;
 
 public interface IModel  {
 
-    boolean createGizmo(String type, int xStart, int yStart, int xEnd, int yEnd,String id);
-    boolean createGizmo(String type, int xStart, int yStart, int xEnd, int yEnd);
+    boolean createGizmo(GizmoType type, int xStart, int yStart, int xEnd, int yEnd,String id);
+    boolean createGizmo(GizmoType type, int xStart, int yStart, int xEnd, int yEnd);
     Set<IGizmo> getGizmoList();
     IGizmo getGizmo(int xPos, int yPos);
     boolean moveGizmo(int xPos, int yPos, int newxPos, int newyPos);

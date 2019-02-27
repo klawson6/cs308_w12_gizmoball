@@ -40,29 +40,29 @@ public class Model extends Observable implements IModel {
         //addGizmo(new GAbsorber(1,18,18,18));
     }
 
-    public boolean createGizmo(String type, int xStart, int yStart, int xEnd, int yEnd, String id) {
+    public boolean createGizmo(GizmoType type, int xStart, int yStart, int xEnd, int yEnd, String id) {
         Gizmo gizmo;
         Gizmo location = (Gizmo) getGizmo(xStart, yStart);
         if (location != null) {
             return false;
         }
         switch (type) {
-            case "Square":
+            case SQUARE:
                 gizmo = new GSquare(xStart, yStart, id);
                 break;
-            case "Circle":
+            case CIRCLE:
                 gizmo = new GCircle(xStart, yStart, id);
                 break;
-            case "Triangle":
+            case TRIANGLE:
                 gizmo = new GTriangle(xStart, yStart, id);
                 break;
-            case "LeftFlipper":
+            case LEFTFLIPPER:
                 gizmo = new GFlipper(xStart, yStart, true, id);
                 break;
-            case "RightFlipper":
+            case RIGHTFLIPPER:
                 gizmo = new GFlipper(xStart, yStart, false, id);
                 break;
-            case "Absorber":
+            case ABSORBER:
                 gizmo = new GAbsorber(xStart, yStart, xEnd, yEnd, id);
                 break;
             default:
@@ -73,29 +73,29 @@ public class Model extends Observable implements IModel {
         return true;
     }
 
-    public boolean createGizmo(String type, int xStart, int yStart, int xEnd, int yEnd) {
+    public boolean createGizmo(GizmoType type, int xStart, int yStart, int xEnd, int yEnd) {
         Gizmo gizmo;
         Gizmo location = (Gizmo) getGizmo(xStart, yStart);
         if (location != null) {
             return false;
         }
         switch (type) {
-            case "Square":
+            case SQUARE:
                 gizmo = new GSquare(xStart, yStart);
                 break;
-            case "Circle":
+            case CIRCLE:
                 gizmo = new GCircle(xStart, yStart);
                 break;
-            case "Triangle":
+            case TRIANGLE:
                 gizmo = new GTriangle(xStart, yStart);
                 break;
-            case "LeftFlipper":
+            case LEFTFLIPPER:
                 gizmo = new GFlipper(xStart, yStart, true);
                 break;
-            case "RightFlipper":
+            case RIGHTFLIPPER:
                 gizmo = new GFlipper(xStart, yStart, false);
                 break;
-            case "Absorber":
+            case ABSORBER:
                 gizmo = new GAbsorber(xStart, yStart, xEnd, yEnd);
                 break;
             default:

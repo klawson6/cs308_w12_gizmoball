@@ -45,29 +45,32 @@ public class LoadFile {
                 //Massive if else system, will go through all possibilities and process accordingly
                 //The types could be parsed before this loop and used to compare instead if .startsWith.
                 if (info.startsWith("Square")) {
-                    String type = scan.next();
+                    scan.next();
+                    GizmoType type = GizmoType.SQUARE;
                     String name = scan.next();
                     int xPos = scan.nextInt();
                     int yPos = scan.nextInt();
 
                     //model.addGizmo(new GSquare(xPos,yPos,name));
-                    model.createGizmo("Square",xPos,yPos,xPos,yPos,name);
+                    model.createGizmo(type,xPos,yPos,xPos,yPos,name);
                 } else if (info.startsWith("Circle")) {
-                    String type = scan.next();
+                    scan.next();
+                    GizmoType type = GizmoType.CIRCLE;
                     String name = scan.next();
                     int xPos = scan.nextInt();
                     int yPos = scan.nextInt();
 
                     //model.addGizmo(new GCircle(xPos,yPos,name));
-                    model.createGizmo("Circle",xPos,yPos,xPos,yPos,name);
+                    model.createGizmo(type,xPos,yPos,xPos,yPos,name);
                 } else if (info.startsWith("Triangle")) {
-                    String type = scan.next();
+                    scan.next();
+                    GizmoType type = GizmoType.TRIANGLE;
                     String name = scan.next();
                     int xPos = scan.nextInt();
                     int yPos = scan.nextInt();
 
                     //model.addGizmo(new GTriangle(xPos,yPos,name));
-                    model.createGizmo("Triangle",xPos,yPos,xPos,yPos,name);
+                    model.createGizmo(type,xPos,yPos,xPos,yPos,name);
                 } else if (info.startsWith("Rotate")) {
                     String type = scan.next();
                     String toRotate = scan.next();
@@ -75,21 +78,23 @@ public class LoadFile {
                     System.out.println("Rotating object " + toRotate);
                     model.RotateGizmo(model.getGizmo(toRotate));
                 } else if (info.startsWith("LeftFlipper")) {
-                    String type = scan.next();
+                    scan.next();
+                    GizmoType type = GizmoType.LEFTFLIPPER;
                     String name = scan.next();
                     int xPos = scan.nextInt();
                     int yPos = scan.nextInt();
 
                     //model.addGizmo(new GFlipper(xPos,yPos,true,name));
-                    model.createGizmo("LeftFlipper",xPos,yPos,xPos,yPos,name);
+                    model.createGizmo(type,xPos,yPos,xPos,yPos,name);
                 } else if (info.startsWith("RightFlipper")) {
-                    String type = scan.next();
+                    scan.next();
+                    GizmoType type = GizmoType.RIGHTFLIPPER;
                     String name = scan.next();
                     int xPos = scan.nextInt();
                     int yPos = scan.nextInt();
 
                     //model.addGizmo(new GFlipper(xPos,yPos,false,name));
-                    model.createGizmo("RightFlipper",xPos,yPos,xPos,yPos,name);
+                    model.createGizmo(type,xPos,yPos,xPos,yPos,name);
                 } else if (info.startsWith("KeyConnect")) {
                     String type = scan.next();
                     String toPress = scan.next();
@@ -121,14 +126,15 @@ public class LoadFile {
 
                     model.addBall(new Ball(xPos,yPos,xVel, yVel));
                 } else if (info.startsWith("Absorber")) {
-                    String type = scan.next();
+                    scan.next();
+                    GizmoType type = GizmoType.ABSORBER;
                     String name = scan.next();
                     int x1 = scan.nextInt();
                     int y1 = scan.nextInt();
                     int x2 = scan.nextInt();
                     int y2 = scan.nextInt();
                     //model.addGizmo(new GAbsorber(x1,y1,x2,y2,name));
-                    model.createGizmo("Absorber",x1,y1,x2,y2,name);
+                    model.createGizmo(type,x1,y1,x2,y2,name);
                 } else if (info.equals("")) {
 
                 } else {

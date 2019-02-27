@@ -43,8 +43,8 @@ public class GSquare extends Gizmo {
     }
 
     //Returns type of gizmo
-    public String getGizmoType() {
-        return "Square";
+    public GizmoType getGizmoType() {
+        return GizmoType.SQUARE;
     }
 
     //Returns end positions of current gizmo

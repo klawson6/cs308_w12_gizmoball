@@ -1,5 +1,6 @@
 package controller;
 
+import ModelPackage.GizmoType;
 import ModelPackage.IModel;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
@@ -17,7 +18,7 @@ public class RunMouseEventHandler implements MouseEventHandler{
     }
 
     @Override
-    public void addGizmo(String gizmoType) {
+    public void addGizmo(GizmoType gizmoType) {
 
     }
 }

@@ -40,17 +40,17 @@ public class ResizableCanvas extends Canvas implements Observer {
 
 
             for (IGizmo iGizmo : gizmoList) {
-                String type = iGizmo.getGizmoType();
+                GizmoType type = iGizmo.getGizmoType();
                 switch (type) {
-                    case "Circle":
+                    case CIRCLE:
                         gc.setFill(Color.GREEN);
                         gc.fillOval(iGizmo.getStartxPosition() * wGridSquareSize, iGizmo.getStartyPosition() * hGridSquareSize, wGridSquareSize, hGridSquareSize);
                         break;
-                    case "Square":
+                    case SQUARE:
                         gc.setFill(Color.RED);
                         gc.fillRect(iGizmo.getStartxPosition() * wGridSquareSize, iGizmo.getStartyPosition() * hGridSquareSize, wGridSquareSize, hGridSquareSize);
                         break;
-                    case "Triangle":
+                    case TRIANGLE:
                         gc.save();
                         gc.setFill(Color.BLUE);
                         double startX = (double) iGizmo.getStartxPosition() * wGridSquareSize;
@@ -61,7 +61,7 @@ public class ResizableCanvas extends Canvas implements Observer {
                         gc.fillPolygon(xPoints, yPoints, 3);
                         gc.restore();
                         break;
-                    case "Absorber":
+                    case ABSORBER:
                         gc.setFill(Color.PURPLE);
                         double startXAbsorber = (double) iGizmo.getStartxPosition() * wGridSquareSize;
                         double startYAbsorber = (double) iGizmo.getStartyPosition() * hGridSquareSize;
@@ -71,14 +71,14 @@ public class ResizableCanvas extends Canvas implements Observer {
                         double[] yPointsAbsorber = {startYAbsorber, endYAbsorber, endYAbsorber, startYAbsorber};
                         gc.fillPolygon(xPointsAbsorber, yPointsAbsorber, 4);
                         break;
-                    case "LeftFlipper":
+                    case LEFTFLIPPER:
                         gc.save();
                         gc.setFill(Color.YELLOW);
                         gc.transform(new Affine(new Rotate(-iGizmo.getRotation(), (iGizmo.getStartxPosition() + 0.5) * wGridSquareSize, (iGizmo.getStartyPosition() + 0.5) * hGridSquareSize)));
                         gc.fillRoundRect(iGizmo.getStartxPosition() * wGridSquareSize, iGizmo.getStartyPosition() * hGridSquareSize, wGridSquareSize, hGridSquareSize * 2, wGridSquareSize, hGridSquareSize);
                         gc.restore();
                         break;
-                    case "RightFlipper":
+                    case RIGHTFLIPPER:
                         gc.save();
                         gc.setFill(Color.YELLOW);
                         gc.transform(new Affine(new Rotate(iGizmo.getRotation(), (iGizmo.getStartxPosition() + 1.5) * wGridSquareSize, (iGizmo.getStartyPosition() + 0.5) * hGridSquareSize)));
