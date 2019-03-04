@@ -152,6 +152,8 @@ public class Model extends Observable implements IModel {
         if (location == null && gizmo != null) {
             gizmo.setxPosition(newxPos);
             gizmo.setyPosition(newyPos);
+            setChanged();
+            notifyObservers();
             return true;
         } else {
             return false;
@@ -163,13 +165,21 @@ public class Model extends Observable implements IModel {
         Gizmo gizmo = getGizmo(xPos, yPos);
         if (gizmo != null) {
             gizmoList.remove(gizmo);
+            setChanged();
+            notifyObservers();
         }
     }
 
     @Override
     public boolean rotate(int xPos, int yPos) {
         Gizmo gizmo = getGizmo(xPos, yPos);
-        return gizmo.rotate();
+        if(gizmo != null) {
+            boolean change = gizmo.rotate();
+            setChanged();
+            notifyObservers();
+            return change;
+        }
+        return false;
     }
 
     @Override
@@ -184,6 +194,8 @@ public class Model extends Observable implements IModel {
         if (location == null) {
             Ball ball = new Ball(xPos, yPos, xVelocity, yVelocity);
             balls.add(ball);
+            setChanged();
+            notifyObservers();
             return true;
         }
         return false;
