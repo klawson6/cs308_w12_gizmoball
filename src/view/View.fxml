@@ -22,8 +22,8 @@
         <Label text="Add Gizmo:" />
         <ChoiceBox fx:id="gizmoChoiceBox" />
         <Separator orientation="VERTICAL" />
-        <Button text="Key connect" />
-        <Button text="Key disconnect" />
+        <Button fx:id="keyConnect" text="Key connect" />
+        <Button fx:id ="keyDisconnect" text="Key disconnect" />
         <Button fx:id="rotateButton" text="Rotate" />
         <Separator orientation="VERTICAL" />
         <Button text="Connect" />
