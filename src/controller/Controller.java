@@ -178,8 +178,7 @@ public class Controller implements Initializable, Observer {
     private void loadFile(){
         File file = new FileChooser().showOpenDialog(stage);
         if(file != null){
-            LoadFile r = new LoadFile(file);
-            model = r.run();
+            model = model.load(file);
             model.addObserver(this);
             update((Observable) model, isBuilding);
         }else{
@@ -192,7 +191,7 @@ public class Controller implements Initializable, Observer {
 
     }
 
-    private void saveFile(){
+    private void saveFile() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Text doc(*.txt)", "*.txt"));
         fileChooser.setInitialFileName("Gizmoball.txt");
