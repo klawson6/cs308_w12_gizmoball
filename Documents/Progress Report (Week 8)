@@ -1,0 +1,32 @@
+Tasks Done:
+
+Build Mode GUI - John
+Load & Save fixes - Mark
+Rotate Gizmos, - Cameron
+Delete Gizmo, - Cameron
+Added Add Ball Button + functionality to Build GUI- Cameron
+Add Key bindings - Alexi
+
+Tasks to do next Week (Week 8-9):
+
+Adjust Build Mode GUI (GUI is stretched slightly, Shapes being stretched on resize) - John
+Move Play mode to Model , i.e Play/Pause Game - Mark
+Add method to detect ball placement over another ball - Cameron
+Updated Physics Loop (Bug found) - Kyle
+Add Gizmo Connections
+
+
+Tasks To Complete (For Final Week):
+
+Add Gizmo Connections
+JUnits (test for each model method, Whitebox and Blackbox methods)
+Updated Physics Loop
+Validation Testing Document
+
+Questions:
+
+Challenges:
+
+Changes:
+
+Adjusted Controller to use one handler for mouse and one for key input
