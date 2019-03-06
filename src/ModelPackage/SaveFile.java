@@ -37,7 +37,7 @@ public class SaveFile {
             if(gizmo.getGizmoType() == GizmoType.ABSORBER)
                 toSave =  gizmo.getGizmoType() + " " + gizmo.getId() + " " + gizmo.getStartxPosition() + " " + gizmo.getStartyPosition() + " " + gizmo.getEndxPosition() + " " + gizmo.getEndyPosition();
             else
-                toSave = gizmo.getGizmoType() + " " + gizmo.getId() + " " + gizmo.getStartxPosition() + " " + gizmo.getStartyPosition();
+                toSave = gizmo.getGizmoType().toString().replace(" ","") + " " + gizmo.getId() + " " + gizmo.getStartxPosition() + " " + gizmo.getStartyPosition();
             infoToSave.add(toSave);
         }
         //Add blank line to seperate.
