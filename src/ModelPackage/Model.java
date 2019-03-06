@@ -186,6 +186,9 @@ public class Model extends Observable implements IModel {
     public boolean createBall(double xPos, double yPos, double xVelocity, double yVelocity) {
         //Get top left of where ball if placed
         //int removes all numbers after decimal, effectively rounding down
+
+        //TODO need to add placement detection to ball
+
         int x = (int) xPos;
         int y = (int) yPos;
 

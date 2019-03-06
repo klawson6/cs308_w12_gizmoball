@@ -21,6 +21,7 @@
         <Separator orientation="VERTICAL" />
         <Label text="Add Gizmo:" />
         <ChoiceBox fx:id="gizmoChoiceBox" />
+        <Button fx:id="addBallButton" text="Add Ball"/>
         <Separator orientation="VERTICAL" />
         <Button text="Key connect" />
         <Button text="Key disconnect" />
