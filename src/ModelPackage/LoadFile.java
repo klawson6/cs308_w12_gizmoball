@@ -141,7 +141,7 @@ public class LoadFile {
                 } else if (info.equals("")) {
 
                 } else {
-                    System.out.println("\n\n\n\n\nStill to add " + scan.next()); //debug, to be removed
+                    //System.out.println("\n\n\n\n\nStill to add " + scan.next()); //debug, to be removed
                 }
             }
             //close scanners

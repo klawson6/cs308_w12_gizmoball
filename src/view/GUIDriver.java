@@ -65,6 +65,8 @@ public class GUIDriver extends Application implements Observer {
             runScene = new Scene(root, WINDOW_SIZE, WINDOW_SIZE);
             runViewController = loader.getController();
             runViewController.setStage(primaryStage);
+            runViewController.setModel(model);
+            runViewController.setHandlers();
 
 
             loader = new FXMLLoader(getClass().getResource("buildView.fxml"));

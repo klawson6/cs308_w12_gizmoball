@@ -10,6 +10,8 @@ public class Ball implements IBall{
     private Circle circle;
     // The velocity of the ball, has speed and direction.
     private Vect velocity;
+    //Boolean indicating whether the ball is stopped or not(by absorber)
+    private boolean stopped;
 
     private static final double ballRadius = 0.25;
 
@@ -20,6 +22,7 @@ public class Ball implements IBall{
         // Pass in the x and y components of the velocity.
         // With this information it will calculate the resultant speed(length in the Vect class) and direction once relevant getters are called.
         velocity = new Vect(xVelocity, yVelocity);
+        stopped = false;
     }
 
     // Return the speed component of the velocity of this ball.
@@ -52,7 +55,7 @@ public class Ball implements IBall{
 
     public void setCircle(double x, double y){
         circle = new Circle(x,y,ballRadius);
-        System.out.println("x=" + x + "y=" + y);
+        //System.out.println("x=" + x + "y=" + y);
 
     }
     /**
@@ -97,5 +100,27 @@ public class Ball implements IBall{
     @Override
     public double getYPosition() {
         return circle.getCenter().y();
+    }
+    /**
+     * @modifies this
+     * @effects Stops the ball by changing the boolean field 'stopped' to true.
+     */
+
+    public void stopBall(){
+        stopped = true;
+    }
+    /**
+     * @modifies this
+     * @effects Starts the ball by changing the boolean field 'stopped' to false.
+     */
+    public void startBall(){
+        stopped = false;
+    }
+
+    /**
+     * @effects Returns the corresponding boolean field 'stopped' which indicates whether the ball is in motion
+     */
+    public boolean isStopped(){
+        return stopped;
     }
 }

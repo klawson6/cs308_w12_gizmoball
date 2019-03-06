@@ -6,6 +6,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -22,6 +23,7 @@ public class RunViewController implements Initializable {
     private Stage stage;
     private Scene buildScene;
     private BuildViewController buildController;
+    private IModel model;
 
     private Model model;
 
@@ -32,6 +34,8 @@ public class RunViewController implements Initializable {
     @FXML private Button buildButton;
     @FXML private Button saveButton;
     @FXML private Button loadButton;
+
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -62,6 +66,14 @@ public class RunViewController implements Initializable {
         this.buildController = buildController;
     }
 
+
+    public void setModel(IModel m){
+        model = m;
+    }
+
+    public void setHandlers(){
+        rootPane.addEventHandler(KeyEvent.KEY_PRESSED, new KeyBindingHandler(model));
+    }
 
     public void update(Observable o){
 

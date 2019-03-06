@@ -5,9 +5,8 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.*;
+import java.util.HashSet;
+import java.util.Scanner;
 
 public class SaveFile {
 
@@ -16,6 +15,7 @@ public class SaveFile {
 
     public SaveFile(String filename){
         this.filename = filename;
+        System.out.println("Saving to file " + filename);
     }
 
     public SaveFile(Stage stage){
@@ -23,16 +23,10 @@ public class SaveFile {
     }
 
     public void save(Model model){
+        String toSave;
 
-        //Get all gizmos.
+        ///////////////////////////////////////////// General Gizmos /////////////////////////////////////////////
         HashSet<Gizmo> gizmos = model.getGizmoList();
-
-        //Where all formatted information will be held
-        List<String> infoToSave = new ArrayList<String>();
-
-
-        //Gizmos must be first.
-        ////////////////////////Gizmos//////////////////////////
         for(Gizmo gizmo: gizmos){
             String toSave;
             if(gizmo.getGizmoType().equals("Absorber"))
@@ -44,12 +38,8 @@ public class SaveFile {
         //Add blank line to seperate.
         infoToSave.add("");
 
-        ////////////////////////Ball//////////////////////////
-        //Currently only one ball, will need to be altered if more than one ball is used.
-        Ball ball = model.getBall();
-        infoToSave.add("Ball B " + ball.getXPosition() + " " + ball.getYPosition() + " " + ball.getVelocity().x() + " " + ball.getVelocity().y());
+            toSave = type + " " + gizmo.getId() + " " + gizmo.getStartxPosition() + " " + gizmo.getStartyPosition();
 
-        infoToSave.add("");
 
         ////////////////////////Rotation//////////////////////////
         for(Gizmo gizmo: gizmos){
@@ -62,26 +52,17 @@ public class SaveFile {
         }
         infoToSave.add("");
 
-        ////////////////////////Gizmo Connection//////////////////////////
-        for(Gizmo gizmo: gizmos){
-            Set<String> connect = gizmo.getGizmoConnectionIds();
-            for(String c: connect){
-                infoToSave.add("Connect " + gizmo.getId() + " " + c);
-            }
+            System.out.println(toSave);
+            //actually save
         }
-        infoToSave.add("");
 
-        ////////////////////////Key Connection//////////////////////////
-        for(Gizmo gizmo: gizmos){
-            HashSet<KeyEvent> connect = gizmo.getKeybindings();
-            for(KeyEvent c: connect){
-                //In format KeyConnect key 87 down RF137
-                infoToSave.add("KeyConnect key " + c.getText() + " down " + gizmo.getId()); //todo: not sure this will properly work
-            }
-        }
-        infoToSave.add("");
+        ///////////////////////////////////////////// Ball /////////////////////////////////////////////
+        Ball ball = model.getBall();
+        toSave = "Ball B " + ball.getPos().x() + " " + ball.getPos().y() + " " + ball.getVelocity().x() + " " + ball.getVelocity().y();
+        System.out.println(toSave);
 
-
+        ///////////////////////////////////////////// Key Connects /////////////////////////////////////////////
+        //todo add key connects
 
 
 

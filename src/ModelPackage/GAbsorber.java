@@ -3,6 +3,7 @@ package ModelPackage;
 import Physics.Circle;
 import Physics.LineSegment;
 import Physics.Vect;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
 import java.awt.*;
@@ -22,6 +23,7 @@ public class GAbsorber implements Gizmo {
     private HashSet<Gizmo> connections = new HashSet<>();
     private Set<LineSegment> composingLines = new HashSet<>();
     private Set<Circle> composingCircles = new HashSet<>();
+    private Ball absorbedBall;
 
     public GAbsorber(int xStart, int yStart, int xEnd, int yEnd){
 
@@ -31,8 +33,11 @@ public class GAbsorber implements Gizmo {
         this.yEnd = yEnd;
         id = "A" + xStart + yStart + xEnd + yEnd;
 
+        absorbedBall = null;
         addLines();
         addCircles();
+        //FIXME - adding a default key binding for the absorber to shoot the ball?
+        addKeyBinding(new KeyEvent(KeyEvent.KEY_PRESSED,"c","c ", KeyCode.C,false,false,false,false));
 
     }
 
@@ -44,6 +49,9 @@ public class GAbsorber implements Gizmo {
         this.yEnd = yEnd;
         this.id = id;
 
+        absorbedBall = null;
+        //FIXME - adding a default key binding for the absorber to shoot the ball?
+        addKeyBinding(new KeyEvent(KeyEvent.KEY_PRESSED,"c","c ", KeyCode.C,false,false,false,false));
         addLines();
         addCircles();
 
@@ -147,7 +155,31 @@ public class GAbsorber implements Gizmo {
     }
 
     @Override
-    public void Rotate() {
+    public void rotate() {
         //Does nothing for absorber
+    }
+
+    public void setAbsorbedBall(Ball b){
+
+        absorbedBall = b;
+    }
+
+    public void moveAbsorbedBall(){
+        if(absorbedBall != null) {
+
+               absorbedBall.setCircle(getEndxPosition(), getStartyPosition() );
+          //  absorbedBall.modifyVelocity(new Vect(0, 0));
+             absorbedBall.stopBall();
+        }
+    }
+    @Override
+    public void activate(){
+        if(absorbedBall != null) {
+            absorbedBall.setCircle(getEndxPosition()-0.5, getEndyPosition()-1);
+            absorbedBall.modifyVelocity(new Vect(0, -50));;
+            System.out.println( absorbedBall.getVelocity());
+            absorbedBall.startBall();
+            absorbedBall = null;
+        }
     }
 }

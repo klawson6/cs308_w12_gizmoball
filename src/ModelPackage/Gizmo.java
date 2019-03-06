@@ -41,6 +41,8 @@ public interface Gizmo extends IGizmo{
 
     Set<String> getGizmoConnectionIds();
 
-    void Rotate();
+    void rotate();
+
+    void activate();
 
 }
