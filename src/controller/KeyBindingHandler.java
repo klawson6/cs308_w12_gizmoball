@@ -1,16 +1,12 @@
 package controller;
 
-import ModelPackage.Gizmo;
 import ModelPackage.IGizmo;
 import ModelPackage.IModel;
-import ModelPackage.Model;
 import javafx.event.EventHandler;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.paint.Color;
 
-import java.awt.event.KeyListener;
-import java.security.Key;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Set;
 
 public class KeyBindingHandler implements EventHandler<KeyEvent> {
 
@@ -31,8 +27,9 @@ public class KeyBindingHandler implements EventHandler<KeyEvent> {
                 Set<KeyEvent> bindings = allbindings.keySet();
 
                 for (KeyEvent e : bindings) {
-                    if (event.getCode().equals(e.getCode())) {
-                        System.out.println("Keybind released!");
+
+                    if (event.getCode().equals(e.getCode()) && event.getEventType().getName().equals(e.getEventType().getName())) {
+                        System.out.println("Keybind Pressed/Released!");
                         g.activate();
                     }
                 }

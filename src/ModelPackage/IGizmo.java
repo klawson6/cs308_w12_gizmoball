@@ -4,7 +4,6 @@ import javafx.scene.input.KeyEvent;
 
 import java.awt.*;
 import java.util.HashMap;
-import java.util.HashSet;
 
 public interface IGizmo {
 
@@ -27,5 +26,8 @@ public interface IGizmo {
     void deactivate();
 
     HashMap<KeyEvent, String> getKeybindings();
+
+//    boolean addKeyBinding(KeyEvent key, String action);
+//    boolean removeKeyBinding(KeyEvent key);
 
 }
