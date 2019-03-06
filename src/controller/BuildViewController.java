@@ -1,5 +1,8 @@
 package controller;
 
+import ModelPackage.IModel;
+import ModelPackage.LoadFile;
+import ModelPackage.SaveFile;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
@@ -24,10 +27,14 @@ public class BuildViewController implements Initializable {
 
     @FXML private Button quitButton;
     @FXML private Button runButton;
+    @FXML private Button saveButton;
+    @FXML private Button loadButton;
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
+        addButtonListeners();
         canvas.widthProperty().bind(rootPane.widthProperty());
         canvas.heightProperty().bind(rootPane.heightProperty());
 
@@ -50,5 +57,20 @@ public class BuildViewController implements Initializable {
 
     public void setRunController(RunViewController runController) {
         this.runController = runController;
+    }
+
+    private void addButtonListeners(){
+        quitButton.setOnAction(event -> System.exit(0));
+        saveButton.setOnAction(event -> save());
+        loadButton.setOnAction(event -> load());
+    }
+
+    private void save(){
+
+        System.out.println("SAVING");
+    }
+
+    private void load(){
+        System.out.println("LOADING");
     }
 }
