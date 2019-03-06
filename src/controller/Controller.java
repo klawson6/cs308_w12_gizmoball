@@ -191,7 +191,7 @@ public class Controller implements Initializable, Observer {
 
     }
 
-    private void saveFile() {
+    private void saveFile(){
         FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Text doc(*.txt)", "*.txt"));
         fileChooser.setInitialFileName("Gizmoball.txt");
