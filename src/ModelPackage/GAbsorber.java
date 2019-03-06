@@ -91,7 +91,7 @@ public class GAbsorber implements Gizmo {
     }
 
     
-    public int getStartxPosition() {
+    public int getStartXPosition() {
         return xStart;
     }
 

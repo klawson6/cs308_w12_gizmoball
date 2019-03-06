@@ -13,7 +13,7 @@ public interface Gizmo extends IGizmo{
 
     String getGizmoType();
 
-    int getStartxPosition();
+    int getStartXPosition();
 
     public int getEndxPosition();
 

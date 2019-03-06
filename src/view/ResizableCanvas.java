@@ -37,16 +37,16 @@ public class ResizableCanvas extends Canvas implements Observer {
                 switch (type) {
                     case "Circle":
                         gc.setFill(Color.GREEN);
-                        gc.fillOval(iGizmo.getStartxPosition() * wGridSquareSize, iGizmo.getStartyPosition() * hGridSquareSize, wGridSquareSize, hGridSquareSize);
+                        gc.fillOval(iGizmo.getStartXPosition() * wGridSquareSize, iGizmo.getStartyPosition() * hGridSquareSize, wGridSquareSize, hGridSquareSize);
                         break;
                     case "Square":
                         gc.setFill(Color.RED);
-                        gc.fillRect(iGizmo.getStartxPosition() * wGridSquareSize, iGizmo.getStartyPosition() * hGridSquareSize, wGridSquareSize, hGridSquareSize);
+                        gc.fillRect(iGizmo.getStartXPosition() * wGridSquareSize, iGizmo.getStartyPosition() * hGridSquareSize, wGridSquareSize, hGridSquareSize);
                         break;
                     case "Triangle":
                         gc.save();
                         gc.setFill(Color.BLUE);
-                        double startX = (double) iGizmo.getStartxPosition() * wGridSquareSize;
+                        double startX = (double) iGizmo.getStartXPosition() * wGridSquareSize;
                         double startY = (double) iGizmo.getStartyPosition() * hGridSquareSize;
                         double[] xPoints = {startX, startX, startX + wGridSquareSize};
                         double[] yPoints = {startY, startY + hGridSquareSize, startY};
@@ -56,7 +56,7 @@ public class ResizableCanvas extends Canvas implements Observer {
                         break;
                     case "Absorber":
                         gc.setFill(Color.PURPLE);
-                        double startXAbsorber = (double) iGizmo.getStartxPosition() * wGridSquareSize;
+                        double startXAbsorber = (double) iGizmo.getStartXPosition() * wGridSquareSize;
                         double startYAbsorber = (double) iGizmo.getStartyPosition() * hGridSquareSize;
                         double endXAbsorber = (double) iGizmo.getEndxPosition() * wGridSquareSize;
                         double endYAbsorber = (double) iGizmo.getEndyPosition() * hGridSquareSize;
@@ -67,15 +67,15 @@ public class ResizableCanvas extends Canvas implements Observer {
                     case "LeftFlipper":
                         gc.save();
                         gc.setFill(Color.YELLOW);
-                        gc.transform(new Affine(new Rotate(-iGizmo.getRotation(), (iGizmo.getStartxPosition()+0.5)*wGridSquareSize, (iGizmo.getStartyPosition()+0.5)*hGridSquareSize)));
-                        gc.fillRoundRect(iGizmo.getStartxPosition() * wGridSquareSize, iGizmo.getStartyPosition() * hGridSquareSize, wGridSquareSize, hGridSquareSize*2, wGridSquareSize, hGridSquareSize);
+                        gc.transform(new Affine(new Rotate(-iGizmo.getRotation(), (iGizmo.getStartXPosition()+0.5)*wGridSquareSize, (iGizmo.getStartyPosition()+0.5)*hGridSquareSize)));
+                        gc.fillRoundRect(iGizmo.getStartXPosition() * wGridSquareSize, iGizmo.getStartyPosition() * hGridSquareSize, wGridSquareSize, hGridSquareSize*2, wGridSquareSize, hGridSquareSize);
                         gc.restore();
                         break;
                     case "RightFlipper":
                         gc.save();
                         gc.setFill(Color.YELLOW);
-                        gc.transform(new Affine(new Rotate(iGizmo.getRotation(), (iGizmo.getStartxPosition()+1.5)*wGridSquareSize, (iGizmo.getStartyPosition()+0.5)*hGridSquareSize)));
-                        gc.fillRoundRect((iGizmo.getStartxPosition()+1) * wGridSquareSize, iGizmo.getStartyPosition() * hGridSquareSize, wGridSquareSize, hGridSquareSize*2, wGridSquareSize, hGridSquareSize);
+                        gc.transform(new Affine(new Rotate(iGizmo.getRotation(), (iGizmo.getStartXPosition()+1.5)*wGridSquareSize, (iGizmo.getStartyPosition()+0.5)*hGridSquareSize)));
+                        gc.fillRoundRect((iGizmo.getStartXPosition()+1) * wGridSquareSize, iGizmo.getStartyPosition() * hGridSquareSize, wGridSquareSize, hGridSquareSize*2, wGridSquareSize, hGridSquareSize);
                         gc.restore();
                         break;
 

@@ -66,7 +66,7 @@ public class GFlipper implements Gizmo{
     }
 
     
-    public int getStartxPosition() {
+    public int getStartXPosition() {
         return xPosition;
     }
 

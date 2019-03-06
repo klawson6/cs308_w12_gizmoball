@@ -9,6 +9,8 @@ import java.util.Set;
 
 public interface IModel  {
 
+    void changeModel(IModel m);
+
     HashSet<Gizmo> getGizmoList();
 
     Ball getBall();

@@ -1,12 +1,14 @@
 package ModelPackage;
 
-import javafx.scene.input.KeyEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Scanner;
+import java.util.List;
 
 public class SaveFile {
 
@@ -22,23 +24,21 @@ public class SaveFile {
         this.stage = stage;
     }
 
-    public void save(Model model){
-        String toSave;
-
+    public void save(IModel model){
+        List<String> infoToSave = new ArrayList<>();
         ///////////////////////////////////////////// General Gizmos /////////////////////////////////////////////
         HashSet<Gizmo> gizmos = model.getGizmoList();
         for(Gizmo gizmo: gizmos){
             String toSave;
             if(gizmo.getGizmoType().equals("Absorber"))
-                toSave =  gizmo.getGizmoType() + " " + gizmo.getId() + " " + gizmo.getStartxPosition() + " " + gizmo.getStartyPosition() + " " + gizmo.getEndxPosition() + " " + gizmo.getEndyPosition();
+                toSave =  gizmo.getGizmoType() + " " + gizmo.getId() + " " + gizmo.getStartXPosition() + " " + gizmo.getStartyPosition() + " " + gizmo.getEndxPosition() + " " + gizmo.getEndyPosition();
             else
-                toSave = gizmo.getGizmoType() + " " + gizmo.getId() + " " + gizmo.getStartxPosition() + " " + gizmo.getStartyPosition();
+                toSave = gizmo.getGizmoType() + " " + gizmo.getId() + " " + gizmo.getStartXPosition() + " " + gizmo.getStartyPosition();
             infoToSave.add(toSave);
         }
         //Add blank line to seperate.
         infoToSave.add("");
 
-            toSave = type + " " + gizmo.getId() + " " + gizmo.getStartxPosition() + " " + gizmo.getStartyPosition();
 
 
         ////////////////////////Rotation//////////////////////////
@@ -52,15 +52,13 @@ public class SaveFile {
         }
         infoToSave.add("");
 
-            System.out.println(toSave);
-            //actually save
-        }
 
+        String toSave;
         ///////////////////////////////////////////// Ball /////////////////////////////////////////////
         Ball ball = model.getBall();
         toSave = "Ball B " + ball.getPos().x() + " " + ball.getPos().y() + " " + ball.getVelocity().x() + " " + ball.getVelocity().y();
-        System.out.println(toSave);
-
+        infoToSave.add(toSave);
+        infoToSave.add("");
         ///////////////////////////////////////////// Key Connects /////////////////////////////////////////////
         //todo add key connects
 

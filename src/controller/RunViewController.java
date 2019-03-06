@@ -25,7 +25,7 @@ public class RunViewController implements Initializable {
     private BuildViewController buildController;
     private IModel model;
 
-    private Model model;
+
 
     @FXML private ResizableCanvas canvas;
     @FXML private VBox rootPane;
@@ -50,8 +50,20 @@ public class RunViewController implements Initializable {
     private void addButtonListeners(){
         quitButton.setOnAction(event -> System.exit(0));
         buildButton.setOnAction(event -> stage.setScene(buildScene));
-        saveButton.setOnAction(event -> new SaveFile(stage).save(model));
-        loadButton.setOnAction(event -> model.changeModel(new LoadFile(stage).run()));
+        saveButton.setOnAction(event -> save());
+        loadButton.setOnAction(event -> load());
+    }
+
+    private void save(){
+        model.getBall().stopBall();
+        new SaveFile(stage).save(model);
+        model.getBall().startBall();
+    }
+
+    private void load(){
+        model.getBall().stopBall();
+        model.changeModel(new LoadFile(stage).run());
+        model.getBall().startBall();
     }
 
     public void setStage(Stage s){

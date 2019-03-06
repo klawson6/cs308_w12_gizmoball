@@ -7,7 +7,7 @@ public interface IGizmo {
 
     String getGizmoType();
 
-    int getStartxPosition();
+    int getStartXPosition();
 
     int getStartyPosition();
 

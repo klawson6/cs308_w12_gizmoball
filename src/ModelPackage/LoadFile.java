@@ -20,7 +20,7 @@ public class LoadFile {
     public LoadFile(){
         //Current file name, will want user prompt most likely in future
 //        filename = "Documents/example_file.txt";
-//        filename = "Documents/test.txt";
+        filename = "Documents/test.txt";
 
         //Check file exists
         file = new File(filename);

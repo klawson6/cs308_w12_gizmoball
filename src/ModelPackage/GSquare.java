@@ -69,7 +69,7 @@ public class GSquare implements Gizmo {
         return "Square";
     }
 
-    public int getStartxPosition() {
+    public int getStartXPosition() {
         return xPos;
     }
 
