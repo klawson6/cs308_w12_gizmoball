@@ -11,7 +11,7 @@ import java.io.IOException;
 
 public class GUIDriver extends Application{
 
-    final static int WINDOW_SIZE = 700;
+    final static int WINDOW_SIZE = 1080;
 
     private Controller controller;
     private Scene runScene;
