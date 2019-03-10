@@ -3,12 +3,10 @@ package ModelPackage;
 import Physics.Circle;
 import Physics.LineSegment;
 import Physics.Vect;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 
 import java.awt.*;
-import java.util.*;
-import java.util.List;
+import java.util.LinkedList;
+import java.util.Set;
 
 public class GAbsorber extends Gizmo {
 
@@ -40,8 +38,6 @@ public class GAbsorber extends Gizmo {
 
         addLines();
         addCircles();
-        //FIXME - adding a default key binding for the absorber to shoot the ball?
-        addKeyBinding(new KeyEvent(KeyEvent.KEY_PRESSED,"c","c ", KeyCode.C,false,false,false,false),"Shoot Ball");
 
     }
 
@@ -60,8 +56,7 @@ public class GAbsorber extends Gizmo {
         this.yEnd = yEnd;
         this.id = id;
 
-        //FIXME - adding a default key binding for the absorber to shoot the ball?
-        addKeyBinding(new KeyEvent(KeyEvent.KEY_PRESSED,"c","c ", KeyCode.C,false,false,false,false),"Shoot Ball");
+
         addLines();
         addCircles();
 
@@ -140,7 +135,7 @@ public class GAbsorber extends Gizmo {
         if(ball != null) {
 
                ball.setCircle(getEndxPosition(), getStartyPosition() );
-          //  absorbedBall.modifyVelocity(new Vect(0, 0));
+
              ball.stopBall();
         }
     }

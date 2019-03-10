@@ -11,7 +11,7 @@ import java.io.IOException;
 
 public class GUIDriver extends Application{
 
-    final static int WINDOW_SIZE = 700;
+    final static int CANVAS_SIZE = 700;
 
     private Controller controller;
     private Scene runScene;
@@ -24,6 +24,7 @@ public class GUIDriver extends Application{
         setUpScenes();
         primaryStage.setTitle("Gizmoball");
         primaryStage.setScene(runScene);
+        primaryStage.setResizable(false);
         primaryStage.show();
 
 
@@ -33,8 +34,9 @@ public class GUIDriver extends Application{
         try{
             FXMLLoader loader = new FXMLLoader(getClass().getResource("View.fxml"));
             Parent root = loader.load();
-            runScene = new Scene(root, WINDOW_SIZE, WINDOW_SIZE);
+            runScene = new Scene(root);
             controller = loader.getController();
+            controller.setCanvasSize(CANVAS_SIZE);
             controller.setStage(primaryStage);
 
         }catch (IOException e){
