@@ -40,6 +40,7 @@ public class Controller implements Initializable, Observer {
     @FXML private ToolBar commonToolBar, runToolBar, buildToolBar;
     @FXML private Button rotateButton;
     @FXML private Button deleteButton;
+    @FXML private Button addBallButton;
     @FXML private ChoiceBox<GizmoType> gizmoChoiceBox;
     @FXML private Label infoLabel;
 
@@ -208,7 +209,16 @@ public class Controller implements Initializable, Observer {
 
             canvas.draw(isBuilding);
         }
+
+        addBallButton.setOnAction(event -> {
+            canvas.removeEventHandler(MouseEvent.ANY, mouseHandler);
+            mouseHandler = new AddBallHandler(model,canvas);
+            canvas.addEventHandler(MouseEvent.ANY, mouseHandler);
+        });
+
     }
+
+
 
     public void setStage(Stage s){
         stage = s;
