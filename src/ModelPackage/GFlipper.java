@@ -6,6 +6,7 @@ import Physics.Vect;
 import javafx.scene.input.KeyEvent;
 
 import java.awt.*;
+import java.awt.geom.AffineTransform;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
@@ -44,6 +45,8 @@ public class GFlipper extends Gizmo{
         }else{
             id = "RF" + xPosition + yPosition;
         }
+        addCircles();
+        addLines();
 
         setId(id);
 
@@ -57,6 +60,9 @@ public class GFlipper extends Gizmo{
         setColor(defaultColor);
         setId(id);
 
+        addCircles();
+        addLines();
+
         this.xPosition = xPosition;
         this.yPosition = yPosition;
         this.isLeft = isLeft;
@@ -66,9 +72,53 @@ public class GFlipper extends Gizmo{
     //TODO add flipper collision detection
     private void addCircles(){
 
+        if(isLeft) {
+
+            Circle circle = new Circle(xPosition + 0.5, yPosition + 0.5, 0.5);
+            Circle circle1 = new Circle(xPosition + 0.5, yPosition + 1.5, 0.5);
+
+            composingCircles.add(circle);
+            composingCircles.add(circle1);
+        }else{
+
+            Circle circle = new Circle(xPosition + 1.5, yPosition + 0.5, 0.5);
+            Circle circle1 = new Circle(xPosition + 1.5, yPosition + 1.5, 0.5);
+
+            composingCircles.add(circle);
+            composingCircles.add(circle1);
+        }
+
     }
 
     private void addLines(){
+
+        if(isLeft) {
+
+            double topX = xPosition;
+            double topY = yPosition + 0.5;
+            double bottomX = xPosition;
+            double bottomY = yPosition + 1.5;
+
+            LineSegment lineSegment = new LineSegment(topX, topY, bottomX, bottomY);
+            LineSegment lineSegment1 = new LineSegment(topX + 1, topY, bottomX + 1, bottomY);
+
+            composingLines.add(lineSegment);
+            composingLines.add(lineSegment1);
+        }
+        else{
+            double topX = xPosition + 1;
+            double topY = yPosition + 0.5;
+            double bottomX = xPosition + 1;
+            double bottomY = yPosition + 1.5;
+
+            LineSegment lineSegment = new LineSegment(topX, topY, bottomX, bottomY);
+            LineSegment lineSegment1 = new LineSegment(topX + 1, topY, bottomX + 1, bottomY);
+
+            composingLines.add(lineSegment);
+            composingLines.add(lineSegment1);
+        }
+
+
 
     }
 
@@ -103,12 +153,20 @@ public class GFlipper extends Gizmo{
     @Override
     public boolean rotate() {
         //Does nothing for flipper
+
+        for(int i=0;i<90;i++){
+            angleDegrees++;
+        }
+
         return false;
     }
 
     @Override
     public void activate(){
         //FIXME rotate flipper?
+
+        rotate();
+
     }
 
     @Override

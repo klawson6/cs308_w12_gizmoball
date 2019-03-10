@@ -41,6 +41,7 @@ public class Controller implements Initializable, Observer {
     @FXML private Button rotateButton;
     @FXML private Button deleteButton;
     @FXML private Button addBallButton;
+    @FXML public Button deleteBall;
     @FXML private ChoiceBox<GizmoType> gizmoChoiceBox;
     @FXML private Label infoLabel;
 
@@ -152,6 +153,16 @@ public class Controller implements Initializable, Observer {
 
             canvas.removeEventHandler(MouseEvent.ANY, mouseHandler);
             mouseHandler = new RemoveKeyConnectionsHandler(model,canvas);
+            canvas.addEventHandler(MouseEvent.ANY, mouseHandler);
+            canvas.requestFocus();
+            keyDisconnect.requestFocus();
+
+        });
+
+        deleteBall.setOnAction(event -> {
+
+            canvas.removeEventHandler(MouseEvent.ANY, mouseHandler);
+            mouseHandler = new DeleteBallHandler(model,canvas);
             canvas.addEventHandler(MouseEvent.ANY, mouseHandler);
             canvas.requestFocus();
             keyDisconnect.requestFocus();

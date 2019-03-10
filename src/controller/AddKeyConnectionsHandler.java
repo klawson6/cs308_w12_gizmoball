@@ -70,7 +70,7 @@ public class AddKeyConnectionsHandler implements EventHandler<MouseEvent> {
                         public void handle(KeyEvent event) {
 
                             //If ESC button is pressed just close the dialog window
-                            if (event.getCode().getCode() != 27) {
+                            if (!event.getCode().getName().equals("Esc")) {
                                 if (group.getSelectedToggle().getUserData().toString().equals("press")) {
 
                                     KeyEvent binding = new KeyEvent(KeyEvent.KEY_PRESSED, event.getCharacter(), event.getText(), event.getCode(), false, false, false, false);

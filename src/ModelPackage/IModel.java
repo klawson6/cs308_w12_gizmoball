@@ -35,4 +35,5 @@ public interface IModel  {
     void stop();
     void tick();
 
+    boolean deleteBall(double x, double y);
 }

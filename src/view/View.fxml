@@ -29,7 +29,8 @@
         <Separator orientation="VERTICAL" />
         <Button text="Connect" />
         <Button text="Disconnect" />
-        <Button fx:id="deleteButton" text="Delete" />
+        <Button fx:id="deleteButton" text="Delete Gizmo" />
+        <Button fx:id="deleteBall" text="Delete Ball"/>
     </ToolBar>
     <ToolBar fx:id="runToolBar">
         <Button fx:id="buildButton" text="Build Mode" />
