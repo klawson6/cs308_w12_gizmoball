@@ -262,26 +262,35 @@ public class Model extends Observable implements IModel {
                 moveBallForTime(tuc, ball);
                 ball.modifyVelocity(cd.getVelo());
                 if (cd.getCollisionGizmo() != null) {
-                    if (cd.getCollisionGizmo().getGizmoType().equals("Absorber")) {
+                    if (cd.getCollisionGizmo().getGizmoType().equals(GizmoType.ABSORBER)) {
 
                         GAbsorber absorber = (GAbsorber) cd.getCollisionGizmo();
-                        //ball = new Ball(absorber.getEndxPosition() - 0.75, absorber.getStartyPosition() + 0.75, 0, 0);
-                        int counter = 0;
+//                        ball = new Ball(absorber.getEndxPosition() - 0.75, absorber.getStartyPosition() + 0.75, 0, 0);
+//                        int counter = 0;
+//                        System.out.println("colided with absorber");
+//                        ball.setCircle(absorber.getEndxPosition()-0.75,absorber.getStartyPosition()+0.75);
+//                        ball.setVelocity(0,0);
+//                        ball.stopBall();
 
-                        ball.setCircle(absorber.getEndxPosition()-0.75,absorber.getStartyPosition()+0.75);
-                        ball.setVelocity(0,0);
-                        ball.stopBall();
-
-                        absorber.setAbsorbedBall(ball);
+                        absorber.addAbsorbedBall(ball);
 
                         LinkedList<Ball> listofballs = absorber.getAbsorberBalls();
 
-                      for(int i =0;i<listofballs.size();i++){
-                          listofballs.get(i).setCircle(absorber.getEndxPosition()-0.75-i,absorber.getStartyPosition()+0.75);
-                          listofballs.get(i).setVelocity(0,0);
-                      }
+//                      for(int i =0;i<listofballs.size();i++){
+//                          listofballs.get(i).setCircle(absorber.getEndxPosition()-0.75,absorber.getStartyPosition()+0.75);
+//                          listofballs.get(i).setVelocity(0,0);
+//                      }
+                      //TODO add absorber to absorber connection activation
+                    }
+
+                    if(cd.getCollisionGizmo().getGizmoConnectionIds().size()>0){
+                        for(String id: cd.getCollisionGizmo().getGizmoConnectionIds()){
+                            getGizmo(id).activate();
+                        }
                     }
                 }
+
+
 
             }
 
@@ -316,7 +325,10 @@ public class Model extends Observable implements IModel {
 
     @Override
     public boolean addGizmoConnection(int xPosofSelectedGizmo, int yPosfSelectedGizmo, int xPosofTargetGizmo, int yPosofTargetGizmo) {
+        if(getGizmo(xPosofSelectedGizmo,yPosfSelectedGizmo) != null & getGizmo(xPosofTargetGizmo,yPosofTargetGizmo) != null)
        return getGizmo(xPosofSelectedGizmo,yPosfSelectedGizmo).addGizmoConnection(getGizmo(xPosofTargetGizmo,yPosofTargetGizmo));
+        else
+            return false;
     }
 
     @Override

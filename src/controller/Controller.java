@@ -35,8 +35,7 @@ public class Controller implements Initializable, Observer {
 
     @FXML private ResizableCanvas canvas;
     @FXML private VBox rootPane;
-  //  @FXML private Label speed;
-    @FXML private Button startButton, stopButton, tickButton, buildButton, runButton, saveButton, loadButton, quitButton,keyConnect,keyDisconnect;
+    @FXML private Button startButton, stopButton, tickButton, buildButton, runButton, saveButton, loadButton, quitButton,keyConnect,keyDisconnect,connect,disconnect;
     @FXML private ToolBar commonToolBar, runToolBar, buildToolBar;
     @FXML private Button rotateButton;
     @FXML private Button deleteButton;
@@ -154,6 +153,33 @@ public class Controller implements Initializable, Observer {
 
         });
 
+        //Add handler for adding gizmo connections
+        connect.setOnAction(event -> {
+
+            canvas.removeEventHandler(MouseEvent.ANY, mouseHandler);
+            mouseHandler = new AddGizmoConnectionsHandler(canvas,model);
+            canvas.addEventHandler(MouseEvent.ANY, mouseHandler);
+            canvas.requestFocus();
+            infoLabel.setText("Please select two gizmos to connect.");
+            connect.requestFocus();
+
+
+
+        });
+
+        //Add handler for removing gizmo connections
+        disconnect.setOnAction(event -> {
+
+            canvas.removeEventHandler(MouseEvent.ANY, mouseHandler);
+            mouseHandler = new RemoveGizmoConnectionsHandler(canvas,model);
+            canvas.addEventHandler(MouseEvent.ANY, mouseHandler);
+            canvas.requestFocus();
+            setInfoLabel("Please select two gizmos to disconnect.");
+            disconnect.requestFocus();
+
+        });
+
+
         //Add Handler for Gizmos to be added
 
         gizmoChoiceBox.focusedProperty().addListener(new ChangeListener<Boolean>() {
@@ -172,6 +198,9 @@ public class Controller implements Initializable, Observer {
     }
 
 
+    public void setInfoLabel(String text){
+       infoLabel.setText(text);
+    }
     private void toggleModes(){
         if(runToolBar.isManaged()){ // From run to build mode
             isBuilding = true;

@@ -2,12 +2,8 @@ package ModelPackage;
 
 import Physics.Circle;
 import Physics.LineSegment;
-import Physics.Vect;
-import javafx.scene.input.KeyEvent;
+import javafx.scene.paint.Color;
 
-import java.awt.*;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Set;
 
 public class GFlipper extends Gizmo{
@@ -23,7 +19,7 @@ public class GFlipper extends Gizmo{
     private Set<LineSegment> composingLines = super.composingLines;
     private Set<Circle> composingCircles = super.composingCircles;
 
-    private Color defaultColor = Color.yellow;
+    private Color defaultColor = Color.YELLOW;
 
     //Flippers are split into left or right flippers through boolean parameter
 
@@ -109,6 +105,7 @@ public class GFlipper extends Gizmo{
     @Override
     public void activate(){
         //FIXME rotate flipper?
+
     }
 
     @Override

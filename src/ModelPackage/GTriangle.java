@@ -3,10 +3,8 @@ package ModelPackage;
 import Physics.Circle;
 import Physics.LineSegment;
 import Physics.Vect;
-import javafx.scene.input.KeyEvent;
+import javafx.scene.paint.Color;
 
-import java.awt.*;
-import java.util.HashSet;
 import java.util.Set;
 
 public class GTriangle extends Gizmo {
@@ -210,7 +208,11 @@ public class GTriangle extends Gizmo {
 
     @Override
     public void activate(){
-        //Does nothing for Triangle
+        double red = Math.random();
+        double green = Math.random();
+        double blue = Math.random();
+        Color newColor = new Color(red,green,blue,1.0);
+        setColor(newColor);
     }
 
     @Override

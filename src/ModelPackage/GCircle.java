@@ -1,13 +1,8 @@
 package ModelPackage;
 
 import Physics.Circle;
-import Physics.LineSegment;
-import Physics.Vect;
-import javafx.scene.input.KeyEvent;
+import javafx.scene.paint.Color;
 
-import java.awt.*;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Set;
 
 public class GCircle extends Gizmo {
@@ -80,9 +75,12 @@ public class GCircle extends Gizmo {
         return false;
     }
     @Override
-    //Do gizmo default action
     public void activate(){
-        //Does nothing for Circle
+        double red = Math.random();
+        double green = Math.random();
+        double blue = Math.random();
+        Color newColor = new Color(red,green,blue,1.0);
+        setColor(newColor);
     }
 
     @Override

@@ -27,8 +27,8 @@
         <Button fx:id ="keyDisconnect" text="Key disconnect" />
         <Button fx:id="rotateButton" text="Rotate" />
         <Separator orientation="VERTICAL" />
-        <Button text="Connect" />
-        <Button text="Disconnect" />
+        <Button fx:id = "connect" text="Connect" />
+        <Button fx:id = "disconnect" text="Disconnect" />
         <Button fx:id="deleteButton" text="Delete" />
     </ToolBar>
     <ToolBar fx:id="runToolBar">
