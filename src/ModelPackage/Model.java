@@ -343,17 +343,16 @@ public class Model extends Observable implements IModel {
 
     @Override
     public void save(File path) {
-        //TODO change saveFile
-        //SaveFile saveFile = new SaveFile(path);
-        //saveFile.save(this);
+        SaveFile saveFile = new SaveFile(path);
+        saveFile.save(this);
+
     }
 
     @Override
     public Model load(File path) {
-        //TODO change loadFile
-        //LoadFile loadFile = new LoadFile(path);
-        //return loadFile.run();
-        return null;
+        LoadFile loadFile = new LoadFile(path);
+        return loadFile.run();
+
     }
 
     @Override
