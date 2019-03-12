@@ -235,8 +235,14 @@ public class Controller implements Initializable, Observer {
     public void setInfoLabel(String text){
        infoLabel.setText(text);
     }
+
     private void toggleModes(){
         if(runToolBar.isManaged()){ // From run to build mode
+
+            //Stop if running
+            // TODO Reset ball position
+            stopTimeline();
+
             isBuilding = true;
             runToolBar.setManaged(false);
             runToolBar.setVisible(false);
