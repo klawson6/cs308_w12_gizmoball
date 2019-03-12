@@ -349,10 +349,11 @@ public class Model extends Observable implements IModel {
     }
 
     @Override
-    public void load(File path) {
+    public Model load(File path) {
         //TODO change loadFile
         //LoadFile loadFile = new LoadFile(path);
         //return loadFile.run();
+        return null;
     }
 
     @Override
