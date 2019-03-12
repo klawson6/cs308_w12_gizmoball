@@ -73,6 +73,9 @@ public class Controller implements Initializable, Observer {
         initialiseCommonToolBar();
         buildToolBar.setManaged(false);
         buildToolBar.setVisible(false);
+        buildToolBar.maxWidthProperty().bind(canvas.widthProperty());
+        runToolBar.maxWidthProperty().bind(canvas.widthProperty());
+        commonToolBar.maxWidthProperty().bind(canvas.widthProperty());
         populateChoiceBox();
         addButtonListeners();
     }
@@ -245,6 +248,7 @@ public class Controller implements Initializable, Observer {
             canvas.addEventHandler(MouseEvent.ANY, mouseHandler);
 
             canvas.draw(isBuilding);
+            stage.sizeToScene();
         }
 
         addBallButton.setOnAction(event -> {
@@ -277,9 +281,6 @@ public class Controller implements Initializable, Observer {
         canvasSizeTextField.setText(String.valueOf(canvasSize));
         stage.setMaxWidth(canvasSize);
         stage.sizeToScene();
-        rootPane.setAlignment(Pos.CENTER);
-        rootPane.setBackground(new Background(new BackgroundFill(Color.web("#111"), CornerRadii.EMPTY, Insets.EMPTY)));
-        //stage.setHeight(commonToolBar.getHeight() + runToolBar.getHeight() + canvasSize);
     }
 
     @Override
