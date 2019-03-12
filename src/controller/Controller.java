@@ -3,6 +3,7 @@ package controller;
 import ModelPackage.*;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -10,10 +11,15 @@ import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -44,6 +50,7 @@ public class Controller implements Initializable, Observer {
     @FXML public Button deleteBall;
     @FXML private ChoiceBox<GizmoType> gizmoChoiceBox;
     @FXML private Label infoLabel;
+    @FXML private TextField canvasSizeTextField;
 
 
 
@@ -56,16 +63,35 @@ public class Controller implements Initializable, Observer {
         mouseHandler = new RunMouseEventHandler(model);
         keyBindHandler = new KeyBindingHandler(model);
         rootPane.addEventHandler(KeyEvent.ANY,keyBindHandler);
-        initialiseToolBars();
         initialiseCanvas();
+        initialiseToolBars();
         initialiseTimeline();
     }
 
     private void initialiseToolBars(){
+
+        initialiseCommonToolBar();
         buildToolBar.setManaged(false);
         buildToolBar.setVisible(false);
         populateChoiceBox();
         addButtonListeners();
+    }
+
+    private void initialiseCommonToolBar(){
+        canvasSizeTextField.setMinWidth(Region.USE_PREF_SIZE);
+        canvasSizeTextField.setMaxWidth(Region.USE_PREF_SIZE);
+        canvasSizeTextField.textProperty().addListener((ov, prevText, currText) -> {
+            // Do this in a Platform.runLater because of Textfield has no padding at first time and so on
+            Platform.runLater(() -> {
+                Text text = new Text(currText);
+                text.setFont(canvasSizeTextField.getFont()); // Set the same font, so the size is the same
+                double width = text.getLayoutBounds().getWidth() // This big is the Text in the TextField
+                        + canvasSizeTextField.getPadding().getLeft() + canvasSizeTextField.getPadding().getRight() // Add the padding of the TextField
+                        + 2d; // Add some spacing
+                canvasSizeTextField.setPrefWidth(width); // Set the width
+                canvasSizeTextField.positionCaret(canvasSizeTextField.getCaretPosition()); // If you remove this line, it flashes a little bit
+            });
+        });
     }
 
     private void populateChoiceBox(){
@@ -85,15 +111,6 @@ public class Controller implements Initializable, Observer {
     }
 
     private void initialiseCanvas(){
-        /*
-        canvas.widthProperty().bind(rootPane.widthProperty());
-        canvas.heightProperty().bind(rootPane.heightProperty().subtract(buildToolBar.heightProperty()).subtract(commonToolBar.heightProperty()));
-        canvas.heightProperty().bind(rootPane.heightProperty().subtract(runToolBar.heightProperty()).subtract(commonToolBar.heightProperty()));
-        canvas.widthProperty().addListener(observable -> canvas.draw(isBuilding));
-        canvas.heightProperty().addListener(observable -> canvas.draw(isBuilding));
-        */
-
-
 
         canvas.addEventHandler(MouseEvent.ANY, mouseHandler);
         canvas.addEventHandler(KeyEvent.ANY,keyBindHandler);
@@ -113,6 +130,11 @@ public class Controller implements Initializable, Observer {
         runButton.setOnAction(event -> toggleModes());
         buildButton.setOnAction(event -> toggleModes());
         quitButton.setOnAction(event -> System.exit(0));
+
+        // Resize Canvas
+        canvasSizeTextField.setOnKeyPressed((event) -> {
+            if(event.getCode() == KeyCode.ENTER) { setCanvasSize(Integer.valueOf(canvasSizeTextField.getText())); }
+        });
 
         //Add Handler for Rotation
 
@@ -252,6 +274,12 @@ public class Controller implements Initializable, Observer {
         canvas.setWidth(canvasSize);
         canvas.setHeight(canvasSize);
         canvas.draw(isBuilding);
+        canvasSizeTextField.setText(String.valueOf(canvasSize));
+        stage.setMaxWidth(canvasSize);
+        stage.sizeToScene();
+        rootPane.setAlignment(Pos.CENTER);
+        rootPane.setBackground(new Background(new BackgroundFill(Color.web("#111"), CornerRadii.EMPTY, Insets.EMPTY)));
+        //stage.setHeight(commonToolBar.getHeight() + runToolBar.getHeight() + canvasSize);
     }
 
     @Override
