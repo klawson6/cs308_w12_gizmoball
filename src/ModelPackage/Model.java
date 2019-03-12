@@ -152,6 +152,8 @@ public class Model extends Observable implements IModel {
         if (location == null && gizmo != null) {
             gizmo.setxPosition(newxPos);
             gizmo.setyPosition(newyPos);
+            setChanged();
+            notifyObservers();
             return true;
         } else {
             return false;
@@ -163,19 +165,30 @@ public class Model extends Observable implements IModel {
         Gizmo gizmo = getGizmo(xPos, yPos);
         if (gizmo != null) {
             gizmoList.remove(gizmo);
+            setChanged();
+            notifyObservers();
         }
     }
 
     @Override
     public boolean rotate(int xPos, int yPos) {
         Gizmo gizmo = getGizmo(xPos, yPos);
-        return gizmo.rotate();
+        if(gizmo != null) {
+            boolean change = gizmo.rotate();
+            setChanged();
+            notifyObservers();
+            return change;
+        }
+        return false;
     }
 
     @Override
     public boolean createBall(double xPos, double yPos, double xVelocity, double yVelocity) {
         //Get top left of where ball if placed
         //int removes all numbers after decimal, effectively rounding down
+
+        //TODO need to add placement detection to ball
+
         int x = (int) xPos;
         int y = (int) yPos;
 
@@ -184,6 +197,8 @@ public class Model extends Observable implements IModel {
         if (location == null) {
             Ball ball = new Ball(xPos, yPos, xVelocity, yVelocity);
             balls.add(ball);
+            setChanged();
+            notifyObservers();
             return true;
         }
         return false;
@@ -247,26 +262,35 @@ public class Model extends Observable implements IModel {
                 moveBallForTime(tuc, ball);
                 ball.modifyVelocity(cd.getVelo());
                 if (cd.getCollisionGizmo() != null) {
-                    if (cd.getCollisionGizmo().getGizmoType().equals("Absorber")) {
+                    if (cd.getCollisionGizmo().getGizmoType().equals(GizmoType.ABSORBER)) {
 
                         GAbsorber absorber = (GAbsorber) cd.getCollisionGizmo();
-                        //ball = new Ball(absorber.getEndxPosition() - 0.75, absorber.getStartyPosition() + 0.75, 0, 0);
-                        int counter = 0;
+//                        ball = new Ball(absorber.getEndxPosition() - 0.75, absorber.getStartyPosition() + 0.75, 0, 0);
+//                        int counter = 0;
+//                        System.out.println("colided with absorber");
+//                        ball.setCircle(absorber.getEndxPosition()-0.75,absorber.getStartyPosition()+0.75);
+//                        ball.setVelocity(0,0);
+//                        ball.stopBall();
 
-                        ball.setCircle(absorber.getEndxPosition()-0.75,absorber.getStartyPosition()+0.75);
-                        ball.setVelocity(0,0);
-                        ball.stopBall();
-
-                        absorber.setAbsorbedBall(ball);
+                        absorber.addAbsorbedBall(ball);
 
                         LinkedList<Ball> listofballs = absorber.getAbsorberBalls();
 
-                      for(int i =0;i<listofballs.size();i++){
-                          listofballs.get(i).setCircle(absorber.getEndxPosition()-0.75-i,absorber.getStartyPosition()+0.75);
-                          listofballs.get(i).setVelocity(0,0);
-                      }
+//                      for(int i =0;i<listofballs.size();i++){
+//                          listofballs.get(i).setCircle(absorber.getEndxPosition()-0.75,absorber.getStartyPosition()+0.75);
+//                          listofballs.get(i).setVelocity(0,0);
+//                      }
+                      //TODO add absorber to absorber connection activation
+                    }
+
+                    if(cd.getCollisionGizmo().getGizmoConnectionIds().size()>0){
+                        for(String id: cd.getCollisionGizmo().getGizmoConnectionIds()){
+                            getGizmo(id).activate();
+                        }
                     }
                 }
+
+
 
             }
 
@@ -301,7 +325,10 @@ public class Model extends Observable implements IModel {
 
     @Override
     public boolean addGizmoConnection(int xPosofSelectedGizmo, int yPosfSelectedGizmo, int xPosofTargetGizmo, int yPosofTargetGizmo) {
+        if(getGizmo(xPosofSelectedGizmo,yPosfSelectedGizmo) != null & getGizmo(xPosofTargetGizmo,yPosofTargetGizmo) != null)
        return getGizmo(xPosofSelectedGizmo,yPosfSelectedGizmo).addGizmoConnection(getGizmo(xPosofTargetGizmo,yPosofTargetGizmo));
+        else
+            return false;
     }
 
     @Override
@@ -316,15 +343,16 @@ public class Model extends Observable implements IModel {
 
     @Override
     public void save(File path) {
-        SaveFile saveFile = new SaveFile(path);
-        saveFile.save(this);
+        //TODO change saveFile
+        //SaveFile saveFile = new SaveFile(path);
+        //saveFile.save(this);
     }
 
     @Override
-    public Model load(File path) {
+    public void load(File path) {
         //TODO change loadFile
-        LoadFile loadFile = new LoadFile(path);
-        return loadFile.run();
+        //LoadFile loadFile = new LoadFile(path);
+        //return loadFile.run();
     }
 
     @Override

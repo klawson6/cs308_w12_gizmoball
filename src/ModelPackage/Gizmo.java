@@ -3,8 +3,8 @@ package ModelPackage;
 import Physics.Circle;
 import Physics.LineSegment;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.paint.Color;
 
-import java.awt.*;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
@@ -101,12 +101,37 @@ public abstract class Gizmo implements IGizmo {
     //TODO figure out how to store an action
 
     boolean addKeyBinding(KeyEvent key, String action) {
-        return keybindings.put(key, action) != null;
+        for(KeyEvent e :keybindings.keySet()){
+
+            if(e.getCode().getName().equals(key.getCode().getName()) && e.getEventType().getName().equals(key.getEventType().getName()) ){
+                System.out.println("Keybinding exists!");
+                return false;
+           }
+
+        }
+        keybindings.put(key,action);
+        return true;
     }
 
     boolean removeKeyBinding(KeyEvent key){
-        return keybindings.remove(key) != null;
-    }
+
+        boolean deleted = false;
+
+            //Adding binding to be removed in a set to avoid concurrent modification exception
+            Set<KeyEvent> toBeRemoved = new HashSet<>();
+            for(KeyEvent e :keybindings.keySet()){
+                if(e.getCode().getName().equals(key.getCode().getName()) )
+                {
+
+                  toBeRemoved.add(e);
+                    deleted = true;
+                }
+            }
+            keybindings.keySet().removeAll(toBeRemoved);
+           return deleted;
+        }
+
+
 
     //Getter for keybindings
     public HashMap<KeyEvent, String> getKeybindings() {

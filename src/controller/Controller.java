@@ -11,6 +11,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
@@ -28,16 +29,18 @@ public class Controller implements Initializable, Observer {
     private IModel model;
     private Timeline timeline;
     private KeyBindingHandler keyBindHandler;
-    private MouseEventHandler mouseHandler;
+    private EventHandler<MouseEvent> mouseHandler;
 
     private boolean isBuilding = false;
 
     @FXML private ResizableCanvas canvas;
     @FXML private VBox rootPane;
-  //  @FXML private Label speed;
-    @FXML private Button startButton, stopButton, tickButton, buildButton, runButton, saveButton, loadButton, quitButton;
+    @FXML private Button startButton, stopButton, tickButton, buildButton, runButton, saveButton, loadButton, quitButton,keyConnect,keyDisconnect,connect,disconnect;
     @FXML private ToolBar commonToolBar, runToolBar, buildToolBar;
-    @FXML private ChoiceBox<String> gizmoChoiceBox;
+    @FXML private Button rotateButton;
+    @FXML private Button deleteButton;
+    @FXML private Button addBallButton;
+    @FXML private ChoiceBox<GizmoType> gizmoChoiceBox;
     @FXML private Label infoLabel;
 
 
@@ -49,7 +52,8 @@ public class Controller implements Initializable, Observer {
         model.addObserver(this);
 
         mouseHandler = new RunMouseEventHandler(model);
-
+        keyBindHandler = new KeyBindingHandler(model);
+        rootPane.addEventHandler(KeyEvent.ANY,keyBindHandler);
         initialiseToolBars();
         initialiseCanvas();
         initialiseTimeline();
@@ -63,7 +67,8 @@ public class Controller implements Initializable, Observer {
     }
 
     private void populateChoiceBox(){
-        ObservableList<String> gizmoTypes = FXCollections.observableArrayList(getGizmoTypeStringArray());
+        //ObservableList<String> gizmoTypes = FXCollections.observableArrayList(getGizmoTypeStringArray());
+        ObservableList<GizmoType> gizmoTypes = FXCollections.observableArrayList(GizmoType.values());
         gizmoChoiceBox.setItems(gizmoTypes);
         gizmoChoiceBox.setValue(gizmoTypes.get(0));
     }
@@ -85,6 +90,7 @@ public class Controller implements Initializable, Observer {
         canvas.heightProperty().addListener(observable -> canvas.draw(isBuilding));
 
         canvas.addEventHandler(MouseEvent.ANY, mouseHandler);
+        canvas.addEventHandler(KeyEvent.ANY,keyBindHandler);
 
     }
 
@@ -102,20 +108,99 @@ public class Controller implements Initializable, Observer {
         buildButton.setOnAction(event -> toggleModes());
         quitButton.setOnAction(event -> System.exit(0));
 
-        addChoiceBoxListener();
-    }
+        //Add Handler for Rotation
 
-    private void addChoiceBoxListener(){
-        gizmoChoiceBox.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
-            @Override public void changed(ObservableValue<? extends String> selected, String oldGizmo, String newGizmo) {
-                if (newGizmo != null) {
-                    infoLabel.setText("Click on grid to add " + newGizmo);
-                    mouseHandler.addGizmo(GizmoType.fromString(newGizmo));
-                }
+        rotateButton.setOnAction(event -> {
+            canvas.removeEventHandler(MouseEvent.ANY,mouseHandler);
+            mouseHandler = new RotationHandler(model, canvas);
+            canvas.addEventHandler(MouseEvent.ANY, mouseHandler);
+                canvas.requestFocus();
+                rotateButton.requestFocus();
+
+        }
+
+        );
+
+        //Add Handler for Deleting Gizmos
+
+        deleteButton.setOnAction(event -> {
+
+            canvas.removeEventHandler(MouseEvent.ANY, mouseHandler);
+            mouseHandler = new DeleteGizmoHandler(model, canvas);
+            canvas.addEventHandler(MouseEvent.ANY, mouseHandler);
+                canvas.requestFocus();
+                deleteButton.requestFocus();
+
+        });
+        //Add handler for adding keybindings
+        keyConnect.setOnAction(event -> {
+
+            canvas.removeEventHandler(MouseEvent.ANY, mouseHandler);
+            mouseHandler = new AddKeyConnectionsHandler(canvas,model);
+            canvas.addEventHandler(MouseEvent.ANY, mouseHandler);
+            canvas.requestFocus();
+            keyConnect.requestFocus();
+
+        });
+        //Add handler for adding keybindings
+        keyDisconnect.setOnAction(event -> {
+
+            canvas.removeEventHandler(MouseEvent.ANY, mouseHandler);
+            mouseHandler = new RemoveKeyConnectionsHandler(model,canvas);
+            canvas.addEventHandler(MouseEvent.ANY, mouseHandler);
+            canvas.requestFocus();
+            keyDisconnect.requestFocus();
+
+        });
+
+        //Add handler for adding gizmo connections
+        connect.setOnAction(event -> {
+
+            canvas.removeEventHandler(MouseEvent.ANY, mouseHandler);
+            mouseHandler = new AddGizmoConnectionsHandler(canvas,model);
+            canvas.addEventHandler(MouseEvent.ANY, mouseHandler);
+            canvas.requestFocus();
+            infoLabel.setText("Please select two gizmos to connect.");
+            connect.requestFocus();
+
+
+
+        });
+
+        //Add handler for removing gizmo connections
+        disconnect.setOnAction(event -> {
+
+            canvas.removeEventHandler(MouseEvent.ANY, mouseHandler);
+            mouseHandler = new RemoveGizmoConnectionsHandler(canvas,model);
+            canvas.addEventHandler(MouseEvent.ANY, mouseHandler);
+            canvas.requestFocus();
+            setInfoLabel("Please select two gizmos to disconnect.");
+            disconnect.requestFocus();
+
+        });
+
+
+        //Add Handler for Gizmos to be added
+
+        gizmoChoiceBox.focusedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+
+                if(gizmoChoiceBox.isFocused()){
+                    //Focused so use Handler
+                        canvas.removeEventHandler(MouseEvent.ANY, mouseHandler);
+                        mouseHandler = new PlaceGizmoHandler(model, canvas, gizmoChoiceBox);
+                        canvas.addEventHandler(MouseEvent.ANY, mouseHandler);
+                    }
             }
         });
+
     }
 
+
+    public void setInfoLabel(String text){
+       infoLabel.setText(text);
+    }
     private void toggleModes(){
         if(runToolBar.isManaged()){ // From run to build mode
             isBuilding = true;
@@ -123,12 +208,17 @@ public class Controller implements Initializable, Observer {
             runToolBar.setVisible(false);
             buildToolBar.setManaged(true);
             buildToolBar.setVisible(true);
+            //FIXME handler on root pane?
+            rootPane.removeEventHandler(KeyEvent.ANY,keyBindHandler);
+            canvas.removeEventHandler(MouseEvent.ANY,mouseHandler);
 
-            canvas.removeEventHandler(MouseEvent.ANY, mouseHandler);
-            mouseHandler = new BuildMouseEventHandler(model, canvas);
+            //Default Handler will be place Gizmo's from selection
+            mouseHandler = new PlaceGizmoHandler(model, canvas,gizmoChoiceBox);
+
             canvas.addEventHandler(MouseEvent.ANY, mouseHandler);
-
+            //canvas.removeEventHandler(KeyEvent.ANY,keyBindHandler);
             canvas.draw(isBuilding);
+
         }else{ // From build to run mode
             isBuilding = false;
             runToolBar.setManaged(true);
@@ -136,13 +226,28 @@ public class Controller implements Initializable, Observer {
             buildToolBar.setManaged(false);
             buildToolBar.setVisible(false);
 
+
             canvas.removeEventHandler(MouseEvent.ANY, mouseHandler);
+
             mouseHandler = new RunMouseEventHandler(model);
+            keyBindHandler = new KeyBindingHandler(model);
+            //FIXME
+            rootPane.addEventHandler(KeyEvent.ANY,keyBindHandler);
+            rootPane.requestFocus();
             canvas.addEventHandler(MouseEvent.ANY, mouseHandler);
 
             canvas.draw(isBuilding);
         }
+
+        addBallButton.setOnAction(event -> {
+            canvas.removeEventHandler(MouseEvent.ANY, mouseHandler);
+            mouseHandler = new AddBallHandler(model,canvas);
+            canvas.addEventHandler(MouseEvent.ANY, mouseHandler);
+        });
+
     }
+
+
 
     public void setStage(Stage s){
         stage = s;
@@ -153,20 +258,13 @@ public class Controller implements Initializable, Observer {
         model = m;
     }
 
-    public void setHandlers(){
-        keyBindHandler = new KeyBindingHandler(model);
-        //rootPane.addEventHandler(KeyEvent.ANY,keyBindHandler);
-        rootPane.setOnKeyReleased(keyBindHandler);
-    }
-
-
     @Override
     public void update(Observable o, Object arg) {
         Model model = (Model) o;
         Set<IGizmo> gizmos = model.getGizmoList();
         List<IBall> balls = model.getBalls();
 
-        setHandlers();
+        //setHandlers();
 
         canvas.setGizmoList(gizmos);
 
@@ -178,7 +276,8 @@ public class Controller implements Initializable, Observer {
     private void loadFile(){
         File file = new FileChooser().showOpenDialog(stage);
         if(file != null){
-            model = model.load(file);
+            LoadFile r = new LoadFile(file);
+            model = r.run();
             model.addObserver(this);
             update((Observable) model, isBuilding);
         }else{

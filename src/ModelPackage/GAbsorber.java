@@ -3,12 +3,10 @@ package ModelPackage;
 import Physics.Circle;
 import Physics.LineSegment;
 import Physics.Vect;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
+import javafx.scene.paint.Color;
 
-import java.awt.*;
-import java.util.*;
-import java.util.List;
+import java.util.LinkedList;
+import java.util.Set;
 
 public class GAbsorber extends Gizmo {
 
@@ -20,7 +18,7 @@ public class GAbsorber extends Gizmo {
     private Set<LineSegment> composingLines = super.composingLines;
     private Set<Circle> composingCircles = super.composingCircles;
     private LinkedList<Ball> absorbedBall = new LinkedList<>();
-    private Color defaultColor = Color.magenta;
+    private Color defaultColor = Color.MAGENTA;
     private String id;
 
     //Constructor that gives id, if none given
@@ -40,8 +38,6 @@ public class GAbsorber extends Gizmo {
 
         addLines();
         addCircles();
-        //FIXME - adding a default key binding for the absorber to shoot the ball?
-        addKeyBinding(new KeyEvent(KeyEvent.KEY_PRESSED,"c","c ", KeyCode.C,false,false,false,false),"Shoot Ball");
 
     }
 
@@ -60,8 +56,7 @@ public class GAbsorber extends Gizmo {
         this.yEnd = yEnd;
         this.id = id;
 
-        //FIXME - adding a default key binding for the absorber to shoot the ball?
-        addKeyBinding(new KeyEvent(KeyEvent.KEY_PRESSED,"c","c ", KeyCode.C,false,false,false,false),"Shoot Ball");
+
         addLines();
         addCircles();
 
@@ -127,32 +122,31 @@ public class GAbsorber extends Gizmo {
     
 
     //Sets ball currently in the absorber
-    public void setAbsorbedBall(Ball b){
+    public void addAbsorbedBall(Ball b){
 
         absorbedBall.addLast(b);
+        moveAbsorbedBall(b);
 
     }
 
-    public void moveAbsorbedBall(){
+    private void moveAbsorbedBall(Ball ball){
 
-        Ball ball = absorbedBall.removeFirst();
 
-        if(ball != null) {
+        ball.setCircle(getEndxPosition() - 0.75, getEndyPosition() -0.75);
+        ball.setVelocity(0,0);
 
-               ball.setCircle(getEndxPosition(), getStartyPosition() );
-          //  absorbedBall.modifyVelocity(new Vect(0, 0));
-             ball.stopBall();
-        }
+        ball.stopBall();
+
     }
     @Override
     //Launches ball on absorber
     public void activate() {
         if (!absorbedBall.isEmpty()) {
             Ball ball = absorbedBall.removeFirst();
-
-                ball.setCircle(getEndxPosition() - 0.5, getEndyPosition() - 1);
-                ball.modifyVelocity(new Vect(0, -50));
-                System.out.println(ball.getVelocity());
+            double newX = getEndxPosition()- 0.75;
+            double newY = getStartyPosition() + -0.75;
+              ball.setCircle(newX, newY);
+              ball.modifyVelocity(new Vect(0, -50));
                 ball.startBall();
 
         }
@@ -165,6 +159,14 @@ public class GAbsorber extends Gizmo {
     @Override
     //Stops action
     public void deactivate() {
+//        if (!absorbedBall.isEmpty()) {
+//            Ball ball = absorbedBall.removeFirst();
+//            ball.setCircle(getEndxPosition() - 0.5, getEndyPosition() - 1);
+//            ball.modifyVelocity(new Vect(0, -50));
+//            System.out.println(ball.getVelocity());
+//            ball.startBall();
+//
+//        }
 
     }
 }
