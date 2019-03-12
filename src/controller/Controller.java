@@ -182,7 +182,7 @@ public class Controller implements Initializable, Observer {
         connect.setOnAction(event -> {
 
             canvas.removeEventHandler(MouseEvent.ANY, mouseHandler);
-            mouseHandler = new AddKeyConnectionsHandler(canvas,model);
+            mouseHandler = new AddGizmoConnectionsHandler(canvas,model);
             canvas.addEventHandler(MouseEvent.ANY, mouseHandler);
             canvas.requestFocus();
             infoLabel.setText("Please select two gizmos to connect.");
