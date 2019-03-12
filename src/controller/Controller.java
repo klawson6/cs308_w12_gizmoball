@@ -44,6 +44,7 @@ public class Controller implements Initializable, Observer {
     @FXML private Button rotateButton;
     @FXML private Button deleteButton;
     @FXML private Button addBallButton;
+    @FXML public Button deleteBall;
     @FXML private ChoiceBox<GizmoType> gizmoChoiceBox;
     @FXML private Label infoLabel;
     @FXML private TextField canvasSizeTextField;
@@ -59,8 +60,8 @@ public class Controller implements Initializable, Observer {
         mouseHandler = new RunMouseEventHandler(model);
         keyBindHandler = new KeyBindingHandler(model);
         rootPane.addEventHandler(KeyEvent.ANY,keyBindHandler);
-        initialiseToolBars();
         initialiseCanvas();
+        initialiseToolBars();
         initialiseTimeline();
     }
 
@@ -91,7 +92,6 @@ public class Controller implements Initializable, Observer {
             });
         });
     }
-
 
     private void populateChoiceBox(){
         //ObservableList<String> gizmoTypes = FXCollections.observableArrayList(getGizmoTypeStringArray());
@@ -204,6 +204,15 @@ public class Controller implements Initializable, Observer {
 
         });
 
+        deleteBall.setOnAction(event -> {
+
+            canvas.removeEventHandler(MouseEvent.ANY, mouseHandler);
+            mouseHandler = new DeleteBallHandler(model,canvas);
+            canvas.addEventHandler(MouseEvent.ANY, mouseHandler);
+            canvas.requestFocus();
+            keyDisconnect.requestFocus();
+
+        });
 
         //Add Handler for Gizmos to be added
 
@@ -262,6 +271,7 @@ public class Controller implements Initializable, Observer {
             canvas.addEventHandler(MouseEvent.ANY, mouseHandler);
 
             canvas.draw(isBuilding);
+            stage.sizeToScene();
         }
 
         addBallButton.setOnAction(event -> {

@@ -14,6 +14,7 @@
         <Button fx:id="saveButton" text="Save" />
         <Button fx:id="loadButton" text="Load" />
         <Button fx:id="quitButton" text="Quit" />
+        <Separator orientation="VERTICAL" />
         <Label text="Canvas Size:" />
         <TextField fx:id="canvasSizeTextField" />
         <Separator orientation="VERTICAL" />
@@ -32,7 +33,8 @@
         <Separator orientation="VERTICAL" />
         <Button fx:id = "connect" text="Connect" />
         <Button fx:id = "disconnect" text="Disconnect" />
-        <Button fx:id="deleteButton" text="Delete" />
+        <Button fx:id="deleteButton" text="Delete Gizmo" />
+        <Button fx:id="deleteBall" text="Delete Ball"/>
     </ToolBar>
     <ToolBar fx:id="runToolBar">
         <Button fx:id="buildButton" text="Build Mode" />
