@@ -29,7 +29,7 @@ public interface IModel  {
     void addObserver(Observer observer);
 
     void save(File path);
-    void load(File path);
+    Model load(File path);
 
     void play();
     void stop();

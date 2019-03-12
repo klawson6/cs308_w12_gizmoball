@@ -1,0 +1,21 @@
+Triangle T 9 10
+Triangle T1 9 9
+
+Triangle T2 10 8
+Triangle T3 10 11
+
+Triangle T4 11 9
+Triangle T5 11 10
+
+Rotate T
+Rotate T
+Rotate T
+
+Rotate T2
+Rotate T2
+Rotate T4
+Rotate T5
+Rotate T5
+
+
+Ball B 10.0 10.5 0.3 20.0
