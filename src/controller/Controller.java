@@ -3,6 +3,7 @@ package controller;
 import ModelPackage.*;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -11,9 +12,12 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -35,14 +39,14 @@ public class Controller implements Initializable, Observer {
 
     @FXML private ResizableCanvas canvas;
     @FXML private VBox rootPane;
-  //  @FXML private Label speed;
-    @FXML private Button startButton, stopButton, tickButton, buildButton, runButton, saveButton, loadButton, quitButton,keyConnect,keyDisconnect;
+    @FXML private Button startButton, stopButton, tickButton, buildButton, runButton, saveButton, loadButton, quitButton,keyConnect,keyDisconnect,connect,disconnect;
     @FXML private ToolBar commonToolBar, runToolBar, buildToolBar;
     @FXML private Button rotateButton;
     @FXML private Button deleteButton;
     @FXML private Button addBallButton;
     @FXML private ChoiceBox<GizmoType> gizmoChoiceBox;
     @FXML private Label infoLabel;
+    @FXML private TextField canvasSizeTextField;
 
 
 
@@ -61,11 +65,33 @@ public class Controller implements Initializable, Observer {
     }
 
     private void initialiseToolBars(){
+        initialiseCommonToolBar();
         buildToolBar.setManaged(false);
         buildToolBar.setVisible(false);
+        buildToolBar.maxWidthProperty().bind(canvas.widthProperty());
+        runToolBar.maxWidthProperty().bind(canvas.widthProperty());
+        commonToolBar.maxWidthProperty().bind(canvas.widthProperty());
         populateChoiceBox();
         addButtonListeners();
     }
+
+    private void initialiseCommonToolBar(){
+        canvasSizeTextField.setMinWidth(Region.USE_PREF_SIZE);
+        canvasSizeTextField.setMaxWidth(Region.USE_PREF_SIZE);
+        canvasSizeTextField.textProperty().addListener((ov, prevText, currText) -> {
+            // Do this in a Platform.runLater because of Textfield has no padding at first time and so on
+            Platform.runLater(() -> {
+                Text text = new Text(currText);
+                text.setFont(canvasSizeTextField.getFont()); // Set the same font, so the size is the same
+                double width = text.getLayoutBounds().getWidth() // This big is the Text in the TextField
+                        + canvasSizeTextField.getPadding().getLeft() + canvasSizeTextField.getPadding().getRight() // Add the padding of the TextField
+                        + 2d; // Add some spacing
+                canvasSizeTextField.setPrefWidth(width); // Set the width
+                canvasSizeTextField.positionCaret(canvasSizeTextField.getCaretPosition()); // If you remove this line, it flashes a little bit
+            });
+        });
+    }
+
 
     private void populateChoiceBox(){
         //ObservableList<String> gizmoTypes = FXCollections.observableArrayList(getGizmoTypeStringArray());
@@ -84,19 +110,8 @@ public class Controller implements Initializable, Observer {
     }
 
     private void initialiseCanvas(){
-        /*
-        canvas.widthProperty().bind(rootPane.widthProperty());
-        canvas.heightProperty().bind(rootPane.heightProperty().subtract(buildToolBar.heightProperty()).subtract(commonToolBar.heightProperty()));
-        canvas.heightProperty().bind(rootPane.heightProperty().subtract(runToolBar.heightProperty()).subtract(commonToolBar.heightProperty()));
-        canvas.widthProperty().addListener(observable -> canvas.draw(isBuilding));
-        canvas.heightProperty().addListener(observable -> canvas.draw(isBuilding));
-        */
-
-
-
         canvas.addEventHandler(MouseEvent.ANY, mouseHandler);
         canvas.addEventHandler(KeyEvent.ANY,keyBindHandler);
-
     }
 
     private void initialiseTimeline(){
@@ -112,6 +127,11 @@ public class Controller implements Initializable, Observer {
         runButton.setOnAction(event -> toggleModes());
         buildButton.setOnAction(event -> toggleModes());
         quitButton.setOnAction(event -> System.exit(0));
+
+        // Resize Canvas
+        canvasSizeTextField.setOnKeyPressed((event) -> {
+            if(event.getCode() == KeyCode.ENTER) { setCanvasSize(Integer.valueOf(canvasSizeTextField.getText())); }
+        });
 
         //Add Handler for Rotation
 
@@ -158,6 +178,33 @@ public class Controller implements Initializable, Observer {
 
         });
 
+        //Add handler for adding gizmo connections
+        connect.setOnAction(event -> {
+
+            canvas.removeEventHandler(MouseEvent.ANY, mouseHandler);
+            mouseHandler = new AddKeyConnectionsHandler(canvas,model);
+            canvas.addEventHandler(MouseEvent.ANY, mouseHandler);
+            canvas.requestFocus();
+            infoLabel.setText("Please select two gizmos to connect.");
+            connect.requestFocus();
+
+
+
+        });
+
+        //Add handler for removing gizmo connections
+        disconnect.setOnAction(event -> {
+
+            canvas.removeEventHandler(MouseEvent.ANY, mouseHandler);
+            mouseHandler = new RemoveGizmoConnectionsHandler(canvas,model);
+            canvas.addEventHandler(MouseEvent.ANY, mouseHandler);
+            canvas.requestFocus();
+            setInfoLabel("Please select two gizmos to disconnect.");
+            disconnect.requestFocus();
+
+        });
+
+
         //Add Handler for Gizmos to be added
 
         gizmoChoiceBox.focusedProperty().addListener(new ChangeListener<Boolean>() {
@@ -176,6 +223,9 @@ public class Controller implements Initializable, Observer {
     }
 
 
+    public void setInfoLabel(String text){
+       infoLabel.setText(text);
+    }
     private void toggleModes(){
         if(runToolBar.isManaged()){ // From run to build mode
             isBuilding = true;
@@ -233,15 +283,15 @@ public class Controller implements Initializable, Observer {
         model = m;
     }
 
-    public int getCanvasSize() {
-        return (int) canvas.getHeight();
-    }
-
     public void setCanvasSize(int canvasSize) {
         canvas.setWidth(canvasSize);
         canvas.setHeight(canvasSize);
         canvas.draw(isBuilding);
+        canvasSizeTextField.setText(String.valueOf(canvasSize));
+        stage.setMaxWidth(canvasSize);
+        stage.sizeToScene();
     }
+
 
     @Override
     public void update(Observable o, Object arg) {
@@ -261,7 +311,8 @@ public class Controller implements Initializable, Observer {
     private void loadFile(){
         File file = new FileChooser().showOpenDialog(stage);
         if(file != null){
-            model = model.load(file);
+            LoadFile r = new LoadFile(file);
+            model = r.run();
             model.addObserver(this);
             update((Observable) model, isBuilding);
         }else{
@@ -273,7 +324,6 @@ public class Controller implements Initializable, Observer {
         }
 
     }
-
 
     private void saveFile(){
         FileChooser fileChooser = new FileChooser();
@@ -299,7 +349,6 @@ public class Controller implements Initializable, Observer {
             alert.showAndWait();
         }
     }
-
 
     private void startTimeline(){
         timeline.setCycleCount(Timeline.INDEFINITE);

@@ -36,8 +36,8 @@ public class GUIDriver extends Application{
             Parent root = loader.load();
             runScene = new Scene(root);
             controller = loader.getController();
-            controller.setCanvasSize(CANVAS_SIZE);
             controller.setStage(primaryStage);
+            controller.setCanvasSize(CANVAS_SIZE);
 
         }catch (IOException e){
             System.err.println("Error when loading the view! Please check the FXML file doesn't have any errors!");

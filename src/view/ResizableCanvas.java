@@ -1,15 +1,18 @@
 package view;
 
-import ModelPackage.*;
-import Physics.Vect;
+import ModelPackage.GizmoType;
+import ModelPackage.IBall;
+import ModelPackage.IGizmo;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Polygon;
 import javafx.scene.transform.Affine;
 import javafx.scene.transform.Rotate;
 
-import java.util.*;
+import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
+import java.util.Set;
 
 public class ResizableCanvas extends Canvas implements Observer {
 
@@ -43,16 +46,16 @@ public class ResizableCanvas extends Canvas implements Observer {
                 GizmoType type = iGizmo.getGizmoType();
                 switch (type) {
                     case CIRCLE:
-                        gc.setFill(Color.GREEN);
+                        gc.setFill(iGizmo.getColour());
                         gc.fillOval(iGizmo.getStartxPosition() * wGridSquareSize, iGizmo.getStartyPosition() * hGridSquareSize, wGridSquareSize, hGridSquareSize);
                         break;
                     case SQUARE:
-                        gc.setFill(Color.RED);
+                        gc.setFill(iGizmo.getColour());
                         gc.fillRect(iGizmo.getStartxPosition() * wGridSquareSize, iGizmo.getStartyPosition() * hGridSquareSize, wGridSquareSize, hGridSquareSize);
                         break;
                     case TRIANGLE:
                         gc.save();
-                        gc.setFill(Color.BLUE);
+                        gc.setFill(iGizmo.getColour());
                         double startX = (double) iGizmo.getStartxPosition() * wGridSquareSize;
                         double startY = (double) iGizmo.getStartyPosition() * hGridSquareSize;
                         double[] xPoints = {startX, startX, startX + wGridSquareSize};
@@ -62,7 +65,7 @@ public class ResizableCanvas extends Canvas implements Observer {
                         gc.restore();
                         break;
                     case ABSORBER:
-                        gc.setFill(Color.PURPLE);
+                        gc.setFill(iGizmo.getColour());
                         double startXAbsorber = (double) iGizmo.getStartxPosition() * wGridSquareSize;
                         double startYAbsorber = (double) iGizmo.getStartyPosition() * hGridSquareSize;
                         double endXAbsorber = (double) iGizmo.getEndxPosition() * wGridSquareSize;
@@ -73,14 +76,14 @@ public class ResizableCanvas extends Canvas implements Observer {
                         break;
                     case LEFTFLIPPER:
                         gc.save();
-                        gc.setFill(Color.YELLOW);
+                        gc.setFill(iGizmo.getColour());
                         gc.transform(new Affine(new Rotate(-iGizmo.getRotation(), (iGizmo.getStartxPosition() + 0.5) * wGridSquareSize, (iGizmo.getStartyPosition() + 0.5) * hGridSquareSize)));
                         gc.fillRoundRect(iGizmo.getStartxPosition() * wGridSquareSize, iGizmo.getStartyPosition() * hGridSquareSize, wGridSquareSize, hGridSquareSize * 2, wGridSquareSize, hGridSquareSize);
                         gc.restore();
                         break;
                     case RIGHTFLIPPER:
                         gc.save();
-                        gc.setFill(Color.YELLOW);
+                        gc.setFill(iGizmo.getColour());
                         gc.transform(new Affine(new Rotate(iGizmo.getRotation(), (iGizmo.getStartxPosition() + 1.5) * wGridSquareSize, (iGizmo.getStartyPosition() + 0.5) * hGridSquareSize)));
                         gc.fillRoundRect((iGizmo.getStartxPosition() + 1) * wGridSquareSize, iGizmo.getStartyPosition() * hGridSquareSize, wGridSquareSize, hGridSquareSize * 2, wGridSquareSize, hGridSquareSize);
                         gc.restore();

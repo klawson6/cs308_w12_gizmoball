@@ -2,8 +2,8 @@ package ModelPackage;
 
 import Physics.Circle;
 import Physics.LineSegment;
+import javafx.scene.paint.Color;
 
-import java.awt.*;
 import java.util.Set;
 
 public class GSquare extends Gizmo {
@@ -55,9 +55,13 @@ public class GSquare extends Gizmo {
         return yPos;
     }
 
-    //TODO carry out actions
-    //Will carry out gizmo's standard action
-    public void activate() {}
+    public void activate() {
+        double red = Math.random();
+        double green = Math.random();
+        double blue = Math.random();
+        Color newColor = new Color(red,green,blue,1.0);
+        setColor(newColor);
+    }
 
     //TODO stop actions
     //Will stop gizmo's action

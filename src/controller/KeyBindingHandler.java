@@ -18,26 +18,26 @@ public class KeyBindingHandler implements EventHandler<KeyEvent> {
 
     @Override
     public void handle(KeyEvent event)
-        {
+    {
 
-            Set<IGizmo> gizmos = model.getGizmoList();
-            for(IGizmo g:gizmos) {
+        Set<IGizmo> gizmos = model.getGizmoList();
+        for(IGizmo g:gizmos) {
 
-                HashMap<KeyEvent, String> allbindings = g.getKeybindings();
-                Set<KeyEvent> bindings = allbindings.keySet();
+            HashMap<KeyEvent, String> allbindings = g.getKeybindings();
+            Set<KeyEvent> bindings = allbindings.keySet();
 
-                for (KeyEvent e : bindings) {
+            for (KeyEvent e : bindings) {
 
-                    if (event.getCode().equals(e.getCode()) && event.getEventType().getName().equals(e.getEventType().getName())) {
-                        System.out.println("Keybind Pressed/Released!");
-                        g.activate();
-                    }
+                if (event.getCode().equals(e.getCode()) && event.getEventType().getName().equals(e.getEventType().getName())) {
+                    System.out.println("Keybind Pressed/Released!");
+                    g.activate();
                 }
             }
-                event.consume();
-
-
         }
+        event.consume();
+
+
+    }
 
 
 }

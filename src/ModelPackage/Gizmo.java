@@ -3,8 +3,8 @@ package ModelPackage;
 import Physics.Circle;
 import Physics.LineSegment;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.paint.Color;
 
-import java.awt.*;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
