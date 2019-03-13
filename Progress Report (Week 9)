@@ -1,0 +1,37 @@
+Tasks Done:
+
+Adjust Build Mode GUI (GUI is stretched slightly, Shapes being stretched on resize) - John
+Add method to detect ball placement over another ball - Cameron
+Updated Physics Loop (Bug found) - Kyle
+Add Gizmo Connections - Alexi
+Get JUnit tests done (Model partly done) - John/Cameron.
+
+
+Tasks to do next Week (Week 8-9):
+
+Flipper collisions - Cameron
+Drawing of Flipper animation - John
+
+Overlapping Gizmos (Add boundary checks) - Alexi
+Allow aborber to connect to its self - Alexi
+Fixing bouncing bug - Kyle
+
+Multiple Ball collisions - Alexi
+Reset Ball position when entering build mode , (ball needs constructor) - Cameron
+Reset Button (reset play to default) - (Extra)
+
+add KeyConnect loading and saving - Mark
+
+Make feedback appear in  GUI rather than console - John
+
+JUnit - John
+Validation Testing - Kyle
+Bullet Point of design changes - Cameron
+
+Questions:
+
+Challenges:
+
+Fixing Collisions (making ball work with gravity and friction)
+
+Changes:
