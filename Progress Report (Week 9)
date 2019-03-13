@@ -13,6 +13,7 @@ Flipper collisions - Cameron
 Drawing of Flipper animation - John
 
 Overlapping Gizmos (Add boundary checks) - Alexi
+Allow aborber to connect to its self
 Fixing bouncing bug - Kyle
 
 Multiple Ball collisions - Alexi
