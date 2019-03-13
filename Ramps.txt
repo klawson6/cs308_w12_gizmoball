@@ -1,0 +1,78 @@
+Triangle T136 13 6
+Triangle T54 5 4
+Triangle T 19 0
+Triangle T87 8 7
+Triangle T76 7 6
+Triangle T99 9 9
+Triangle T173 17 3
+Triangle T154 15 4
+Triangle T119 11 9
+Triangle T44 4 4
+Absorber A 0 19 20 20
+Triangle T55 5 5
+Square S182 18 2
+Triangle T65 6 5
+Square S02 0 2
+Triangle T43 4 3
+Triangle T98 9 8
+Triangle T88 8 8
+Triangle T2 1 1
+Triangle T127 12 7
+Triangle T163 16 3
+Triangle T128 12 8
+Triangle T137 13 7
+Square S32 3 2
+Triangle T118 11 8
+Triangle T77 7 7
+Triangle T33 3 3
+Triangle T145 14 5
+Triangle T155 15 5
+Square S12 1 2
+Triangle T66 6 6
+Square S172 17 2
+Triangle T146 14 6
+Square S22 2 2
+Triangle T164 16 4
+
+Ball B 19.5 16.221875 0.0 -45.5625
+
+Rotate T136
+Rotate T136
+Rotate T54
+Rotate T54
+Rotate T54
+Rotate T
+Rotate T87
+Rotate T87
+Rotate T87
+Rotate T76
+Rotate T76
+Rotate T76
+Rotate T99
+Rotate T154
+Rotate T154
+Rotate T44
+Rotate T55
+Rotate T65
+Rotate T65
+Rotate T65
+Rotate T43
+Rotate T43
+Rotate T43
+Rotate T98
+Rotate T98
+Rotate T98
+Rotate T88
+Rotate T127
+Rotate T127
+Rotate T163
+Rotate T163
+Rotate T118
+Rotate T118
+Rotate T77
+Rotate T33
+Rotate T145
+Rotate T145
+Rotate T66
+
+Ball B 19.5 16.221875 0.0 -45.5625

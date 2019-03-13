@@ -143,8 +143,8 @@ public class GAbsorber extends Gizmo {
     public void activate() {
         if (!absorbedBall.isEmpty()) {
             Ball ball = absorbedBall.removeFirst();
-            double newX = getEndxPosition()- 0.75;
-            double newY = getStartyPosition() + -0.75;
+            double newX = getEndxPosition()- 0.5;
+            double newY = getStartyPosition() + -0.5;
               ball.setCircle(newX, newY);
               ball.modifyVelocity(new Vect(0, -50));
                 ball.startBall();

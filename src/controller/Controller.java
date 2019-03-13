@@ -26,12 +26,16 @@ import view.ResizableCanvas;
 import java.io.File;
 import java.net.URL;
 import java.util.*;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 public class Controller implements Initializable, Observer {
 
     private Stage stage;
     private IModel model;
     private Timeline timeline;
+    private ScheduledExecutorService scheduler;
     private KeyBindingHandler keyBindHandler;
     private EventHandler<MouseEvent> mouseHandler;
 
@@ -116,6 +120,8 @@ public class Controller implements Initializable, Observer {
 
     private void initialiseTimeline(){
         timeline = new Timeline(new KeyFrame(Duration.millis(50), event -> model.moveBall()));
+        //scheduler = Executors.newScheduledThreadPool(1);
+        //scheduler.scheduleAtFixedRate(() -> model.moveBall(), 50, 50, TimeUnit.MILLISECONDS);
     }
 
     private void addButtonListeners(){
@@ -369,15 +375,18 @@ public class Controller implements Initializable, Observer {
     private void startTimeline(){
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
-    }
+            }
 
     private void stopTimeline(){
-        timeline.stop();
+       timeline.stop();
+       // scheduler.shutdown();
     }
 
     private void tick(){
         timeline.stop();
         timeline.setCycleCount(1);
         timeline.play();
+      //  scheduler.shutdown();
+
     }
 }
