@@ -127,4 +127,23 @@ public class Ball implements IBall{
     public void setVelocity(int xVelocity, int yVelocity) {
         velocity = new Vect(xVelocity,yVelocity);
     }
+
+
+    public boolean equals(Object o) {
+        if (!(o instanceof Ball || o instanceof Ball)) return false;
+        assert o instanceof Ball : "Object must be an instance of Ball";
+        Ball b = (Ball) o;
+        return (b.getAngle().equals(this.getAngle())) && (b.getCircle().equals(this.getCircle()) && (b.getPos().equals(this.getPos())));
+    }
+    public int hashCode() {
+
+        return 31 * (getAngle().hashCode() + getPos().hashCode() + getCircle().hashCode());
+    }
+
+    public String toString() {
+
+        return "Ball[" + "Circle = " + getCircle().toString() + ", Position  = " + getPos().toString() + ", Angle  = " + getAngle().toString() +"]";
+    }
+
+
 }

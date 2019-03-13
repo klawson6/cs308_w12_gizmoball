@@ -474,6 +474,20 @@ public class Model extends Observable implements IModel {
             Vect newVelocity = ball.getVelocity();
             Gizmo collisionGizmo = null;
 
+
+            for(int j = 0; j<balls.size();j++){
+                if(!ball.equals(balls.get(j))) {
+                    double current = Geometry.timeUntilBallBallCollision(ball.getCircle(),ball.getVelocity(),balls.get(j).getCircle(),
+                            balls.get(j).getVelocity());
+                    if(current< minTime){
+                        minTime = current;
+                        newVelocity = Geometry.reflectCircle(balls.get(j).getPos(),ball.getPos(),ball.getVelocity(),1.0);
+                    }
+                }
+
+
+            }
+
             for (int i = 0; i < borders.length; i++) {
                 double current = Geometry.timeUntilWallCollision(borders[i], ball.getCircle(), ball.getVelocity());
                 if (current < minTime) {
