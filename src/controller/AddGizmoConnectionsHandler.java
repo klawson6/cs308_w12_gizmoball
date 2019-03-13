@@ -74,5 +74,3 @@ public class AddGizmoConnectionsHandler implements EventHandler<MouseEvent>{
         }
     }
 }
-
-

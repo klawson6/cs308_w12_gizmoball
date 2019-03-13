@@ -72,6 +72,3 @@ public class RemoveGizmoConnectionsHandler implements EventHandler<MouseEvent> {
         }
     }
 }
-
-
-

@@ -131,6 +131,30 @@ public class Model extends Observable implements IModel {
         return null;
     }
 
+    public Ball getBall(double xPos, double yPos){
+
+        for(Ball ball : balls){
+
+            double ballx = ball.getXPosition();
+            double bally = ball.getYPosition();
+
+            double xlimit = ballx + ball.getCircle().getRadius();
+            double xlimit2 = ballx - ball.getCircle().getRadius();
+
+            double ylimit = bally + ball.getCircle().getRadius();
+            double ylimit2 = bally - ball.getCircle().getRadius();
+
+            //XPos greater than lower limit, lower than higher limit
+            if((xPos<xlimit && xPos>xlimit2) && (yPos<ylimit && yPos>ylimit2) ){
+                return ball;
+            }
+
+        }
+
+        return null;
+
+    }
+
     @Override
     public Gizmo getGizmo(int xPos, int yPos) {
 
@@ -193,8 +217,9 @@ public class Model extends Observable implements IModel {
         int y = (int) yPos;
 
         Gizmo location = getGizmo(x, y);
+        Ball balllocation = getBall(xPos,yPos);
 
-        if (location == null) {
+        if (location == null && balllocation == null) {
             Ball ball = new Ball(xPos, yPos, xVelocity, yVelocity);
             balls.add(ball);
             setChanged();
@@ -370,6 +395,18 @@ public class Model extends Observable implements IModel {
 
     }
 
+    @Override
+    public boolean deleteBall(double x, double y) {
+        Ball ball = getBall(x,y);
+        System.out.println(ball);
+        boolean outcome = balls.remove(ball);
+
+        setChanged();
+        notifyObservers();
+
+        return outcome;
+    }
+
     /**
      * @requires: time >= 0
      * @modifies: ball
@@ -456,4 +493,3 @@ public class Model extends Observable implements IModel {
 
     }
 }
-

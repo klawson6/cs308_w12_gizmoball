@@ -11,7 +11,7 @@ import java.io.IOException;
 
 public class GUIDriver extends Application{
 
-    final static int WINDOW_SIZE = 700;
+    final static int CANVAS_SIZE = 500;
 
     private Controller controller;
     private Scene runScene;
@@ -24,6 +24,7 @@ public class GUIDriver extends Application{
         setUpScenes();
         primaryStage.setTitle("Gizmoball");
         primaryStage.setScene(runScene);
+        primaryStage.setResizable(false);
         primaryStage.show();
 
 
@@ -33,9 +34,10 @@ public class GUIDriver extends Application{
         try{
             FXMLLoader loader = new FXMLLoader(getClass().getResource("View.fxml"));
             Parent root = loader.load();
-            runScene = new Scene(root, WINDOW_SIZE, WINDOW_SIZE);
+            runScene = new Scene(root);
             controller = loader.getController();
             controller.setStage(primaryStage);
+            controller.setCanvasSize(CANVAS_SIZE);
 
         }catch (IOException e){
             System.err.println("Error when loading the view! Please check the FXML file doesn't have any errors!");

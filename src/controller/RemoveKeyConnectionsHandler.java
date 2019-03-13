@@ -55,7 +55,7 @@ public class RemoveKeyConnectionsHandler implements EventHandler<MouseEvent> {
 
 
                             //If ESC button is pressed just close the dialog window
-                            if (event.getCode().getCode() != 27) {
+                            if (!event.getCode().getName().equals("Esc")) {
                                 if (model.removeKeyConnection(startX,startY,event))
                                     System.out.println("Removed Key connections to key '" + event.getCode().getName() + "'");
 

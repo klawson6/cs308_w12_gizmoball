@@ -105,9 +105,9 @@ public class LoadFile {
 
 //                    System.out.println("When " + toPress + " ID " + keyID + " is pressed " + toMove + " is triggered");
 
-                    //todo not sure this will work
-                    KeyEvent k = new KeyEvent(KeyEvent.KEY_PRESSED, KeyEvent.CHAR_UNDEFINED, ""+keyID, KeyCode.getKeyCode(keyID),false,false,false,false);
-                    model.addKeyConnection(k,model.getGizmo(toMove));
+//                    //todo not sure this will work
+//                    KeyEvent k = new KeyEvent(KeyEvent.KEY_PRESSED, KeyEvent.CHAR_UNDEFINED, ""+keyID, KeyCode.getKeyCode(keyID),false,false,false,false);
+//                    model.addKeyConnection(k,model.getGizmo(toMove));
 
                 } else if (info.startsWith("Connect")) {
                     String type = scan.next();
