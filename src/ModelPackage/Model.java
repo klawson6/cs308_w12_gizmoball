@@ -346,7 +346,11 @@ public class Model extends Observable implements IModel {
 
     @Override
     public boolean addKeyConnection(int xPos, int yPos, KeyEvent key) {
-        return getGizmo(xPos,yPos).addKeyBinding(key,"");
+        Gizmo gizmo = getGizmo(xPos,yPos);
+        if(gizmo == null){
+            return false;
+        }
+        return gizmo.addKeyBinding(key,"");
     }
 
     @Override
@@ -359,12 +363,20 @@ public class Model extends Observable implements IModel {
 
     @Override
     public boolean removeKeyConnection(int xPos, int yPos, KeyEvent key) {
-        return getGizmo(xPos,yPos).removeKeyBinding(key);
+        Gizmo gizmo = getGizmo(xPos,yPos);
+        if(gizmo == null){
+            return false;
+        }
+        return gizmo.removeKeyBinding(key);
     }
 
     @Override
     public boolean removeGizmoConnection(int xPosofSelectedGizmo, int yPosfSelectedGizmo, int xPosofTargetGizmo, int yPosofTargetGizmo) {
-        return getGizmo(xPosofSelectedGizmo,yPosfSelectedGizmo).removeGizmoConnection(getGizmo(xPosofTargetGizmo,yPosofTargetGizmo));
+        Gizmo gizmo = getGizmo(xPosofSelectedGizmo,yPosfSelectedGizmo);
+        if(gizmo == null){
+            return false;
+        }
+        return gizmo.removeGizmoConnection(getGizmo(xPosofTargetGizmo,yPosofTargetGizmo));
     }
 
     @Override
