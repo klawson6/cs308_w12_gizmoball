@@ -1,5 +1,10 @@
 package ModelPackage;
 
+import com.sun.javafx.scene.input.KeyCodeMap;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+
+//import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
@@ -97,18 +102,22 @@ public class LoadFile {
                     String direction = scan.next();
                     String toMove = scan.next();
 
+                    System.out.println(info);
 
-//                    System.out.println("When " + toPress + " ID " + keyID + " is pressed " + toMove + " is triggered");
+                    int id = Integer.parseInt(keyID);
 
-//                    //todo not sure this will work
-//                    KeyEvent k = new KeyEvent(KeyEvent.KEY_PRESSED, KeyEvent.CHAR_UNDEFINED, ""+keyID, KeyCode.getKeyCode(keyID),false,false,false,false);
-//                    model.addKeyConnection(k,model.getGizmo(toMove));
+                    String letter = java.awt.event.KeyEvent.getKeyText(id);
+                    KeyCode keyCode = KeyCode.getKeyCode(letter);
+
+                    KeyEvent k = new KeyEvent(KeyEvent.KEY_PRESSED, letter, "", keyCode,false,false,false,false);
+                    model.addKeyConnection(k,model.getGizmo(toMove));
 
                 } else if (info.startsWith("Connect")) {
                     String type = scan.next();
                     String obj1 = scan.next();
                     String obj2 = scan.next();
 
+                    System.out.println(info);
                     model.addGizmoConnection(model.getGizmo(obj1),model.getGizmo(obj2));
                 } else if (info.startsWith("Ball")) {
                     String type = scan.next();
