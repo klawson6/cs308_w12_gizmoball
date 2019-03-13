@@ -15,7 +15,7 @@ Drawing of Flipper animation - John
 Overlapping Gizmos (Add boundary checks) - Alexi
 Fixing bouncing bug - Kyle
 
-Multiple Ball collisions - Cameron
+Multiple Ball collisions - Alexi
 Reset Ball position when entering build mode , (ball needs constructor) - Cameron
 Reset Button (reset play to default) - (Extra)
 
