@@ -217,9 +217,9 @@ public class Model extends Observable implements IModel {
         int y = (int) yPos;
 
         Gizmo location = getGizmo(x, y);
-        Ball balllocation = getBall(xPos,yPos);
+        Ball ballocation = getBall(xPos,yPos);
 
-        if (location == null && balllocation == null) {
+        if (location == null && ballocation == null) {
             Ball ball = new Ball(xPos, yPos, xVelocity, yVelocity);
             balls.add(ball);
             setChanged();
@@ -229,6 +229,7 @@ public class Model extends Observable implements IModel {
         return false;
     }
 
+    // TODO Remove?
     @Override
     public IBall getBall() {
         return null;
@@ -242,7 +243,7 @@ public class Model extends Observable implements IModel {
         gizmoFrom.addGizmoConnection(gizmoTo);
     }
 
-    public void RotateGizmo(Gizmo gizmo) {
+    public void rotateGizmo(Gizmo gizmo) {
         gizmo.rotate();
     }
 

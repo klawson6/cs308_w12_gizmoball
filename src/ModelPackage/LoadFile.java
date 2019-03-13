@@ -2,12 +2,7 @@ package ModelPackage;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.HashSet;
 import java.util.Scanner;
-import Physics.Vect;
-import javafx.event.EventType;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 
 public class LoadFile {
 
@@ -76,7 +71,7 @@ public class LoadFile {
                     String toRotate = scan.next();
 
                     System.out.println("Rotating object " + toRotate);
-                    model.RotateGizmo(model.getGizmo(toRotate));
+                    model.rotateGizmo(model.getGizmo(toRotate));
                 } else if (info.startsWith("LeftFlipper")) {
                     scan.next();
                     GizmoType type = GizmoType.LEFTFLIPPER;
