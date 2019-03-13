@@ -11,33 +11,60 @@ import java.util.Set;
 public class KeyBindingHandler implements EventHandler<KeyEvent> {
 
     private IModel model;
-    public KeyBindingHandler(IModel m){
+    private boolean pressed = false;
+    private boolean releaseyet = true;
+
+    public KeyBindingHandler(IModel m) {
         model = m;
     }
-    boolean releaseyet = false;
+
+
 
     @Override
-    public void handle(KeyEvent event)
-    {
+    public void handle(KeyEvent event) {
 
         Set<IGizmo> gizmos = model.getGizmoList();
-        for(IGizmo g:gizmos) {
+        if (event.getEventType().equals(KeyEvent.KEY_PRESSED) && releaseyet ) {
 
-            HashMap<KeyEvent, String> allbindings = g.getKeybindings();
-            Set<KeyEvent> bindings = allbindings.keySet();
+            for (IGizmo g : gizmos) {
 
-            for (KeyEvent e : bindings) {
+                HashMap<KeyEvent, String> allbindings = g.getKeybindings();
+                Set<KeyEvent> bindings = allbindings.keySet();
 
-                if (event.getCode().equals(e.getCode()) && event.getEventType().getName().equals(e.getEventType().getName())) {
-                    System.out.println("Keybind Pressed/Released!");
-                    g.activate();
+                for (KeyEvent e : bindings) {
+
+                    if (event.getCode().equals(e.getCode()) && event.getEventType().getName().equals(e.getEventType().getName())   ) {
+                        g.activate();
+                        System.out.println("Keybind Pressed");
+                        pressed = true;
+                        releaseyet = false;
+                    }
                 }
             }
         }
-        event.consume();
+
+        if (event.getEventType().equals(KeyEvent.KEY_RELEASED) && pressed ) {
+
+                for (IGizmo g : gizmos) {
+
+                    HashMap<KeyEvent, String> allbindings = g.getKeybindings();
+                    Set<KeyEvent> bindings = allbindings.keySet();
+                    for (KeyEvent e : bindings) {
+                        if (event.getCode().equals(e.getCode()) && event.getEventType().getName().equals(e.getEventType().getName()) && pressed) {
+                            System.out.println("Keybind Released");
+                            g.activate();
+                            pressed = false;
+                            releaseyet = true;
+                        }
+                    }
+
+                }
+            }
+            event.consume();
+
+
+
 
 
     }
-
-
 }
