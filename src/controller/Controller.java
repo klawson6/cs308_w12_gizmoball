@@ -32,7 +32,7 @@ public class Controller implements Initializable, Observer {
     private Stage stage;
     private IModel model;
     private Timeline timeline;
-    private KeyBindingHandler keyBindHandler;
+    private EventHandler<KeyEvent> keyBindHandler;
     private EventHandler<MouseEvent> mouseHandler;
 
     private boolean isBuilding = false;
@@ -58,7 +58,7 @@ public class Controller implements Initializable, Observer {
         model.addObserver(this);
 
         mouseHandler = new RunMouseEventHandler(model);
-        keyBindHandler = new KeyBindingHandler(model);
+        keyBindHandler = new MagicKeyHandler(new KeyBindingHandler(model));
         rootPane.addEventHandler(KeyEvent.ANY,keyBindHandler);
         initialiseCanvas();
         initialiseToolBars();
@@ -270,7 +270,8 @@ public class Controller implements Initializable, Observer {
             canvas.removeEventHandler(MouseEvent.ANY, mouseHandler);
 
             mouseHandler = new RunMouseEventHandler(model);
-            keyBindHandler = new KeyBindingHandler(model);
+            //keyBindHandler = new KeyBindingHandler(model);
+            keyBindHandler = new MagicKeyHandler(new KeyBindingHandler(model));
             //FIXME
             rootPane.addEventHandler(KeyEvent.ANY,keyBindHandler);
             rootPane.requestFocus();
