@@ -213,15 +213,17 @@ class ModelTest extends Model {
     }
 
     @Test
-    void save() {
-    }
-
-    @Test
-    void load() {
+    void loadAndSaveTest() {
         File file = new File("example_file.txt");
         assertEquals(m.load(file).getClass(), Model.class);
         m = m.load(file);
-        assertEquals(m.getGizmoList().size(), 36);
+        assertEquals(36, m.getGizmoList().size());
+
+        File saveFile = new File("saveFileTest.txt");
+        m.save(saveFile);
+        m = new Model();
+        m.load(saveFile);
+        assertEquals(36, m.getGizmoList().size());
     }
 
     /*
