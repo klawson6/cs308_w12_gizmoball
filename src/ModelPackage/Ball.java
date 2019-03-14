@@ -67,10 +67,27 @@ public class Ball implements IBall{
      */
     public boolean modifyVelocity(Vect velocity) {
         if (velocity != null) {
+            velocity = checkVelocity(velocity, this.velocity);
             this.velocity = velocity;
             return true;
         } else
             return false;
+    }
+
+    private Vect checkVelocity(Vect newVel, Vect oldVel){
+        if (-0.002 < newVel.x() && newVel.x() < 0.002){
+            if (oldVel.x() < 0)
+                newVel = new Vect(-0.002, newVel.y());
+            else
+                newVel = new Vect(0.002, newVel.y());
+        }
+        if (-0.002 < newVel.y() && newVel.y() < 0.002){
+            if (oldVel.y() < 0)
+                newVel = new Vect(newVel.x(), 0);
+            else
+                newVel = new Vect(newVel.x(), 0);
+        }
+        return newVel;
     }
 
     /**
