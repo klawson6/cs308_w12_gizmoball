@@ -26,13 +26,15 @@ public class GFlipper extends Gizmo{
     //Constructor that gives id, if none given
     public GFlipper(int xPosition, int yPosition, boolean isLeft){
 
-        setxPosition(xPosition);
-        setyPosition(yPosition);
+
+            setxPosition(xPosition);
+            setyPosition(yPosition);
+            this.xPosition = xPosition;
+            this.yPosition = yPosition;
         setCoefficent(coefficent);
         setColor(defaultColor);
 
-        this.xPosition = xPosition;
-        this.yPosition = yPosition;
+
         this.isLeft = isLeft;
         if(isLeft){
             id = "LF" + xPosition + yPosition;
@@ -48,8 +50,6 @@ public class GFlipper extends Gizmo{
     //Constructor that sets all fields
     public GFlipper(int xPosition, int yPosition, boolean isLeft, String id){
 
-        setxPosition(xPosition);
-        setyPosition(yPosition);
         setCoefficent(coefficent);
         setColor(defaultColor);
         setId(id);
@@ -57,36 +57,38 @@ public class GFlipper extends Gizmo{
         addCircles();
         addLines();
 
-        this.xPosition = xPosition;
-        this.yPosition = yPosition;
-        this.isLeft = isLeft;
-        this.id = id;
+
+            setxPosition(xPosition);
+            setyPosition(yPosition);
+            this.xPosition = xPosition;
+            this.yPosition = yPosition;
+            this.id = id;
     }
 
     //TODO add flipper collision detection
     private void addCircles(){
 
-        if(isLeft) {
+       // if(isLeft) {
 
             Circle circle = new Circle(xPosition + 0.5, yPosition + 0.5, 0.5);
             Circle circle1 = new Circle(xPosition + 0.5, yPosition + 1.5, 0.5);
 
             composingCircles.add(circle);
             composingCircles.add(circle1);
-        }else{
-
-            Circle circle = new Circle(xPosition + 1.5, yPosition + 0.5, 0.5);
-            Circle circle1 = new Circle(xPosition + 1.5, yPosition + 1.5, 0.5);
-
-            composingCircles.add(circle);
-            composingCircles.add(circle1);
-        }
+//        }else{
+//
+//            Circle circle = new Circle(xPosition + 0.5, yPosition + 0.5, 0.5);
+//            Circle circle1 = new Circle(xPosition + 0.5, yPosition + 1.5, 0.5);
+//
+//            composingCircles.add(circle);
+//            composingCircles.add(circle1);
+//        }
 
     }
 
     private void addLines(){
 
-        if(isLeft) {
+     //   if(isLeft) {
 
             double topX = xPosition;
             double topY = yPosition + 0.5;
@@ -98,19 +100,19 @@ public class GFlipper extends Gizmo{
 
             composingLines.add(lineSegment);
             composingLines.add(lineSegment1);
-        }
-        else{
-            double topX = xPosition + 1;
-            double topY = yPosition + 0.5;
-            double bottomX = xPosition + 1;
-            double bottomY = yPosition + 1.5;
-
-            LineSegment lineSegment = new LineSegment(topX, topY, bottomX, bottomY);
-            LineSegment lineSegment1 = new LineSegment(topX + 1, topY, bottomX + 1, bottomY);
-
-            composingLines.add(lineSegment);
-            composingLines.add(lineSegment1);
-        }
+//        }
+//        else{
+//            double topX = xPosition ;
+//            double topY = yPosition + 0.5;
+//            double bottomX = xPosition;
+//            double bottomY = yPosition + 1.5;
+//
+//            LineSegment lineSegment = new LineSegment(topX, topY, bottomX, bottomY);
+//            LineSegment lineSegment1 = new LineSegment(topX + 1, topY, bottomX + 1, bottomY);
+//
+//            composingLines.add(lineSegment);
+//            composingLines.add(lineSegment1);
+//        }
 
 
 
@@ -131,12 +133,18 @@ public class GFlipper extends Gizmo{
 
 
     public int getEndxPosition() {
-        return xPosition;
+        if(isLeft)
+            return xPosition+1;
+        else
+            return xPosition-1;
     }
 
 
     public int getEndyPosition() {
-        return yPosition;
+       // if(isLeft)
+            return yPosition+1;
+//        else
+//            return yPosition;
     }
 
     public int getRotation() {
