@@ -75,13 +75,13 @@ public class Ball implements IBall{
     }
 
     private Vect checkVelocity(Vect newVel, Vect oldVel){
-        if (-0.002 < newVel.x() && newVel.x() < 0.002){
+        if (-0.001 < newVel.x() && newVel.x() < 0.001){
             if (oldVel.x() < 0)
-                newVel = new Vect(-0.002, newVel.y());
+                newVel = new Vect(0, newVel.y());
             else
-                newVel = new Vect(0.002, newVel.y());
+                newVel = new Vect(0, newVel.y());
         }
-        if (-0.002 < newVel.y() && newVel.y() < 0.002){
+        if (-0.001 < newVel.y() && newVel.y() < 0.001){
             if (oldVel.y() < 0)
                 newVel = new Vect(newVel.x(), 0);
             else
