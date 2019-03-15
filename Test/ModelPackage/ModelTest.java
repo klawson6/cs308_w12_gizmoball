@@ -244,14 +244,31 @@ class ModelTest extends Model {
 
     @Test
     void applyGravity() {
+        double initialXVelocity = 1.0;
+        double initialYVelocity = 1.0;
+        Ball ball = new Ball(2, 2, initialXVelocity, initialYVelocity);
+        m.applyGravity(1.0, ball);
+        assertNotEquals(initialYVelocity, ball.getVelocity().y());
     }
 
     @Test
     void applyFriction() {
+        double initialXVelocity = 1.0;
+        double initialYVelocity = 1.0;
+        Ball ball = new Ball(2, 2, initialXVelocity, initialYVelocity);
+        m.applyFriction(1.0, ball);
+        assertNotEquals(initialXVelocity, ball.getVelocity().x());
+        assertNotEquals(initialYVelocity, ball.getVelocity().y());
     }
 
     @Test
     void moveBallForTime() {
+        int initialXPosition = 2;
+        int initialYPosition= 2;
+        Ball ball = new Ball(initialXPosition, initialYPosition, 1.0, 1.0);
+        m.moveBallForTime(1.0, ball);
+        assertNotEquals(initialXPosition, ball.getPos().x());
+        assertNotEquals(initialYPosition, ball.getPos().y());
     }
 
     @Test
