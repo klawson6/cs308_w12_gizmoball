@@ -139,8 +139,9 @@ public class Controller implements Initializable, Observer {
             canvas.removeEventHandler(MouseEvent.ANY,mouseHandler);
             mouseHandler = new RotationHandler(model, canvas);
             canvas.addEventHandler(MouseEvent.ANY, mouseHandler);
-                canvas.requestFocus();
-                rotateButton.requestFocus();
+            canvas.requestFocus();
+            rotateButton.requestFocus();
+            setInfoLabel("Click on a Gizmo to Rotate it.");
 
         }
 
@@ -153,8 +154,9 @@ public class Controller implements Initializable, Observer {
             canvas.removeEventHandler(MouseEvent.ANY, mouseHandler);
             mouseHandler = new DeleteGizmoHandler(model, canvas);
             canvas.addEventHandler(MouseEvent.ANY, mouseHandler);
-                canvas.requestFocus();
-                deleteButton.requestFocus();
+            canvas.requestFocus();
+            deleteButton.requestFocus();
+            setInfoLabel("Click on a Gizmo to delete it.");
 
         });
         //Add handler for adding keybindings
@@ -165,6 +167,7 @@ public class Controller implements Initializable, Observer {
             canvas.addEventHandler(MouseEvent.ANY, mouseHandler);
             canvas.requestFocus();
             keyConnect.requestFocus();
+            setInfoLabel("Click on a Gizmo to add a key binding.");
 
         });
         //Add handler for adding keybindings
@@ -175,6 +178,7 @@ public class Controller implements Initializable, Observer {
             canvas.addEventHandler(MouseEvent.ANY, mouseHandler);
             canvas.requestFocus();
             keyDisconnect.requestFocus();
+            setInfoLabel("Click on a Gizmo to remove the key binding.");
 
         });
 
@@ -211,6 +215,7 @@ public class Controller implements Initializable, Observer {
             canvas.addEventHandler(MouseEvent.ANY, mouseHandler);
             canvas.requestFocus();
             keyDisconnect.requestFocus();
+            setInfoLabel("Click on the grid to delete a Ball.");
 
         });
 
@@ -225,6 +230,7 @@ public class Controller implements Initializable, Observer {
                         canvas.removeEventHandler(MouseEvent.ANY, mouseHandler);
                         mouseHandler = new PlaceGizmoHandler(model, canvas, gizmoChoiceBox);
                         canvas.addEventHandler(MouseEvent.ANY, mouseHandler);
+                        setInfoLabel("Click on the grid to place a Gizmo.");
                     }
             }
         });
@@ -284,6 +290,7 @@ public class Controller implements Initializable, Observer {
             canvas.removeEventHandler(MouseEvent.ANY, mouseHandler);
             mouseHandler = new AddBallHandler(model,canvas);
             canvas.addEventHandler(MouseEvent.ANY, mouseHandler);
+            setInfoLabel("Click on the grid to add a Ball.");
         });
 
     }
@@ -300,6 +307,10 @@ public class Controller implements Initializable, Observer {
     }
 
     public void setCanvasSize(int canvasSize) {
+        if(canvasSize < 200){
+            canvasSize = 200;
+            canvasSizeTextField.setText(String.valueOf(canvasSize));
+        }
         canvas.setWidth(canvasSize);
         canvas.setHeight(canvasSize);
         canvas.draw(isBuilding);

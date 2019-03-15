@@ -25,7 +25,9 @@
         <Separator orientation="VERTICAL" />
         <Label text="Add Gizmo:" />
         <ChoiceBox fx:id="gizmoChoiceBox" />
+        <Button fx:id="deleteButton" text="Delete Gizmo" />
         <Button fx:id="addBallButton" text="Add Ball"/>
+        <Button fx:id="deleteBall" text="Delete Ball"/>
         <Separator orientation="VERTICAL" />
         <Button fx:id="keyConnect" text="Key connect" />
         <Button fx:id ="keyDisconnect" text="Key disconnect" />
@@ -33,8 +35,6 @@
         <Separator orientation="VERTICAL" />
         <Button fx:id = "connect" text="Connect" />
         <Button fx:id = "disconnect" text="Disconnect" />
-        <Button fx:id="deleteButton" text="Delete Gizmo" />
-        <Button fx:id="deleteBall" text="Delete Ball"/>
     </ToolBar>
     <ToolBar fx:id="runToolBar">
         <Button fx:id="buildButton" text="Build Mode" />
