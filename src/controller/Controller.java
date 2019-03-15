@@ -186,7 +186,7 @@ public class Controller implements Initializable, Observer {
         connect.setOnAction(event -> {
 
             canvas.removeEventHandler(MouseEvent.ANY, mouseHandler);
-            mouseHandler = new AddGizmoConnectionsHandler(canvas,model);
+            mouseHandler = new AddGizmoConnectionsHandler(canvas,model, infoLabel);
             canvas.addEventHandler(MouseEvent.ANY, mouseHandler);
             canvas.requestFocus();
             infoLabel.setText("Please select two gizmos to connect.");
@@ -200,7 +200,7 @@ public class Controller implements Initializable, Observer {
         disconnect.setOnAction(event -> {
 
             canvas.removeEventHandler(MouseEvent.ANY, mouseHandler);
-            mouseHandler = new RemoveGizmoConnectionsHandler(canvas,model);
+            mouseHandler = new RemoveGizmoConnectionsHandler(canvas,model, infoLabel);
             canvas.addEventHandler(MouseEvent.ANY, mouseHandler);
             canvas.requestFocus();
             setInfoLabel("Please select two gizmos to disconnect.");
