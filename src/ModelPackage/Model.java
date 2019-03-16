@@ -207,6 +207,15 @@ public class Model extends Observable implements IModel {
     }
 
     @Override
+    public void activateGizmo(IGizmo g) {
+        if(g != null){
+            g.activate();
+            setChanged();
+            notifyObservers();
+        }
+    }
+
+    @Override
     public boolean createBall(double xPos, double yPos, double xVelocity, double yVelocity) {
         //Get top left of where ball if placed
         //int removes all numbers after decimal, effectively rounding down

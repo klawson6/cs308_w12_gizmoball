@@ -17,10 +17,12 @@ public class AddKeyConnectionsHandler implements EventHandler<MouseEvent> {
     private IModel model;
     private int startX;
     private int startY;
+    private Label infoLabel;
 
-    public AddKeyConnectionsHandler(ResizableCanvas canvas, IModel model) {
+    public AddKeyConnectionsHandler(ResizableCanvas canvas, IModel model, Label infoLabel) {
         this.model = model;
         this.canvas = canvas;
+        this.infoLabel = infoLabel;
     }
 
     @Override
@@ -74,8 +76,10 @@ public class AddKeyConnectionsHandler implements EventHandler<MouseEvent> {
                                 if (group.getSelectedToggle().getUserData().toString().equals("press")) {
 
                                     KeyEvent binding = new KeyEvent(KeyEvent.KEY_PRESSED, event.getCharacter(), event.getText(), event.getCode(), false, false, false, false);
-                                    if (model.addKeyConnection(startX,startY,binding))
-                                        System.out.println("Added Key connection to key '" + event.getCode().getName() + "' on key press!");
+                                    if (model.addKeyConnection(startX,startY,binding)) {
+                                        //System.out.println("Added Key connection to key '" + event.getCode().getName() + "' on key press!");
+                                        infoLabel.setText("Added Key connection to key '" + event.getCode().getName() + "' on key press!");
+                                    }
                                     else {
                                         Alert error = new Alert(Alert.AlertType.ERROR);
                                         error.setTitle("Keybinding exists");
@@ -86,7 +90,8 @@ public class AddKeyConnectionsHandler implements EventHandler<MouseEvent> {
                                 } else {
                                     KeyEvent binding = new KeyEvent(KeyEvent.KEY_RELEASED, event.getCharacter(), event.getText(), event.getCode(), false, false, false, false);
                                     if (model.addKeyConnection(startX,startY,binding)) {
-                                        System.out.println("Added Key connection to key '" + event.getCode().getName() + "' on key release!");
+                                        //System.out.println("Added Key connection to key '" + event.getCode().getName() + "' on key release!");
+                                        infoLabel.setText("Added Key connection to key '" + event.getCode().getName() + "' on key release!");
                                     }
                                     else {
                                         Alert error = new Alert(Alert.AlertType.ERROR);

@@ -163,7 +163,7 @@ public class Controller implements Initializable, Observer {
         keyConnect.setOnAction(event -> {
 
             canvas.removeEventHandler(MouseEvent.ANY, mouseHandler);
-            mouseHandler = new AddKeyConnectionsHandler(canvas,model);
+            mouseHandler = new AddKeyConnectionsHandler(canvas,model, infoLabel);
             canvas.addEventHandler(MouseEvent.ANY, mouseHandler);
             canvas.requestFocus();
             keyConnect.requestFocus();
@@ -174,7 +174,7 @@ public class Controller implements Initializable, Observer {
         keyDisconnect.setOnAction(event -> {
 
             canvas.removeEventHandler(MouseEvent.ANY, mouseHandler);
-            mouseHandler = new RemoveKeyConnectionsHandler(model,canvas);
+            mouseHandler = new RemoveKeyConnectionsHandler(model,canvas, infoLabel);
             canvas.addEventHandler(MouseEvent.ANY, mouseHandler);
             canvas.requestFocus();
             keyDisconnect.requestFocus();

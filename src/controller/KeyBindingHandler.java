@@ -34,7 +34,7 @@ public class KeyBindingHandler implements EventHandler<KeyEvent> {
                 for (KeyEvent e : bindings) {
 
                     if (event.getCode().equals(e.getCode()) && event.getEventType().getName().equals(e.getEventType().getName())   ) {
-                        g.activate();
+                        model.activateGizmo(g);
                         System.out.println("Keybind Pressed");
                         pressed = true;
                         releaseyet = false;
@@ -52,7 +52,7 @@ public class KeyBindingHandler implements EventHandler<KeyEvent> {
                     for (KeyEvent e : bindings) {
                         if (event.getCode().equals(e.getCode()) && event.getEventType().getName().equals(e.getEventType().getName()) && pressed) {
                             System.out.println("Keybind Released");
-                            g.activate();
+                            model.activateGizmo(g);
                             pressed = false;
                             releaseyet = true;
                         }
