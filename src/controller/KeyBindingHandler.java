@@ -1,5 +1,6 @@
 package controller;
 
+import ModelPackage.GizmoType;
 import ModelPackage.IGizmo;
 import ModelPackage.IModel;
 import javafx.event.EventHandler;
@@ -52,7 +53,11 @@ public class KeyBindingHandler implements EventHandler<KeyEvent> {
                     for (KeyEvent e : bindings) {
                         if (event.getCode().equals(e.getCode()) && event.getEventType().getName().equals(e.getEventType().getName()) && pressed) {
                             System.out.println("Keybind Released");
-                            model.activateGizmo(g);
+                            if(g.getGizmoType().equals(GizmoType.RIGHTFLIPPER) || g.getGizmoType().equals(GizmoType.LEFTFLIPPER)){
+                                model.deactivateGizmo(g);
+                            }else {
+                                model.activateGizmo(g);
+                            }
                             pressed = false;
                             releaseyet = true;
                         }
