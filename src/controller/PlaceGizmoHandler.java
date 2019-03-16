@@ -1,16 +1,11 @@
 package controller;
 
-import ModelPackage.Gizmo;
 import ModelPackage.GizmoType;
 import ModelPackage.IModel;
 import javafx.event.EventHandler;
 import javafx.scene.control.ChoiceBox;
-import javafx.scene.input.Dragboard;
-import javafx.scene.input.MouseDragEvent;
 import javafx.scene.input.MouseEvent;
 import view.ResizableCanvas;
-
-import java.awt.*;
 
 public class PlaceGizmoHandler implements EventHandler<MouseEvent> {
 
@@ -63,6 +58,19 @@ public class PlaceGizmoHandler implements EventHandler<MouseEvent> {
                 endY = (int) (event.getY() / hGridSquareSize);
 
                 if (gizmoTypeChoiceBox.getValue().equals(GizmoType.ABSORBER)) {
+
+                    //Keeps startX and startY consistent for the getGizmo method with checks boundaries
+                    if(startX>endX)
+                    {
+                        int temp = endX;
+                        endX= startX;
+                        startX = temp;
+                    }
+                    if(startY>endY){
+                        int temp = endY;
+                        endY = startY;
+                        startY = temp;
+                    }
                     model.createGizmo(gizmoTypeChoiceBox.getValue(), startX, startY, endX, endY);
                 }
                 System.out.println("StartX : " + startX + ", Start Y : " + startY);

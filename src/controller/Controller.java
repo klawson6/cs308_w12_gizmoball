@@ -272,7 +272,6 @@ public class Controller implements Initializable, Observer {
             mouseHandler = new RunMouseEventHandler(model);
             //keyBindHandler = new KeyBindingHandler(model);
             keyBindHandler = new MagicKeyHandler(new KeyBindingHandler(model));
-            //FIXME
             rootPane.addEventHandler(KeyEvent.ANY,keyBindHandler);
             rootPane.requestFocus();
             canvas.addEventHandler(MouseEvent.ANY, mouseHandler);
