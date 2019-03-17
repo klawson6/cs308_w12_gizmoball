@@ -83,6 +83,27 @@ public class GAbsorber extends Gizmo {
     }
 
     @Override
+    public void move(int newxPos, int newyPos) {
+
+        int xDistance = xEnd - xStart;
+        int yDistance = yEnd - yStart;
+
+        xStart = newxPos;
+        yStart = newyPos;
+
+        setxPosition(xStart);
+        setyPosition(yStart);
+
+        xEnd = xStart + xDistance;
+        yEnd = yStart + yDistance;
+
+        composingLines.clear();
+        composingCircles.clear();
+        addCircles();
+        addLines();
+    }
+
+    @Override
     //Rotates gizmo 90 degrees
     public boolean rotate() {
         //Does nothing for absorber

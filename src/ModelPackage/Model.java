@@ -207,9 +207,35 @@ public class Model extends Observable implements IModel {
     public boolean moveGizmo(int xPos, int yPos, int newxPos, int newyPos) {
         Gizmo gizmo = getGizmo(xPos, yPos);
         Gizmo location = getGizmo(newxPos, newyPos);
-        if (location == null && gizmo != null) {
-            gizmo.setxPosition(newxPos);
-            gizmo.setyPosition(newyPos);
+
+        int Startx = gizmo.getStartxPosition();
+        int Starty = gizmo.getStartyPosition();
+        int Endx = gizmo.getEndxPosition();
+        int Endy = gizmo.getEndyPosition();
+
+        int xDifference = Math.max(Endx,Startx) - Math.min(Endx,Startx);
+        int yDifference = Math.max(Endy,Starty) - Math.min(Endy,Starty);
+
+        boolean clearArea = true;
+
+
+        //Check area to move can fit gizmo
+
+        HashSet<Gizmo> gizmos = new HashSet<>();
+
+        for(int i=newxPos;i<newxPos+xDifference;i++){
+            for(int j=newyPos;j<newyPos+yDifference;j++){
+                if(getGizmo(i,j)!=null){
+                    if(getGizmo(i,j)!=gizmo) {
+                        clearArea = false;
+                    }
+                };
+            }
+
+        }
+
+        if ((location == null && gizmo != null || location == gizmo) && clearArea) {
+            gizmo.move(newxPos,newyPos);
             setChanged();
             notifyObservers();
             return true;
@@ -357,6 +383,13 @@ public class Model extends Observable implements IModel {
             setChanged();
             notifyObservers();
         }
+    }
+
+    public void activate(IGizmo gizmo){
+        gizmo.activate();
+        //Allows for animation of all actions even if no ball is in play
+        setChanged();
+        notifyObservers();
     }
 
     @Override

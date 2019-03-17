@@ -73,6 +73,18 @@ public class GSquare extends Gizmo {
         return 0;
     }
 
+    @Override
+    public void move(int newxPos, int newyPos) {
+        xPos = newxPos;
+        yPos = newyPos;
+        setxPosition(xPos);
+        setyPosition(yPos);
+        composingLines.clear();
+        composingCircles.clear();
+        addCircles();
+        addLines();
+    }
+
     //Does nothing for square
     public boolean rotate() {return false;}
 

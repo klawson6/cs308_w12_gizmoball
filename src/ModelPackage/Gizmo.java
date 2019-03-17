@@ -157,4 +157,5 @@ public abstract class Gizmo implements IGizmo {
         return ids;
     }
 
+    public abstract void move(int newxPos, int newyPos);
 }

@@ -32,7 +32,8 @@ public class KeyBindingHandler implements EventHandler<KeyEvent> {
                 for (KeyEvent e : bindings) {
 
                     if (event.getCode().equals(e.getCode()) && event.getEventType().getName().equals(e.getEventType().getName())   ) {
-                        g.activate();
+                        model.activate(g);
+                        //g.activate();
                         System.out.println("Keybind Pressed/Released");
 
                     }

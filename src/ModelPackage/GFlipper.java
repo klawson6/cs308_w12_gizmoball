@@ -1,8 +1,12 @@
 package ModelPackage;
 
+import Physics.Angle;
 import Physics.Circle;
+import Physics.Geometry;
 import Physics.LineSegment;
 import javafx.scene.paint.Color;
+
+import java.util.ArrayList;
 import java.util.Set;
 
 public class GFlipper extends Gizmo{
@@ -70,8 +74,16 @@ public class GFlipper extends Gizmo{
 
        // if(isLeft) {
 
+            composingCircles.clear();
+
             Circle circle = new Circle(xPosition + 0.5, yPosition + 0.5, 0.5);
             Circle circle1 = new Circle(xPosition + 0.5, yPosition + 1.5, 0.5);
+
+            if(isLeft){
+                circle1 = Geometry.rotateAround(circle1,circle.getCenter(),new Angle(-Math.toRadians(getRotation())));
+            }else{
+                circle1 = Geometry.rotateAround(circle1,circle.getCenter(),new Angle(Math.toRadians(getRotation())));
+            }
 
             composingCircles.add(circle);
             composingCircles.add(circle1);
@@ -90,6 +102,7 @@ public class GFlipper extends Gizmo{
 
      //   if(isLeft) {
 
+            composingLines.clear();
             double topX = xPosition;
             double topY = yPosition + 0.5;
             double bottomX = xPosition;
@@ -100,6 +113,7 @@ public class GFlipper extends Gizmo{
 
             composingLines.add(lineSegment);
             composingLines.add(lineSegment1);
+
 //        }
 //        else{
 //            double topX = xPosition ;
@@ -151,6 +165,18 @@ public class GFlipper extends Gizmo{
         return angleDegrees;
     }
 
+    @Override
+    public void move(int newxPos, int newyPos) {
+        xPosition = newxPos;
+        yPosition = newyPos;
+        setxPosition(xPosition);
+        setyPosition(yPosition);
+        composingLines.clear();
+        composingCircles.clear();
+        addCircles();
+        addLines();
+    }
+
 
     @Override
     public boolean rotate() {
@@ -158,6 +184,8 @@ public class GFlipper extends Gizmo{
 
         for(int i=0;i<90;i++){
             angleDegrees++;
+            addCircles();
+            addLines();
         }
 
         return false;

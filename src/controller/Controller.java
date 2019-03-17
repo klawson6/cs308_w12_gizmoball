@@ -45,6 +45,7 @@ public class Controller implements Initializable, Observer {
     @FXML private Button deleteButton;
     @FXML private Button addBallButton;
     @FXML public Button deleteBall;
+    @FXML public Button moveGizmo;
     @FXML private ChoiceBox<GizmoType> gizmoChoiceBox;
     @FXML private Label infoLabel;
     @FXML private TextField canvasSizeTextField;
@@ -229,6 +230,24 @@ public class Controller implements Initializable, Observer {
             }
         });
 
+        addBallButton.setOnAction(event -> {
+            canvas.removeEventHandler(MouseEvent.ANY, mouseHandler);
+            mouseHandler = new AddBallHandler(model,canvas);
+            canvas.addEventHandler(MouseEvent.ANY, mouseHandler);
+            canvas.requestFocus();
+            addBallButton.requestFocus();
+
+        });
+
+        moveGizmo.setOnAction(event -> {
+            canvas.removeEventHandler(MouseEvent.ANY, mouseHandler);
+            mouseHandler = new MoveGizmoHandler(model,canvas,infoLabel);
+            canvas.addEventHandler(MouseEvent.ANY, mouseHandler);
+            setInfoLabel("Select Gizmo to Move");
+            canvas.requestFocus();
+            addBallButton.requestFocus();
+        });
+
     }
 
 
@@ -280,12 +299,6 @@ public class Controller implements Initializable, Observer {
             canvas.draw(isBuilding);
             stage.sizeToScene();
         }
-
-        addBallButton.setOnAction(event -> {
-            canvas.removeEventHandler(MouseEvent.ANY, mouseHandler);
-            mouseHandler = new AddBallHandler(model,canvas);
-            canvas.addEventHandler(MouseEvent.ANY, mouseHandler);
-        });
 
     }
 

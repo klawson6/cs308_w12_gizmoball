@@ -15,6 +15,7 @@ public interface IModel  {
     boolean moveGizmo(int xPos, int yPos, int newxPos, int newyPos);
     void deleteGizmo(int xPos, int yPos);
     boolean rotate(int xPos, int yPos);
+    void activate(IGizmo gizmo);
 
     boolean createBall(double xPos, double yPos,double xVelocity, double yVelocity);
     IBall getBall();
