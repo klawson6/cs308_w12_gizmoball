@@ -119,15 +119,23 @@ public class Model extends Observable implements IModel {
                 gizmo = new GFlipper(xStart, yStart, false);
                 break;
             case ABSORBER:
-                //TODO fix start/end x and y for getGizmo
-                gizmo = new GAbsorber(xStart, yStart, xEnd, yEnd);
+
+                for(int l = xStart;l<=xEnd;l++){
+                    for(int k= xStart;k<=yEnd;k++){
+                        location = (Gizmo) getGizmo(l,k);
+                        System.out.println("Checking X = "+ l + " Y= " + k);
+                        if(location != null)
+                            return false;
+                    }
+                }
+                gizmo = new GAbsorber(xStart, yStart, xEnd,  yEnd);
                 break;
             default:
                 return false;
         }
 
         gizmoList.add(gizmo);
-        System.out.println("Created gizmo!");
+
 
         setChanged();
         notifyObservers();
