@@ -19,6 +19,7 @@ public class Ball implements IBall{
 
     private double StartingX;
     private double StartingY;
+    private Vect StartingVelocity;
 
     public Ball(double xPosition, double yPosition, double xVelocity, double yVelocity) {
 
@@ -31,7 +32,8 @@ public class Ball implements IBall{
         // Pass in the x and y components of the velocity.
         // With this information it will calculate the resultant speed(length in the Vect class) and direction once relevant getters are called.
         velocity = new Vect(xVelocity, yVelocity);
-        stopped = false;
+        StartingVelocity = velocity;
+                stopped = false;
     }
 
     public double getStartingX() {
@@ -40,6 +42,10 @@ public class Ball implements IBall{
 
     public double getStartingY(){
         return StartingY;
+    }
+
+    public Vect getStartingVelocity(){
+        return StartingVelocity;
     }
 
     // Return the speed component of the velocity of this ball.
@@ -141,7 +147,7 @@ public class Ball implements IBall{
         return stopped;
     }
 
-    public void setVelocity(int xVelocity, int yVelocity) {
+    public void setVelocity(double xVelocity, double yVelocity) {
         velocity = new Vect(xVelocity,yVelocity);
     }
 

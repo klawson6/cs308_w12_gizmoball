@@ -483,6 +483,14 @@ public class Model extends Observable implements IModel {
 
     }
 
+    public void reset(){
+        for(Ball ball:balls){
+            ball.setCircle(ball.getStartingX(),ball.getStartingY());
+            ball.startBall();
+            ball.setVelocity(ball.getStartingVelocity().x(),ball.getStartingVelocity().y());
+        }
+    }
+
     @Override
     public boolean deleteBall(double x, double y) {
         Ball ball = getBall(x,y);

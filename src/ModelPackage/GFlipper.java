@@ -1,9 +1,6 @@
 package ModelPackage;
 
-import Physics.Angle;
-import Physics.Circle;
-import Physics.Geometry;
-import Physics.LineSegment;
+import Physics.*;
 import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
@@ -111,6 +108,8 @@ public class GFlipper extends Gizmo{
             LineSegment lineSegment = new LineSegment(topX, topY, bottomX, bottomY);
             LineSegment lineSegment1 = new LineSegment(topX + 1, topY, bottomX + 1, bottomY);
 
+
+
             composingLines.add(lineSegment);
             composingLines.add(lineSegment1);
 
@@ -184,11 +183,70 @@ public class GFlipper extends Gizmo{
 
         for(int i=0;i<90;i++){
             angleDegrees++;
-            addCircles();
-            addLines();
+            rotatePhysics();
         }
 
+
+
         return false;
+    }
+
+    private void rotatePhysics() {
+
+
+        composingCircles.clear();
+
+        Circle circle = new Circle(xPosition + 0.5, yPosition + 0.5, 0.5);
+        Circle circle1 = new Circle(xPosition + 0.5, yPosition + 1.5, 0.5);
+
+        if(isLeft){
+            circle1 = Geometry.rotateAround(circle1,circle.getCenter(),new Angle(-Math.toRadians(getRotation())));
+        }else{
+            circle1 = Geometry.rotateAround(circle1,circle.getCenter(),new Angle(Math.toRadians(getRotation())));
+        }
+
+        composingCircles.add(circle);
+        composingCircles.add(circle1);
+
+
+        //Need to get perpendicular for line segments
+
+        Vect centre = circle1.getCenter();
+        int currentRotation = getRotation();
+        int perpendicular = 90 + currentRotation;
+
+        composingLines.clear();
+        double topX = xPosition;
+        double topY = yPosition + 0.5;
+        double bottomX = xPosition;
+        double bottomY = yPosition + 1.5;
+
+        LineSegment lineSegment = new LineSegment(topX, topY, bottomX, bottomY);
+        LineSegment lineSegment1 = new LineSegment(topX + 1, topY, bottomX + 1, bottomY);
+
+        //Centre point of both Circles
+        Vect centre1 = circle.getCenter();
+        Vect centre2 = circle1.getCenter();
+
+        LineSegment lineBetween = new LineSegment(centre1,centre2);
+        double distance = lineBetween.length();
+        Angle angle = lineBetween.angle();
+        Vect centrepoint = new Vect(centre1.x()+(distance/2),centre1.y()+(distance/2));
+
+        Geometry.rotateAround(lineSegment,centrepoint,new Angle(Math.toRadians(getRotation())));
+        Geometry.rotateAround(lineSegment1,centrepoint,new Angle(Math.toRadians(getRotation())));
+
+        if(isLeft){
+            lineSegment = Geometry.rotateAround(lineSegment,centrepoint,new Angle(-Math.toRadians(getRotation())));
+            lineSegment1 = Geometry.rotateAround(lineSegment1,centrepoint,new Angle(-Math.toRadians(getRotation())));
+        }else{
+            lineSegment = Geometry.rotateAround(lineSegment,centrepoint,new Angle(-Math.toRadians(getRotation())));
+            lineSegment1 = Geometry.rotateAround(lineSegment1,centrepoint,new Angle(-Math.toRadians(getRotation())));
+        }
+
+        composingLines.add(lineSegment);
+        composingLines.add(lineSegment1);
+
     }
 
     @Override

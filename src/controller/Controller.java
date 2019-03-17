@@ -260,6 +260,7 @@ public class Controller implements Initializable, Observer {
 
             //Stop if running
             // TODO Reset ball position
+            model.reset();
             stopTimeline();
 
             isBuilding = true;
