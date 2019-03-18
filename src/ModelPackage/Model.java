@@ -58,11 +58,33 @@ public class Model extends Observable implements IModel {
                 gizmo = new GTriangle(xStart, yStart, id);
                 break;
             case LEFTFLIPPER:
-                gizmo = new GFlipper(xStart, yStart, true, id);
+                if(xStart == 19 || yStart == 19)
+                    return false;
+                //Check all surrounding squares for gizmos
+                Gizmo location2 = (Gizmo) getGizmo(xStart+1,yStart);
+                Gizmo location3 = (Gizmo) getGizmo(xStart,yStart+1);
+                Gizmo location4 = (Gizmo) getGizmo(xStart+1,yStart+1);
+                if(location2 != null || location3 != null || location4 != null)
+                    return false;
+                gizmo = new GFlipper(xStart, yStart, true);
                 break;
+
             case RIGHTFLIPPER:
-                gizmo = new GFlipper(xStart, yStart, false, id);
+                //Checks the boundary conditions for the board and flipper taking into account possible rotation
+                if(xStart == 0 || yStart == 19)
+                    return false;
+                //Check all  surrounding squares for gizmos
+                location2 = (Gizmo) getGizmo(xStart-1,yStart);
+                location3 = (Gizmo) getGizmo(xStart,yStart+1);
+                location4 = (Gizmo) getGizmo(xStart-1,yStart-1);
+
+                if(location2 != null || location3 != null || location4 != null)
+                    return false;
+
+                System.out.println("Created a right flipper at " + "X = " + xStart + " Y = " + yStart);
+                gizmo = new GFlipper(xStart, yStart, false);
                 break;
+
             case ABSORBER:
                 gizmo = new GAbsorber(xStart, yStart, xEnd, yEnd, id);
                 break;
