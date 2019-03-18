@@ -4,6 +4,8 @@ import Physics.Angle;
 import Physics.Circle;
 import Physics.Vect;
 
+import java.awt.*;
+
 public class Ball implements IBall{
 
     // Composing circle that contains the position of the ball.
@@ -15,14 +17,35 @@ public class Ball implements IBall{
 
     private static final double ballRadius = 0.25;
 
+    private double StartingX;
+    private double StartingY;
+    private Vect StartingVelocity;
+
     public Ball(double xPosition, double yPosition, double xVelocity, double yVelocity) {
+
+        StartingX = xPosition;
+        StartingY = yPosition;
+
         // Build the composing circle of the playing ball with initial position and required diameter of 0.5L.
         circle = new Circle(xPosition, yPosition, ballRadius);
         // Initialise the velocity field.
         // Pass in the x and y components of the velocity.
         // With this information it will calculate the resultant speed(length in the Vect class) and direction once relevant getters are called.
         velocity = new Vect(xVelocity, yVelocity);
-        stopped = false;
+        StartingVelocity = velocity;
+                stopped = false;
+    }
+
+    public double getStartingX() {
+        return StartingX;
+    }
+
+    public double getStartingY(){
+        return StartingY;
+    }
+
+    public Vect getStartingVelocity(){
+        return StartingVelocity;
     }
 
     // Return the speed component of the velocity of this ball.
@@ -124,7 +147,7 @@ public class Ball implements IBall{
         return stopped;
     }
 
-    public void setVelocity(int xVelocity, int yVelocity) {
+    public void setVelocity(double xVelocity, double yVelocity) {
         velocity = new Vect(xVelocity,yVelocity);
     }
 

@@ -84,8 +84,8 @@ public class ResizableCanvas extends Canvas implements Observer {
                     case RIGHTFLIPPER:
                         gc.save();
                         gc.setFill(iGizmo.getColour());
-                        gc.transform(new Affine(new Rotate(iGizmo.getRotation(), (iGizmo.getStartxPosition() + 1.5) * wGridSquareSize, (iGizmo.getStartyPosition() + 0.5) * hGridSquareSize)));
-                        gc.fillRoundRect((iGizmo.getStartxPosition() + 1) * wGridSquareSize, iGizmo.getStartyPosition() * hGridSquareSize, wGridSquareSize, hGridSquareSize * 2, wGridSquareSize, hGridSquareSize);
+                        gc.transform(new Affine(new Rotate(iGizmo.getRotation(), (iGizmo.getStartxPosition() + 0.5) * wGridSquareSize, (iGizmo.getStartyPosition() + 0.5) * hGridSquareSize)));
+                        gc.fillRoundRect((iGizmo.getStartxPosition() ) * wGridSquareSize, (iGizmo.getStartyPosition()) * hGridSquareSize, wGridSquareSize, hGridSquareSize * 2, wGridSquareSize, hGridSquareSize);
                         gc.restore();
                         break;
 

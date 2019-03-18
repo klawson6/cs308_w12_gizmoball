@@ -1,0 +1,38 @@
+Square S1110 11 10
+Square S166 16 6
+Square S610 6 10
+Triangle T137 13 7
+Square S310 3 10
+Square S168 16 8
+Triangle T146 14 6
+Square S169 16 9
+Triangle T155 15 5
+Square S910 9 10
+Square S510 5 10
+Square S39 3 9
+Square S710 7 10
+Square S1010 10 10
+Square S37 3 7
+Square S810 8 10
+Square S1410 14 10
+Square S1310 13 10
+Square S1610 16 10
+Square S167 16 7
+Square S38 3 8
+Square S35 3 5
+Square S1510 15 10
+Square S410 4 10
+Square S165 16 5
+Square S36 3 6
+Square S1210 12 10
+
+Ball B 14.61111111111111 3.537037037037037 0.0 0.0
+
+Rotate T137
+Rotate T137
+Rotate T146
+Rotate T146
+Rotate T155
+Rotate T155
+
+Ball B 14.61111111111111 3.537037037037037 0.0 0.0

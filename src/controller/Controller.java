@@ -32,7 +32,7 @@ public class Controller implements Initializable, Observer {
     private Stage stage;
     private IModel model;
     private Timeline timeline;
-    private KeyBindingHandler keyBindHandler;
+    private EventHandler<KeyEvent> keyBindHandler;
     private EventHandler<MouseEvent> mouseHandler;
 
     private boolean isBuilding = false;
@@ -45,6 +45,7 @@ public class Controller implements Initializable, Observer {
     @FXML private Button deleteButton;
     @FXML private Button addBallButton;
     @FXML public Button deleteBall;
+    @FXML public Button moveGizmo;
     @FXML private ChoiceBox<GizmoType> gizmoChoiceBox;
     @FXML private Label infoLabel;
     @FXML private TextField canvasSizeTextField;
@@ -58,7 +59,7 @@ public class Controller implements Initializable, Observer {
         model.addObserver(this);
 
         mouseHandler = new RunMouseEventHandler(model);
-        keyBindHandler = new KeyBindingHandler(model);
+        keyBindHandler = new MagicKeyHandler(new KeyBindingHandler(model));
         rootPane.addEventHandler(KeyEvent.ANY,keyBindHandler);
         initialiseCanvas();
         initialiseToolBars();
@@ -115,7 +116,10 @@ public class Controller implements Initializable, Observer {
     }
 
     private void initialiseTimeline(){
-        timeline = new Timeline(new KeyFrame(Duration.millis(50), event -> model.moveBall()));
+        timeline = new Timeline(new KeyFrame(Duration.millis(50), event -> {
+            model.moveBall();
+            model.checkFlippers();
+        }));
     }
 
     private void addButtonListeners(){
@@ -235,6 +239,24 @@ public class Controller implements Initializable, Observer {
             }
         });
 
+        addBallButton.setOnAction(event -> {
+            canvas.removeEventHandler(MouseEvent.ANY, mouseHandler);
+            mouseHandler = new AddBallHandler(model,canvas);
+            canvas.addEventHandler(MouseEvent.ANY, mouseHandler);
+            canvas.requestFocus();
+            addBallButton.requestFocus();
+
+        });
+
+        moveGizmo.setOnAction(event -> {
+            canvas.removeEventHandler(MouseEvent.ANY, mouseHandler);
+            mouseHandler = new MoveGizmoHandler(model,canvas,infoLabel);
+            canvas.addEventHandler(MouseEvent.ANY, mouseHandler);
+            setInfoLabel("Select Gizmo to Move");
+            canvas.requestFocus();
+            addBallButton.requestFocus();
+        });
+
     }
 
 
@@ -247,6 +269,7 @@ public class Controller implements Initializable, Observer {
 
             //Stop if running
             // TODO Reset ball position
+            model.reset();
             stopTimeline();
 
             isBuilding = true;
@@ -276,8 +299,8 @@ public class Controller implements Initializable, Observer {
             canvas.removeEventHandler(MouseEvent.ANY, mouseHandler);
 
             mouseHandler = new RunMouseEventHandler(model);
-            keyBindHandler = new KeyBindingHandler(model);
-            //FIXME
+            //keyBindHandler = new KeyBindingHandler(model);
+            keyBindHandler = new MagicKeyHandler(new KeyBindingHandler(model));
             rootPane.addEventHandler(KeyEvent.ANY,keyBindHandler);
             rootPane.requestFocus();
             canvas.addEventHandler(MouseEvent.ANY, mouseHandler);

@@ -15,7 +15,10 @@ public interface IModel  {
     boolean moveGizmo(int xPos, int yPos, int newxPos, int newyPos);
     void deleteGizmo(int xPos, int yPos);
     boolean rotate(int xPos, int yPos);
+    void activate(IGizmo gizmo);
     void activateGizmo(IGizmo g);
+    void deactivateGizmo(IGizmo g);
+    void checkFlippers();
 
     boolean createBall(double xPos, double yPos,double xVelocity, double yVelocity);
     IBall getBall();
@@ -35,6 +38,7 @@ public interface IModel  {
     void play();
     void stop();
     void tick();
+    void reset();
 
     boolean deleteBall(double x, double y);
 }

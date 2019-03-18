@@ -69,6 +69,16 @@ public class GCircle extends Gizmo {
     }
 
     @Override
+    public void move(int newxPos, int newyPos) {
+        xPos = newxPos;
+        yPos = newyPos;
+        setxPosition(xPos);
+        setyPosition(yPos);
+        composingCircles.clear();
+        addCircles();
+    }
+
+    @Override
     //Rotate gizmo 90 degrees
     public boolean rotate() {
         //Does Nothing for Circle

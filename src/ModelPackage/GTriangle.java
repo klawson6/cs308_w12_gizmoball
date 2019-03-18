@@ -199,6 +199,18 @@ public class GTriangle extends Gizmo {
         }
     }
 
+    @Override
+    public void move(int newxPos, int newyPos) {
+        xPosition = newxPos;
+        yPosition = newyPos;
+        setxPosition(xPosition);
+        setyPosition(yPosition);
+        composingLines.clear();
+        composingCircles.clear();
+        addCircles();
+        addLines();
+    }
+
     // Default rotation action is to rotate the object 90 degrees clockwise.
     @Override
     public boolean rotate() {
