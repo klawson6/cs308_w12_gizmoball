@@ -1,0 +1,90 @@
+Circle C104 10 4
+Square S1211 12 11
+Triangle T115 11 5
+Triangle T01 0 1
+Triangle T610 6 10
+Triangle T34 3 4
+Triangle T77 7 7
+Triangle T183 18 3
+Triangle T04 0 4
+Triangle T195 19 5
+Triangle T67 6 7
+Triangle T156 15 6
+Triangle T23 2 3
+Triangle T192 19 2
+Triangle T86 8 6
+Square S1311 13 11
+Triangle T165 16 5
+Triangle T126 12 6
+Triangle T15 1 5
+Triangle T56 5 6
+Triangle T168 16 8
+Triangle T95 9 5
+Triangle T177 17 7
+Triangle T186 18 6
+Triangle T45 4 5
+Triangle T1410 14 10
+Triangle T12 1 2
+Triangle T174 17 4
+Triangle T26 2 6
+Square S1111 11 11
+Triangle T37 3 7
+Triangle T48 4 8
+Square S811 8 11
+Triangle T159 15 9
+Square S1011 10 11
+Triangle T137 13 7
+Triangle T59 5 9
+Square S911 9 11
+Triangle T147 14 7
+Square S711 7 11
+
+Ball B 0.37333333333333335 2.88 0.0 0.0
+Ball B 3.013333333333333 5.773333333333333 0.0 0.0
+Ball B 18.0 5.44 0.0 0.0
+
+Rotate T115
+Rotate T01
+Rotate T610
+Rotate T610
+Rotate T610
+Rotate T34
+Rotate T04
+Rotate T04
+Rotate T04
+Rotate T195
+Rotate T195
+Rotate T67
+Rotate T23
+Rotate T126
+Rotate T15
+Rotate T15
+Rotate T15
+Rotate T56
+Rotate T168
+Rotate T168
+Rotate T177
+Rotate T177
+Rotate T186
+Rotate T186
+Rotate T45
+Rotate T1410
+Rotate T1410
+Rotate T12
+Rotate T26
+Rotate T26
+Rotate T26
+Rotate T37
+Rotate T37
+Rotate T37
+Rotate T48
+Rotate T48
+Rotate T48
+Rotate T159
+Rotate T159
+Rotate T137
+Rotate T59
+Rotate T59
+Rotate T59
+
+Ball B 0.37333333333333335 2.88 0.0 0.0

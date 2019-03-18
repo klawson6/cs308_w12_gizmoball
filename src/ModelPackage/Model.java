@@ -92,27 +92,27 @@ public class Model extends Observable implements IModel {
                 break;
             case LEFTFLIPPER:
                 //Checks the boundary conditions for the board and flipper taking into account possible rotation
-                if(xStart == 19 || yStart == 19)
+                if (xStart == 19 || yStart == 19)
                     return false;
                 //Check all surrounding squares for gizmos
-                Gizmo location2 = (Gizmo) getGizmo(xStart+1,yStart);
-                Gizmo location3 = (Gizmo) getGizmo(xStart,yStart+1);
-                Gizmo location4 = (Gizmo) getGizmo(xStart+1,yStart+1);
-                if(location2 != null || location3 != null || location4 != null)
+                Gizmo location2 = (Gizmo) getGizmo(xStart + 1, yStart);
+                Gizmo location3 = (Gizmo) getGizmo(xStart, yStart + 1);
+                Gizmo location4 = (Gizmo) getGizmo(xStart + 1, yStart + 1);
+                if (location2 != null || location3 != null || location4 != null)
                     return false;
                 gizmo = new GFlipper(xStart, yStart, true);
                 break;
             case RIGHTFLIPPER:
 
                 //Checks the boundary conditions for the board and flipper taking into account possible rotation
-                if(xStart == 0 || yStart == 19)
+                if (xStart == 0 || yStart == 19)
                     return false;
                 //Check all  surrounding squares for gizmos
-                location2 = (Gizmo) getGizmo(xStart-1,yStart);
-                location3 = (Gizmo) getGizmo(xStart,yStart+1);
-                location4 = (Gizmo) getGizmo(xStart-1,yStart-1);
+                location2 = (Gizmo) getGizmo(xStart - 1, yStart);
+                location3 = (Gizmo) getGizmo(xStart, yStart + 1);
+                location4 = (Gizmo) getGizmo(xStart - 1, yStart - 1);
 
-                if(location2 != null || location3 != null || location4 != null)
+                if (location2 != null || location3 != null || location4 != null)
                     return false;
 
                 System.out.println("Created a right flipper at " + "X = " + xStart + " Y = " + yStart);
@@ -120,15 +120,15 @@ public class Model extends Observable implements IModel {
                 break;
             case ABSORBER:
 
-                for(int l = xStart;l<=xEnd;l++){
-                    for(int k= xStart;k<=yEnd;k++){
-                        location = (Gizmo) getGizmo(l,k);
-                        System.out.println("Checking X = "+ l + " Y= " + k);
-                        if(location != null)
+                for (int l = xStart; l <= xEnd; l++) {
+                    for (int k = xStart; k <= yEnd; k++) {
+                        location = (Gizmo) getGizmo(l, k);
+                        System.out.println("Checking X = " + l + " Y= " + k);
+                        if (location != null)
                             return false;
                     }
                 }
-                gizmo = new GAbsorber(xStart, yStart, xEnd,  yEnd);
+                gizmo = new GAbsorber(xStart, yStart, xEnd, yEnd);
                 break;
             default:
                 return false;
@@ -164,9 +164,9 @@ public class Model extends Observable implements IModel {
         return null;
     }
 
-    public Ball getBall(double xPos, double yPos){
+    public Ball getBall(double xPos, double yPos) {
 
-        for(Ball ball : balls){
+        for (Ball ball : balls) {
 
             double ballx = ball.getXPosition();
             double bally = ball.getYPosition();
@@ -178,7 +178,7 @@ public class Model extends Observable implements IModel {
             double ylimit2 = bally - ball.getCircle().getRadius();
 
             //XPos greater than lower limit, lower than higher limit
-            if((xPos<xlimit && xPos>xlimit2) && (yPos<ylimit && yPos>ylimit2) ){
+            if ((xPos < xlimit && xPos > xlimit2) && (yPos < ylimit && yPos > ylimit2)) {
                 return ball;
             }
 
@@ -192,18 +192,15 @@ public class Model extends Observable implements IModel {
     public Gizmo getGizmo(int xPos, int yPos) {
 
         for (Gizmo g : gizmoList) {
-            if(!g.getGizmoType().equals(GizmoType.RIGHTFLIPPER) ) {
+            if (!g.getGizmoType().equals(GizmoType.RIGHTFLIPPER)) {
                 if ((xPos >= g.getStartxPosition() && xPos <= g.getEndxPosition()) && (yPos >= g.getStartyPosition() && yPos <= g.getEndyPosition())) {
                     return g;
                 }
-            }
-            else{
+            } else {
                 if ((xPos <= g.getStartxPosition() && xPos >= g.getEndxPosition()) && (yPos >= g.getStartyPosition() && yPos <= g.getEndyPosition())) {
                     return g;
                 }
             }
-
-
 
 
         }
@@ -221,8 +218,8 @@ public class Model extends Observable implements IModel {
         int Endx = gizmo.getEndxPosition();
         int Endy = gizmo.getEndyPosition();
 
-        int xDifference = Math.max(Endx,Startx) - Math.min(Endx,Startx);
-        int yDifference = Math.max(Endy,Starty) - Math.min(Endy,Starty);
+        int xDifference = Math.max(Endx, Startx) - Math.min(Endx, Startx);
+        int yDifference = Math.max(Endy, Starty) - Math.min(Endy, Starty);
 
         boolean clearArea = true;
 
@@ -231,19 +228,20 @@ public class Model extends Observable implements IModel {
 
         HashSet<Gizmo> gizmos = new HashSet<>();
 
-        for(int i=newxPos;i<newxPos+xDifference;i++){
-            for(int j=newyPos;j<newyPos+yDifference;j++){
-                if(getGizmo(i,j)!=null){
-                    if(getGizmo(i,j)!=gizmo) {
+        for (int i = newxPos; i < newxPos + xDifference; i++) {
+            for (int j = newyPos; j < newyPos + yDifference; j++) {
+                if (getGizmo(i, j) != null) {
+                    if (getGizmo(i, j) != gizmo) {
                         clearArea = false;
                     }
-                };
+                }
+                ;
             }
 
         }
 
         if ((location == null && gizmo != null || location == gizmo) && clearArea) {
-            gizmo.move(newxPos,newyPos);
+            gizmo.move(newxPos, newyPos);
             setChanged();
             notifyObservers();
             return true;
@@ -265,7 +263,7 @@ public class Model extends Observable implements IModel {
     @Override
     public boolean rotate(int xPos, int yPos) {
         Gizmo gizmo = getGizmo(xPos, yPos);
-        if(gizmo != null) {
+        if (gizmo != null) {
             boolean change = gizmo.rotate();
             setChanged();
             notifyObservers();
@@ -276,7 +274,7 @@ public class Model extends Observable implements IModel {
 
     @Override
     public void activateGizmo(IGizmo g) {
-        if(g != null){
+        if (g != null) {
             g.activate();
             setChanged();
             notifyObservers();
@@ -285,7 +283,7 @@ public class Model extends Observable implements IModel {
 
     @Override
     public void deactivateGizmo(IGizmo g) {
-        if(g != null){
+        if (g != null) {
             g.deactivate();
             setChanged();
             notifyObservers();
@@ -303,7 +301,7 @@ public class Model extends Observable implements IModel {
         int y = (int) yPos;
 
         Gizmo location = getGizmo(x, y);
-        Ball ballocation = getBall(xPos,yPos);
+        Ball ballocation = getBall(xPos, yPos);
 
         if (location == null && ballocation == null) {
             Ball ball = new Ball(xPos, yPos, xVelocity, yVelocity);
@@ -395,18 +393,18 @@ public class Model extends Observable implements IModel {
 //                          listofballs.get(i).setCircle(absorber.getEndxPosition()-0.75,absorber.getStartyPosition()+0.75);
 //                          listofballs.get(i).setVelocity(0,0);
 //                      }
-                      //TODO add absorber to absorber connection activation
+                        //TODO add absorber to absorber connection activation
                     }
 
-                    if(cd.getCollisionGizmo().getGizmoConnectionIds().size()>0){
-                        for(String id: cd.getCollisionGizmo().getGizmoConnectionIds()){
+                    if (cd.getCollisionGizmo().getGizmoConnectionIds().size() > 0) {
+                        for (String id : cd.getCollisionGizmo().getGizmoConnectionIds()) {
                             getGizmo(id).activate();
                         }
                     }
                 }
-
-
-
+                else if (cd.getCollisionBall() != null){
+                    cd.getCollisionBall().modifyVelocity(Geometry.reflectCircle(cd.getCollisionBall().getCircle().getCenter(), ball.getCircle().getCenter(), ball.getVelocity(), 1));
+                }
             }
 
             setChanged();
@@ -414,27 +412,27 @@ public class Model extends Observable implements IModel {
         }
     }
 
-    public void activate(IGizmo gizmo){
+    public void activate(IGizmo gizmo) {
         gizmo.activate();
         //Allows for animation of all actions even if no ball is in play
         setChanged();
         notifyObservers();
     }
 
-    public void checkFlippers(){
-        for(Gizmo g : gizmoList){
-            if(g.getGizmoType().equals(GizmoType.RIGHTFLIPPER)){
+    public void checkFlippers() {
+        for (Gizmo g : gizmoList) {
+            if (g.getGizmoType().equals(GizmoType.RIGHTFLIPPER)) {
                 GFlipper flipper = ((GFlipper) g);
-                if(flipper.isActivated()){
+                if (flipper.isActivated()) {
                     flipper.rotate();
-                }else{
+                } else {
                     flipper.antirotate();
                 }
-            }else if(g.getGizmoType().equals(GizmoType.LEFTFLIPPER)){
+            } else if (g.getGizmoType().equals(GizmoType.LEFTFLIPPER)) {
                 GFlipper flipper = ((GFlipper) g);
-                if(flipper.isActivated()){
+                if (flipper.isActivated()) {
                     flipper.rotate();
-                }else{
+                } else {
                     flipper.antirotate();
                 }
             }
@@ -454,7 +452,7 @@ public class Model extends Observable implements IModel {
 
         //If nothing there move ball
         if (location == null) {
-            ballToMove.setCircle(newxPos,newyPos);
+            ballToMove.setCircle(newxPos, newyPos);
             return true;
         }
         return false;
@@ -464,25 +462,25 @@ public class Model extends Observable implements IModel {
 
     @Override
     public boolean addKeyConnection(int xPos, int yPos, KeyEvent key) {
-        Gizmo gizmo = getGizmo(xPos,yPos);
-        if(gizmo == null){
+        Gizmo gizmo = getGizmo(xPos, yPos);
+        if (gizmo == null) {
             return false;
         }
-        return gizmo.addKeyBinding(key,"");
+        return gizmo.addKeyBinding(key, "");
     }
 
     @Override
     public boolean addGizmoConnection(int xPosofSelectedGizmo, int yPosfSelectedGizmo, int xPosofTargetGizmo, int yPosofTargetGizmo) {
-        if(getGizmo(xPosofSelectedGizmo,yPosfSelectedGizmo) != null & getGizmo(xPosofTargetGizmo,yPosofTargetGizmo) != null)
-       return getGizmo(xPosofSelectedGizmo,yPosfSelectedGizmo).addGizmoConnection(getGizmo(xPosofTargetGizmo,yPosofTargetGizmo));
+        if (getGizmo(xPosofSelectedGizmo, yPosfSelectedGizmo) != null & getGizmo(xPosofTargetGizmo, yPosofTargetGizmo) != null)
+            return getGizmo(xPosofSelectedGizmo, yPosfSelectedGizmo).addGizmoConnection(getGizmo(xPosofTargetGizmo, yPosofTargetGizmo));
         else
             return false;
     }
 
     @Override
     public boolean removeKeyConnection(int xPos, int yPos, KeyEvent key) {
-        Gizmo gizmo = getGizmo(xPos,yPos);
-        if(gizmo == null){
+        Gizmo gizmo = getGizmo(xPos, yPos);
+        if (gizmo == null) {
             return false;
         }
         return gizmo.removeKeyBinding(key);
@@ -490,11 +488,11 @@ public class Model extends Observable implements IModel {
 
     @Override
     public boolean removeGizmoConnection(int xPosofSelectedGizmo, int yPosfSelectedGizmo, int xPosofTargetGizmo, int yPosofTargetGizmo) {
-        Gizmo gizmo = getGizmo(xPosofSelectedGizmo,yPosfSelectedGizmo);
-        if(gizmo == null){
+        Gizmo gizmo = getGizmo(xPosofSelectedGizmo, yPosfSelectedGizmo);
+        if (gizmo == null) {
             return false;
         }
-        return gizmo.removeGizmoConnection(getGizmo(xPosofTargetGizmo,yPosofTargetGizmo));
+        return gizmo.removeGizmoConnection(getGizmo(xPosofTargetGizmo, yPosofTargetGizmo));
     }
 
     @Override
@@ -526,17 +524,17 @@ public class Model extends Observable implements IModel {
 
     }
 
-    public void reset(){
-        for(Ball ball:balls){
-            ball.setCircle(ball.getStartingX(),ball.getStartingY());
+    public void reset() {
+        for (Ball ball : balls) {
+            ball.setCircle(ball.getStartingX(), ball.getStartingY());
             ball.startBall();
-            ball.setVelocity(ball.getStartingVelocity().x(),ball.getStartingVelocity().y());
+            ball.setVelocity(ball.getStartingVelocity().x(), ball.getStartingVelocity().y());
         }
     }
 
     @Override
     public boolean deleteBall(double x, double y) {
-        Ball ball = getBall(x,y);
+        Ball ball = getBall(x, y);
         System.out.println(ball);
         boolean outcome = balls.remove(ball);
 
@@ -594,53 +592,50 @@ public class Model extends Observable implements IModel {
 
     public CollisionDetails timeUntilCollision(Ball ball) {
 
-            double minTime = Double.MAX_VALUE;
-            Vect newVelocity = ball.getVelocity();
-            Gizmo collisionGizmo = null;
+        double minTime = Double.MAX_VALUE;
+        Vect newVelocity = ball.getVelocity();
+        Gizmo collisionGizmo = null;
+        Ball collisionBall = null;
 
-
-            for(int j = 0; j<balls.size();j++){
-                if(!ball.equals(balls.get(j))) {
-                    double current = Geometry.timeUntilBallBallCollision(ball.getCircle(),ball.getVelocity(),balls.get(j).getCircle(),
-                            balls.get(j).getVelocity());
-                    if(current< minTime){
-                        minTime = current;
-                        newVelocity = Geometry.reflectCircle(balls.get(j).getPos(),ball.getPos(),ball.getVelocity(),1.0);
-                    }
-                }
-
-
+        for (int i = 0; i < borders.length; i++) {
+            double current = Geometry.timeUntilWallCollision(borders[i], ball.getCircle(), ball.getVelocity());
+            if (current < minTime) {
+                minTime = current;
+                newVelocity = Geometry.reflectWall(borders[i], ball.getVelocity(), 1.0);
             }
+        }
+        for (Gizmo g : gizmoList) {
 
-            for (int i = 0; i < borders.length; i++) {
-                double current = Geometry.timeUntilWallCollision(borders[i], ball.getCircle(), ball.getVelocity());
+            //Check TUC for all composing line segments
+            for (LineSegment l : g.getComposingLines()) {
+                double current = Geometry.timeUntilWallCollision(l, ball.getCircle(), ball.getVelocity());
                 if (current < minTime) {
                     minTime = current;
-                    newVelocity = Geometry.reflectWall(borders[i], ball.getVelocity(), 1.0);
+                    newVelocity = Geometry.reflectWall(l, ball.getVelocity(), g.getReflectionCoef());
+                    collisionGizmo = g;
                 }
             }
-            for (Gizmo g : gizmoList) {
-
-                //Check TUC for all composing line segments
-                for (LineSegment l : g.getComposingLines()) {
-                    double current = Geometry.timeUntilWallCollision(l, ball.getCircle(), ball.getVelocity());
-                    if (current < minTime) {
-                        minTime = current;
-                        newVelocity = Geometry.reflectWall(l, ball.getVelocity(), g.getReflectionCoef());
-                        collisionGizmo = g;
-                    }
+            for (Circle c : g.getComposingCircles()) {
+                double current = Geometry.timeUntilCircleCollision(c, ball.getCircle(), ball.getVelocity());
+                if (current < minTime) {
+                    minTime = current;
+                    newVelocity = Geometry.reflectCircle(c.getCenter(), ball.getPos(), ball.getVelocity(), g.getReflectionCoef());
+                    collisionGizmo = g;
                 }
-                for (Circle c : g.getComposingCircles()) {
-                    double current = Geometry.timeUntilCircleCollision(c, ball.getCircle(), ball.getVelocity());
-                    if (current < minTime) {
-                        minTime = current;
-                        newVelocity = Geometry.reflectCircle(c.getCenter(), ball.getPos(), ball.getVelocity(), g.getReflectionCoef());
-                        collisionGizmo = g;
-                    }
-                }
-
             }
-            return new CollisionDetails(minTime, newVelocity, collisionGizmo);
+
+        }
+        for (Ball b : balls) {
+            double current = Geometry.timeUntilCircleCollision(b.getCircle(), ball.getCircle(), ball.getVelocity());
+            if (current < minTime) {
+                minTime = current;
+                newVelocity = Geometry.reflectCircle(b.getCircle().getCenter(), ball.getPos(), ball.getVelocity(), 1);
+                // b.modifyVelocity(Geometry.reflectCircle(ball.getCircle().getCenter(), b.getPos(), newVelocity, 1));
+                collisionGizmo = null;
+                collisionBall = b;
+            }
+        }
+        return new CollisionDetails(minTime, newVelocity, collisionGizmo, collisionBall);
 
     }
 }
