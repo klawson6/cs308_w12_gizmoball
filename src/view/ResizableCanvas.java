@@ -68,8 +68,8 @@ public class ResizableCanvas extends Canvas implements Observer {
                         gc.setFill(iGizmo.getColour());
                         double startXAbsorber = (double) iGizmo.getStartxPosition() * wGridSquareSize;
                         double startYAbsorber = (double) iGizmo.getStartyPosition() * hGridSquareSize;
-                        double endXAbsorber = (double) iGizmo.getEndxPosition() * wGridSquareSize;
-                        double endYAbsorber = (double) iGizmo.getEndyPosition() * hGridSquareSize;
+                        double endXAbsorber = (double) (iGizmo.getEndxPosition()+1) * wGridSquareSize;
+                        double endYAbsorber = (double) (iGizmo.getEndyPosition()+1) * hGridSquareSize;
                         double[] xPointsAbsorber = {startXAbsorber, startXAbsorber, endXAbsorber, endXAbsorber};
                         double[] yPointsAbsorber = {startYAbsorber, endYAbsorber, endYAbsorber, startYAbsorber};
                         gc.fillPolygon(xPointsAbsorber, yPointsAbsorber, 4);

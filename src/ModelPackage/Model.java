@@ -45,7 +45,6 @@ public class Model extends Observable implements IModel {
         Gizmo location = (Gizmo) getGizmo(xStart, yStart);
         if (location != null) {
             return false;
-
         }
         switch (type) {
             case SQUARE:
@@ -76,7 +75,7 @@ public class Model extends Observable implements IModel {
                 //Check all  surrounding squares for gizmos
                 location2 = (Gizmo) getGizmo(xStart-1,yStart);
                 location3 = (Gizmo) getGizmo(xStart,yStart+1);
-                location4 = (Gizmo) getGizmo(xStart-1,yStart-1);
+                location4 = (Gizmo) getGizmo(xStart-1,yStart+1);
 
                 if(location2 != null || location3 != null || location4 != null)
                     return false;
@@ -86,7 +85,15 @@ public class Model extends Observable implements IModel {
                 break;
 
             case ABSORBER:
-                gizmo = new GAbsorber(xStart, yStart, xEnd, yEnd, id);
+                for(int l = xStart;l<=xEnd;l++){
+                    for(int k= yStart;k<=yEnd;k++){
+                        location = (Gizmo) getGizmo(l,k);
+                        System.out.println("Checking X = "+ l + " Y= " + k);
+                        if(location != null)
+                            return false;
+                    }
+                }
+                gizmo = new GAbsorber(xStart, yStart, xEnd, yEnd);
                 break;
             default:
                 return false;
@@ -100,6 +107,7 @@ public class Model extends Observable implements IModel {
         Gizmo gizmo;
         Gizmo location = (Gizmo) getGizmo(xStart, yStart);
         if (location != null) {
+            System.out.println(location);
             return false;
         }
         switch (type) {
@@ -132,7 +140,7 @@ public class Model extends Observable implements IModel {
                 //Check all  surrounding squares for gizmos
                 location2 = (Gizmo) getGizmo(xStart - 1, yStart);
                 location3 = (Gizmo) getGizmo(xStart, yStart + 1);
-                location4 = (Gizmo) getGizmo(xStart - 1, yStart - 1);
+                location4 = (Gizmo) getGizmo(xStart - 1, yStart + 1);
 
                 if (location2 != null || location3 != null || location4 != null)
                     return false;
@@ -150,6 +158,10 @@ public class Model extends Observable implements IModel {
                             return false;
                     }
                 }
+                System.out.println("Start x : " + xStart);
+                System.out.println("Start y : " + yStart);
+                System.out.println("End x : " + yEnd);
+                System.out.println("End y : " + xEnd);
                 gizmo = new GAbsorber(xStart, yStart, xEnd, yEnd);
                 break;
             default:

@@ -115,9 +115,9 @@ public class GAbsorber extends Gizmo {
     private void addCircles(){
 
         Circle topLeft = new Circle(xStart,yStart,0);
-        Circle topRight = new Circle(xEnd,yStart,0);
-        Circle bottomLeft = new Circle(xStart,yEnd,0);
-        Circle bottomRight = new Circle(xEnd,yEnd,0);
+        Circle topRight = new Circle(xEnd+1,yStart,0);
+        Circle bottomLeft = new Circle(xStart,yEnd+1,0);
+        Circle bottomRight = new Circle(xEnd+1,yEnd+1,0);
 
         composingCircles.add(topLeft);
         composingCircles.add(topRight);
@@ -130,10 +130,10 @@ public class GAbsorber extends Gizmo {
         //Add one to end as we get top left co-ordinate which will be one short of draw
         //Add one to compensate for this
 
-        LineSegment topLine = new LineSegment(xStart,yStart,xEnd,yStart);
-        LineSegment leftLine = new LineSegment(xStart,yStart,xStart,yEnd);
-        LineSegment rightLine = new LineSegment(xEnd,yStart,xEnd,yEnd);
-        LineSegment bottomLine = new LineSegment(xStart,yEnd,xEnd,yEnd);
+        LineSegment topLine = new LineSegment(xStart,yStart,xEnd+1,yStart);
+        LineSegment leftLine = new LineSegment(xStart,yStart,xStart,yEnd+1);
+        LineSegment rightLine = new LineSegment(xEnd+1,yStart,xEnd+1,yEnd+1);
+        LineSegment bottomLine = new LineSegment(xStart,yEnd+1,xEnd+1,yEnd+1);
 
         composingLines.add(topLine);
         composingLines.add(leftLine);

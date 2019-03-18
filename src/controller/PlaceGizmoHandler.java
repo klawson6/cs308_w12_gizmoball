@@ -67,7 +67,7 @@ public class PlaceGizmoHandler implements EventHandler<MouseEvent> {
                     int maxY = Math.max(startY,endY);
                     int minX = Math.min(startX,endX);
                     int minY = Math.min(startY,endY);
-                    model.createGizmo(gizmoTypeChoiceBox.getValue(), minX, minY, maxX+1, maxY+1);
+                    model.createGizmo(gizmoTypeChoiceBox.getValue(), minX, minY, maxX, maxY);
                 }
                 System.out.println("StartX : " + startX + ", Start Y : " + startY);
                 System.out.println("EndX : " + endX + ", End Y : " + endY);
