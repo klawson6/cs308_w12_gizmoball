@@ -43,7 +43,7 @@ public class AddKeyConnectionsHandler implements EventHandler<MouseEvent> {
 
                 IGizmo g = model.getGizmo(startX, startY);
 
-                if (g!= null && (g.getGizmoType().equals(GizmoType.ABSORBER) | g.getGizmoType().equals(GizmoType.LEFTFLIPPER) | g.getGizmoType().equals(GizmoType.RIGHTFLIPPER))) {
+                if (g != null && (g.getGizmoType().equals(GizmoType.ABSORBER) || g.getGizmoType().equals(GizmoType.LEFTFLIPPER) || g.getGizmoType().equals(GizmoType.RIGHTFLIPPER))) {
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
                     alert.setTitle("Add a key binding");
                     alert.setHeaderText("Please press a key to add a connection!");
@@ -57,6 +57,10 @@ public class AddKeyConnectionsHandler implements EventHandler<MouseEvent> {
                     rb2.setUserData("release");
                     rb2.setToggleGroup(group);
                     rb1.setSelected(true);
+
+                    if(g.getGizmoType().equals(GizmoType.RIGHTFLIPPER) || g.getGizmoType().equals(GizmoType.LEFTFLIPPER)){
+                        rb2.setVisible(false);
+                    }
 
                     //Add radio buttons to a pane
                     GridPane gp = new GridPane();
@@ -74,31 +78,12 @@ public class AddKeyConnectionsHandler implements EventHandler<MouseEvent> {
                             //If ESC button is pressed just close the dialog window
                             if (!event.getCode().getName().equals("Esc")) {
                                 if (group.getSelectedToggle().getUserData().toString().equals("press")) {
-
-                                    KeyEvent binding = new KeyEvent(KeyEvent.KEY_PRESSED, event.getCharacter(), event.getText(), event.getCode(), false, false, false, false);
-                                    if (model.addKeyConnection(startX,startY,binding)) {
-                                        //System.out.println("Added Key connection to key '" + event.getCode().getName() + "' on key press!");
-                                        infoLabel.setText("Added Key connection to key '" + event.getCode().getName() + "' on key press!");
+                                    addOnKeyPressed(event);
+                                    if(g.getGizmoType().equals(GizmoType.RIGHTFLIPPER) || g.getGizmoType().equals(GizmoType.LEFTFLIPPER)){
+                                        addOnKeyReleased(event);
                                     }
-                                    else {
-                                        Alert error = new Alert(Alert.AlertType.ERROR);
-                                        error.setTitle("Keybinding exists");
-                                        error.setHeaderText("Key connection already exists on gizmo!");
-                                        error.show();
-                                    }
-
                                 } else {
-                                    KeyEvent binding = new KeyEvent(KeyEvent.KEY_RELEASED, event.getCharacter(), event.getText(), event.getCode(), false, false, false, false);
-                                    if (model.addKeyConnection(startX,startY,binding)) {
-                                        //System.out.println("Added Key connection to key '" + event.getCode().getName() + "' on key release!");
-                                        infoLabel.setText("Added Key connection to key '" + event.getCode().getName() + "' on key release!");
-                                    }
-                                    else {
-                                        Alert error = new Alert(Alert.AlertType.ERROR);
-                                        error.setTitle("Key binding exists");
-                                        error.setHeaderText("Key connection already exists on gizmo!");
-                                        error.show();
-                                    }
+                                    addOnKeyReleased(event);
                                 }
 
 
@@ -114,6 +99,34 @@ public class AddKeyConnectionsHandler implements EventHandler<MouseEvent> {
 
 
 
+        }
+    }
+
+    private void addOnKeyPressed(KeyEvent event){
+        KeyEvent binding = new KeyEvent(KeyEvent.KEY_PRESSED, event.getCharacter(), event.getText(), event.getCode(), false, false, false, false);
+        if (model.addKeyConnection(startX,startY,binding)) {
+            //System.out.println("Added Key connection to key '" + event.getCode().getName() + "' on key press!");
+            infoLabel.setText("Added Key connection to key '" + event.getCode().getName() + "' on key press!");
+        }
+        else {
+            Alert error = new Alert(Alert.AlertType.ERROR);
+            error.setTitle("Keybinding exists");
+            error.setHeaderText("Key connection already exists on gizmo!");
+            error.show();
+        }
+    }
+
+    private void addOnKeyReleased(KeyEvent event){
+        KeyEvent binding = new KeyEvent(KeyEvent.KEY_RELEASED, event.getCharacter(), event.getText(), event.getCode(), false, false, false, false);
+        if (model.addKeyConnection(startX,startY,binding)) {
+            //System.out.println("Added Key connection to key '" + event.getCode().getName() + "' on key release!");
+            infoLabel.setText("Added Key connection to key '" + event.getCode().getName() + "' on key release!");
+        }
+        else {
+            Alert error = new Alert(Alert.AlertType.ERROR);
+            error.setTitle("Key binding exists");
+            error.setHeaderText("Key connection already exists on gizmo!");
+            error.show();
         }
     }
 }
