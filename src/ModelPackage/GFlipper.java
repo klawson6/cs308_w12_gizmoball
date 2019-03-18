@@ -32,8 +32,8 @@ public class GFlipper extends Gizmo{
             setyPosition(yPosition);
             this.xPosition = xPosition;
             this.yPosition = yPosition;
-        setCoefficent(coefficent);
-        setColor(defaultColor);
+            setCoefficent(coefficent);
+            setColor(defaultColor);
 
 
         this.isLeft = isLeft;
