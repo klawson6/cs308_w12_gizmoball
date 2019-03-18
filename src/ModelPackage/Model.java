@@ -121,7 +121,7 @@ public class Model extends Observable implements IModel {
             case ABSORBER:
 
                 for(int l = xStart;l<=xEnd;l++){
-                    for(int k= xStart;k<=yEnd;k++){
+                    for(int k= yStart;k<=yEnd;k++){
                         location = (Gizmo) getGizmo(l,k);
                         System.out.println("Checking X = "+ l + " Y= " + k);
                         if(location != null)
