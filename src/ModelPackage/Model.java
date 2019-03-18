@@ -367,12 +367,15 @@ public class Model extends Observable implements IModel {
 
             if (tuc > moveTime) {
                 moveBallForTime(moveTime, ball);
-
+                applyFriction(moveTime, ball);
+                applyGravity(moveTime, ball);
 
             } else {
 
                 moveBallForTime(tuc, ball);
                 ball.modifyVelocity(cd.getVelo());
+                applyFriction(tuc, ball);
+                applyGravity(tuc, ball);
                 if (cd.getCollisionGizmo() != null) {
                     if (cd.getCollisionGizmo().getGizmoType().equals(GizmoType.ABSORBER)) {
 
@@ -574,8 +577,6 @@ public class Model extends Observable implements IModel {
 
     public void moveBallForTime(double time, Ball ball) {
         if (!ball.isStopped()) {
-            applyFriction(time, ball);
-            applyGravity(time, ball);
 
             double xPos = ball.getPos().x();
             double yPos = ball.getPos().y();
