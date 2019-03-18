@@ -116,7 +116,10 @@ public class Controller implements Initializable, Observer {
     }
 
     private void initialiseTimeline(){
-        timeline = new Timeline(new KeyFrame(Duration.millis(50), event -> model.moveBall()));
+        timeline = new Timeline(new KeyFrame(Duration.millis(50), event -> {
+            model.moveBall();
+            model.checkFlippers();
+        }));
     }
 
     private void addButtonListeners(){
@@ -140,8 +143,9 @@ public class Controller implements Initializable, Observer {
             canvas.removeEventHandler(MouseEvent.ANY,mouseHandler);
             mouseHandler = new RotationHandler(model, canvas);
             canvas.addEventHandler(MouseEvent.ANY, mouseHandler);
-                canvas.requestFocus();
-                rotateButton.requestFocus();
+            canvas.requestFocus();
+            rotateButton.requestFocus();
+            setInfoLabel("Click on a Gizmo to Rotate it.");
 
         }
 
@@ -154,28 +158,31 @@ public class Controller implements Initializable, Observer {
             canvas.removeEventHandler(MouseEvent.ANY, mouseHandler);
             mouseHandler = new DeleteGizmoHandler(model, canvas);
             canvas.addEventHandler(MouseEvent.ANY, mouseHandler);
-                canvas.requestFocus();
-                deleteButton.requestFocus();
+            canvas.requestFocus();
+            deleteButton.requestFocus();
+            setInfoLabel("Click on a Gizmo to delete it.");
 
         });
         //Add handler for adding keybindings
         keyConnect.setOnAction(event -> {
 
             canvas.removeEventHandler(MouseEvent.ANY, mouseHandler);
-            mouseHandler = new AddKeyConnectionsHandler(canvas,model);
+            mouseHandler = new AddKeyConnectionsHandler(canvas,model, infoLabel);
             canvas.addEventHandler(MouseEvent.ANY, mouseHandler);
             canvas.requestFocus();
             keyConnect.requestFocus();
+            setInfoLabel("Click on a Gizmo to add a key binding.");
 
         });
         //Add handler for adding keybindings
         keyDisconnect.setOnAction(event -> {
 
             canvas.removeEventHandler(MouseEvent.ANY, mouseHandler);
-            mouseHandler = new RemoveKeyConnectionsHandler(model,canvas);
+            mouseHandler = new RemoveKeyConnectionsHandler(model,canvas, infoLabel);
             canvas.addEventHandler(MouseEvent.ANY, mouseHandler);
             canvas.requestFocus();
             keyDisconnect.requestFocus();
+            setInfoLabel("Click on a Gizmo to remove the key binding.");
 
         });
 
@@ -183,7 +190,7 @@ public class Controller implements Initializable, Observer {
         connect.setOnAction(event -> {
 
             canvas.removeEventHandler(MouseEvent.ANY, mouseHandler);
-            mouseHandler = new AddGizmoConnectionsHandler(canvas,model);
+            mouseHandler = new AddGizmoConnectionsHandler(canvas,model, infoLabel);
             canvas.addEventHandler(MouseEvent.ANY, mouseHandler);
             canvas.requestFocus();
             infoLabel.setText("Please select two gizmos to connect.");
@@ -197,7 +204,7 @@ public class Controller implements Initializable, Observer {
         disconnect.setOnAction(event -> {
 
             canvas.removeEventHandler(MouseEvent.ANY, mouseHandler);
-            mouseHandler = new RemoveGizmoConnectionsHandler(canvas,model);
+            mouseHandler = new RemoveGizmoConnectionsHandler(canvas,model, infoLabel);
             canvas.addEventHandler(MouseEvent.ANY, mouseHandler);
             canvas.requestFocus();
             setInfoLabel("Please select two gizmos to disconnect.");
@@ -212,6 +219,7 @@ public class Controller implements Initializable, Observer {
             canvas.addEventHandler(MouseEvent.ANY, mouseHandler);
             canvas.requestFocus();
             keyDisconnect.requestFocus();
+            setInfoLabel("Click on the grid to delete a Ball.");
 
         });
 
@@ -226,6 +234,7 @@ public class Controller implements Initializable, Observer {
                         canvas.removeEventHandler(MouseEvent.ANY, mouseHandler);
                         mouseHandler = new PlaceGizmoHandler(model, canvas, gizmoChoiceBox);
                         canvas.addEventHandler(MouseEvent.ANY, mouseHandler);
+                        setInfoLabel("Click on the grid to place a Gizmo.");
                     }
             }
         });
@@ -300,6 +309,13 @@ public class Controller implements Initializable, Observer {
             stage.sizeToScene();
         }
 
+        addBallButton.setOnAction(event -> {
+            canvas.removeEventHandler(MouseEvent.ANY, mouseHandler);
+            mouseHandler = new AddBallHandler(model,canvas);
+            canvas.addEventHandler(MouseEvent.ANY, mouseHandler);
+            setInfoLabel("Click on the grid to add a Ball.");
+        });
+
     }
 
 
@@ -314,6 +330,10 @@ public class Controller implements Initializable, Observer {
     }
 
     public void setCanvasSize(int canvasSize) {
+        if(canvasSize < 200){
+            canvasSize = 200;
+            canvasSizeTextField.setText(String.valueOf(canvasSize));
+        }
         canvas.setWidth(canvasSize);
         canvas.setHeight(canvasSize);
         canvas.draw(isBuilding);

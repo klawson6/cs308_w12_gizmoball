@@ -1,0 +1,42 @@
+Square S132 13 2
+Circle C174 17 4
+Circle C76 7 6
+Circle C1110 11 10
+Square S182 18 2
+RightFlipper RF137 13 7
+Square S52 5 2
+Square S12 1 2
+RightFlipper RF112 11 2
+Circle C43 4 3
+Circle C183 18 3
+Circle C139 13 9
+Square S32 3 2
+Absorber A 0 19 8 20
+Circle C109 10 9
+Triangle T2 1 1
+Square S142 14 2
+Square S02 0 2
+Square S82 8 2
+LeftFlipper LF87 8 7
+Triangle T 19 0
+Square S42 4 2
+Circle C129 12 9
+Square S172 17 2
+Circle C99 9 9
+Square S72 7 2
+Square S62 6 2
+Circle C156 15 6
+Circle C165 16 5
+Square S152 15 2
+Square S22 2 2
+LeftFlipper LF92 9 2
+Square S162 16 2
+Absorber A 12 19 20 20
+Circle C65 6 5
+Circle C54 5 4
+
+Ball B 19.5 17.0 0.0 20.0
+
+Rotate T
+
+Ball B 19.5 17.0 0.0 20.0

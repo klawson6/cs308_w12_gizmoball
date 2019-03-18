@@ -176,6 +176,9 @@ public class GFlipper extends Gizmo{
         addLines();
     }
 
+    public boolean isActivated() {
+        return isActivated;
+    }
 
     @Override
     public boolean rotate() {
@@ -184,6 +187,11 @@ public class GFlipper extends Gizmo{
         for(int i=0;i<90;i++){
             angleDegrees++;
             rotatePhysics();
+        int rotation = angleDegrees + 5;
+        if(rotation > 90){
+            angleDegrees = 90;
+        }else {
+            angleDegrees = rotation;
         }
 
 
@@ -249,14 +257,24 @@ public class GFlipper extends Gizmo{
 
     }
 
+    public void antirotate(){
+        int rotation = angleDegrees - 5;
+        if(rotation < 0){
+            angleDegrees = 0;
+        }else {
+            angleDegrees = rotation;
+        }
+    }
+
+
     @Override
     public void activate(){
         //FIXME rotate flipper?
-        rotate();
+            isActivated = true;
     }
 
     @Override
     public void deactivate() {
-
+        isActivated = false;
     }
 }

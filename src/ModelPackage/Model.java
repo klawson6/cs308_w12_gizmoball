@@ -275,6 +275,24 @@ public class Model extends Observable implements IModel {
     }
 
     @Override
+    public void activateGizmo(IGizmo g) {
+        if(g != null){
+            g.activate();
+            setChanged();
+            notifyObservers();
+        }
+    }
+
+    @Override
+    public void deactivateGizmo(IGizmo g) {
+        if(g != null){
+            g.deactivate();
+            setChanged();
+            notifyObservers();
+        }
+    }
+
+    @Override
     public boolean createBall(double xPos, double yPos, double xVelocity, double yVelocity) {
         //Get top left of where ball if placed
         //int removes all numbers after decimal, effectively rounding down
@@ -396,6 +414,28 @@ public class Model extends Observable implements IModel {
     public void activate(IGizmo gizmo){
         gizmo.activate();
         //Allows for animation of all actions even if no ball is in play
+        setChanged();
+        notifyObservers();
+    }
+
+    public void checkFlippers(){
+        for(Gizmo g : gizmoList){
+            if(g.getGizmoType().equals(GizmoType.RIGHTFLIPPER)){
+                GFlipper flipper = ((GFlipper) g);
+                if(flipper.isActivated()){
+                    flipper.rotate();
+                }else{
+                    flipper.antirotate();
+                }
+            }else if(g.getGizmoType().equals(GizmoType.LEFTFLIPPER)){
+                GFlipper flipper = ((GFlipper) g);
+                if(flipper.isActivated()){
+                    flipper.rotate();
+                }else{
+                    flipper.antirotate();
+                }
+            }
+        }
         setChanged();
         notifyObservers();
     }

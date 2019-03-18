@@ -5,6 +5,7 @@ import ModelPackage.IGizmo;
 import ModelPackage.IModel;
 import javafx.event.EventHandler;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Label;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -16,10 +17,12 @@ public class RemoveKeyConnectionsHandler implements EventHandler<MouseEvent> {
      private ResizableCanvas canvas;
     private int startX;
     private int startY;
+    private Label infoLabel;
 
-    public RemoveKeyConnectionsHandler(IModel model, ResizableCanvas canvas){
+    public RemoveKeyConnectionsHandler(IModel model, ResizableCanvas canvas, Label infoLabel){
         this.model = model;
         this.canvas = canvas;
+        this.infoLabel = infoLabel;
     }
 
     @Override
@@ -56,9 +59,10 @@ public class RemoveKeyConnectionsHandler implements EventHandler<MouseEvent> {
 
                             //If ESC button is pressed just close the dialog window
                             if (!event.getCode().getName().equals("Esc")) {
-                                if (model.removeKeyConnection(startX,startY,event))
-                                    System.out.println("Removed Key connections to key '" + event.getCode().getName() + "'");
-
+                                if (model.removeKeyConnection(startX,startY,event)) {
+                                    //System.out.println("Removed Key connections to key '" + event.getCode().getName() + "'");
+                                    infoLabel.setText("Removed Key connections to key '" + event.getCode().getName() + "'");
+                                }
                                 else {
                                     Alert error = new Alert(Alert.AlertType.ERROR);
                                     error.setTitle("Invalid key");

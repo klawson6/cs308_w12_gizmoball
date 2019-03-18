@@ -4,6 +4,7 @@ import ModelPackage.IGizmo;
 import ModelPackage.IModel;
 import javafx.event.EventHandler;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import view.ResizableCanvas;
 
@@ -14,12 +15,12 @@ public class AddGizmoConnectionsHandler implements EventHandler<MouseEvent>{
     private int startX,startX2;
     private int startY,startY2;
     private boolean selectedGizmo = false;
+    private Label infoLabel;
 
-
-
-    public AddGizmoConnectionsHandler(ResizableCanvas canvas, IModel model) {
+    public AddGizmoConnectionsHandler(ResizableCanvas canvas, IModel model, Label infoLabel) {
         this.model = model;
         this.canvas = canvas;
+        this.infoLabel = infoLabel;
     }
 
     @Override
@@ -31,7 +32,8 @@ public class AddGizmoConnectionsHandler implements EventHandler<MouseEvent>{
             if (event.isPrimaryButtonDown()) {
                 //Check if the first gizmo has been selected
                 if (selectedGizmo == false) {
-                    System.out.println("first gizmo");
+//                    System.out.println("first gizmo");
+                    infoLabel.setText("First Gizmo selected.");
                     double width = canvas.getWidth();
                     double height = canvas.getHeight();
                     double wGridSquareSize = width / 20;
@@ -55,8 +57,10 @@ public class AddGizmoConnectionsHandler implements EventHandler<MouseEvent>{
 
                     IGizmo g = model.getGizmo(startX2, startY2);
                     if(g != null) {
-                        if (model.addGizmoConnection(startX, startY, startX2, startY2))
-                            System.out.println("Successfully added gizmo connection");
+                        if (model.addGizmoConnection(startX, startY, startX2, startY2)) {
+//                          System.out.println("Successfully added gizmo connection");
+                            infoLabel.setText("Gizmos connected.");
+                        }
                         else {
                             Alert error = new Alert(Alert.AlertType.ERROR);
                             error.setTitle("Error");
