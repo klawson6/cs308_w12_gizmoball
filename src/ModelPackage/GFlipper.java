@@ -184,17 +184,17 @@ public class GFlipper extends Gizmo{
     public boolean rotate() {
         //Does nothing for flipper
 
-        for(int i=0;i<90;i++){
+        for(int i=0;i<90;i++) {
             angleDegrees++;
             rotatePhysics();
-        int rotation = angleDegrees + 5;
-        if(rotation > 90){
-            angleDegrees = 90;
-        }else {
-            angleDegrees = rotation;
+            int rotation = angleDegrees + 5;
+            if (rotation > 90) {
+                angleDegrees = 90;
+            } else {
+                angleDegrees = rotation;
+            }
+
         }
-
-
 
         return false;
     }
