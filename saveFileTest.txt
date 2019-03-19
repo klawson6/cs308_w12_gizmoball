@@ -1,67 +1,66 @@
-RightFlipper RF112 11 2
-Circle C183 18 3
-Absorber A 12 19 20 20
-Square S32 3 2
-Circle C54 5 4
-Circle C165 16 5
-LeftFlipper LF92 9 2
-Square S72 7 2
-Square S12 1 2
-Square S62 6 2
-Circle C76 7 6
-Triangle T2 1 1
-Square S52 5 2
-Absorber A 0 19 8 20
 Square S162 16 2
-Circle C43 4 3
+Circle C76 7 6
+Square S52 5 2
+LeftFlipper LF92 9 2
+Square S82 8 2
+Square S12 1 2
+Circle C65 6 5
+Square S182 18 2
+Circle C174 17 4
+Square S32 3 2
+Square S132 13 2
+Square S22 2 2
+RightFlipper RF137 13 7
+Circle C54 5 4
+LeftFlipper LF87 8 7
 Square S42 4 2
+Square S02 0 2
 Circle C99 9 9
 Circle C109 10 9
-Circle C129 12 9
+Square S62 6 2
 Square S152 15 2
-Square S172 17 2
-Square S82 8 2
-Square S132 13 2
-LeftFlipper LF87 8 7
-Circle C65 6 5
-Circle C156 15 6
+Square S142 14 2
 Circle C139 13 9
 Triangle T 19 0
-Square S182 18 2
-RightFlipper RF137 13 7
-Square S02 0 2
-Square S142 14 2
-Circle C174 17 4
+Square S172 17 2
+Circle C165 16 5
+Circle C183 18 3
+Absorber A 0 19 20 20
+Circle C43 4 3
+RightFlipper RF112 11 2
+Square S72 7 2
+Circle C156 15 6
+Triangle T2 1 1
 Circle C1110 11 10
-Square S22 2 2
+Circle C129 12 9
 
 Rotate T
 
-Ball B 19.5 17.0 0.0 20.0
+Ball B 1.0 11.0 0.0 0.0
 
-KeyConnect key SPACE up RF112
-KeyConnect key UNDEFINED down RF112
-KeyConnect key UNDEFINED down A
-KeyConnect key UNDEFINED down LF92
-KeyConnect key SPACE up LF92
-KeyConnect key UNDEFINED down LF87
-KeyConnect key Q up LF87
-KeyConnect key W up RF137
-KeyConnect key UNDEFINED down RF137
+KeyConnect key 32 down LF92
+KeyConnect key 32 up LF92
+KeyConnect key 87 down RF137
+KeyConnect key 87 up RF137
+KeyConnect key 81 up LF87
+KeyConnect key 81 down LF87
+KeyConnect key 127 down A
+KeyConnect key 32 up RF112
+KeyConnect key 32 down RF112
 
-Connect C183 RF137
-Connect A A
-Connect C54 LF87
-Connect C165 RF137
 Connect C76 LF87
-Connect C43 LF87
+Connect C65 LF87
+Connect C174 RF137
+Connect C54 LF87
 Connect C99 RF137
 Connect C109 LF87
-Connect C129 RF137
-Connect C65 LF87
-Connect C156 RF137
 Connect C139 LF87
-Connect C174 RF137
+Connect C165 RF137
+Connect C183 RF137
+Connect A A
+Connect C43 LF87
+Connect C156 RF137
 Connect C1110 RF137
 Connect C1110 LF87
+Connect C129 RF137
 

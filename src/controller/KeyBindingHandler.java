@@ -42,7 +42,7 @@ public class KeyBindingHandler implements EventHandler<KeyEvent> {
                         }
                     }
                     model.activateGizmo(g);
-                    System.out.println("Keybind Pressed/Released");
+                    System.out.println("Keybind Pressed/Released " + event.getCharacter());
 
                 }
             }
