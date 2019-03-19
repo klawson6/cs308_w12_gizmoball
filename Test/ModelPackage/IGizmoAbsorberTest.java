@@ -1,5 +1,6 @@
 package ModelPackage;
 
+import Physics.Vect;
 import javafx.scene.paint.Color;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -57,12 +58,20 @@ class IGizmoAbsorberTest {
 
     @Test
     void activate(){
-
+        GAbsorber castedAbsorber = (GAbsorber) gizmo;
+        Ball ball = new Ball(1,1, 1, 1);
+        castedAbsorber.addAbsorbedBall(ball);
+        castedAbsorber.activate();
+        assertEquals(new Vect(0, -50), ball.getVelocity());
     }
 
     @Test
     void deactivate(){
-
+        GAbsorber castedAbsorber = (GAbsorber) gizmo;
+        Ball ball = new Ball(1,1, 1, 1);
+        castedAbsorber.addAbsorbedBall(ball);
+        castedAbsorber.deactivate();
+        assertEquals(new Vect(0, -50), ball.getVelocity());
     }
 
     @Test

@@ -23,7 +23,7 @@ public interface IModel  {
     boolean createBall(double xPos, double yPos,double xVelocity, double yVelocity);
     IBall getBall(int startX, int startY);
     void moveBall();
-    boolean moveBallPostion(IBall ball, double newxPos, double newyPos);
+    boolean moveBallPosition(IBall ball, double newxPos, double newyPos);
 
     boolean addKeyConnection(int xPos, int Pos, KeyEvent key);
     boolean addGizmoConnection(int xPosofSelectedGizmo, int yPosfSelectedGizmo, int xPosofTargetGizmo, int yPosofTargetGizmo);

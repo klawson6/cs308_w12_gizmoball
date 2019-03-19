@@ -1,5 +1,6 @@
 package ModelPackage;
 
+import Physics.Vect;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import org.junit.jupiter.api.AfterEach;
@@ -76,10 +77,12 @@ class ModelTest extends Model {
         assertTrue(status4);
         boolean status5 = m.createGizmo(GizmoType.LEFTFLIPPER,4,4,4,4,"TestLFlipper");
         assertTrue(status5);
+        boolean status7 = m.createGizmo(GizmoType.LEFTFLIPPER,12,12,12,12);
+        assertTrue(status7);
         boolean status6 = m.createGizmo(GizmoType.RIGHTFLIPPER,6,6,6,6,"TestRFlipper");
         assertTrue(status6);
 
-        assertEquals(m.getGizmoList().size(), 6);
+        assertEquals(m.getGizmoList().size(), 7);
 
     }
 
@@ -205,10 +208,38 @@ class ModelTest extends Model {
 
     @Test
     void getBallsTest() {
+        assertTrue(m.getBalls().isEmpty());
+        m.addBall(new Ball(1,1, 0, 0));
+        assertFalse(m.getBalls().isEmpty());
+        Ball ball = new Ball(4, 4, 5, 5);
+        m.addBall(ball);
+        assertEquals(m.getBalls().get(1), ball);
+    }
+
+    @Test
+    void resetBallsAndMoveBallTest(){
+        Ball ball1 = new Ball(4, 4, 5, 5);
+        Ball ball2 = new Ball(6, 6, 5, 5);
+        m.addBall(ball1);
+        m.addBall(ball2);
+        m.moveBallPosition(ball1, 3, 3);
+        assertEquals(ball1.getPos(), new Vect(3, 3));
+        m.reset();
+        assertEquals(ball1.getPos(), new Vect(4, 4));
     }
 
     @Test
     void moveBallTest() {
+        m.addBall(new Ball(1, 1, 5, 6));
+        m.moveBall();
+        double newX = m.getBalls().get(0).getVelocity().x();
+        double newY = m.getBalls().get(0).getVelocity().x();
+        assertNotEquals(newX, 5.0);
+        assertNotEquals(newY, 6.0);
+        m.createGizmo(GizmoType.ABSORBER, 0, 2, 2, 2);
+        m.moveBall();
+        assertNotEquals(newX, 5);
+        assertNotEquals(newY, 6);
     }
 
     @Test
@@ -271,7 +302,21 @@ class ModelTest extends Model {
     }
 
     @Test
-    void timeUntilCollision() {
+    void checkFlippersTest() {
+        m.createGizmo(GizmoType.RIGHTFLIPPER, 1, 2, 1, 2);
+        m.createGizmo(GizmoType.LEFTFLIPPER, 1, 2, 1, 2);
+        IGizmo gizmo = m.getGizmo(1, 2);
+        m.activate(gizmo);
+        m.checkFlippers();
+    }
+
+    @Test
+    void activateDeactivateGizmoTest(){
+        GFlipper gizmo = new GFlipper(2, 2, true);
+        m.activateGizmo(gizmo);
+        assertTrue(gizmo.isActivated());
+        m.deactivateGizmo(gizmo);
+        assertFalse(gizmo.isActivated());
     }
 
 }

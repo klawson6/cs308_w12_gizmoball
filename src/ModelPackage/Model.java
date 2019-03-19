@@ -586,7 +586,7 @@ public class Model extends Observable implements IModel {
     }
 
     @Override
-    public boolean moveBallPostion(IBall ball, double newxPos, double newyPos) {
+    public boolean moveBallPosition(IBall ball, double newxPos, double newyPos) {
         Ball ballToMove = (Ball) ball;
 
         int x = (int) newxPos;
