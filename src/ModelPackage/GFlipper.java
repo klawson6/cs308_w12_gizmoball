@@ -8,6 +8,8 @@ import java.util.Set;
 
 public class GFlipper extends Gizmo{
 
+    private final static int ROTATION_RATE = 10;
+
     private int angleDegrees;
     private boolean isLeft;
     private boolean isActivated;
@@ -185,17 +187,13 @@ public class GFlipper extends Gizmo{
     public boolean rotate() {
         //Does nothing for flipper
 
-        for(int i=0;i<90;i++) {
-            angleDegrees++;
-            rotatePhysics();
-            int rotation = angleDegrees + 5;
-            if (rotation > 90) {
-                angleDegrees = 90;
-            } else {
-                angleDegrees = rotation;
-            }
-
+        int rotation = angleDegrees + ROTATION_RATE;
+        if (rotation > 90) {
+            angleDegrees = 90;
+        } else {
+            angleDegrees = rotation;
         }
+        rotatePhysics();
 
         return false;
     }
@@ -280,13 +278,13 @@ public class GFlipper extends Gizmo{
     }
 
     public void antirotate(){
-        int rotation = angleDegrees - 5;
-        rotatePhysics();
+        int rotation = angleDegrees - ROTATION_RATE;
         if(rotation < 0){
             angleDegrees = 0;
         }else {
             angleDegrees = rotation;
         }
+        rotatePhysics();
     }
 
 
