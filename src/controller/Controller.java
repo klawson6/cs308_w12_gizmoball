@@ -1,6 +1,7 @@
 package controller;
 
 import ModelPackage.*;
+import com.sun.javafx.fxml.builder.JavaFXSceneBuilder;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
@@ -12,6 +13,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -39,7 +41,8 @@ public class Controller implements Initializable, Observer {
 
     @FXML private ResizableCanvas canvas;
     @FXML private VBox rootPane;
-    @FXML private Button startButton, stopButton, tickButton, buildButton, runButton, saveButton, loadButton, quitButton,keyConnect,keyDisconnect,connect,disconnect;
+    @FXML private ImageView saveImg, loadImg, exitImg, buildImg, startImg;
+    @FXML private Button stopButton, tickButton, runButton, keyConnect,keyDisconnect,connect,disconnect;
     @FXML private ToolBar commonToolBar, runToolBar, buildToolBar;
     @FXML private Button rotateButton;
     @FXML private Button deleteButton;
@@ -123,18 +126,24 @@ public class Controller implements Initializable, Observer {
     }
 
     private void addButtonListeners(){
-        startButton.setOnAction(event -> startTimeline());
+        //startButton.setOnAction(event -> startTimeline());
         stopButton.setOnAction(event -> stopTimeline());
         tickButton.setOnAction(event -> tick());
-        saveButton.setOnAction(event -> saveFile());
-        loadButton.setOnAction(event -> loadFile());
+       // saveButton.setOnAction(event -> saveFile());
+        //loadButton.setOnAction(event -> loadFile());
         runButton.setOnAction(event -> toggleModes());
-        buildButton.setOnAction(event -> toggleModes());
-        quitButton.setOnAction(event -> System.exit(0));
-
+       // buildButton.setOnAction(event -> toggleModes());
+        //quitButton.setOnAction(event -> System.exit(0));
+        saveImg.setOnMouseClicked(event -> saveFile());
+        loadImg.setOnMouseClicked(event -> loadFile());
+        exitImg.setOnMouseClicked(event -> System.exit(0));
+        buildImg.setOnMouseClicked(event -> toggleModes());
+        startImg.setOnMouseClicked(event -> startTimeline());
         // Resize Canvas
         canvasSizeTextField.setOnKeyPressed((event) -> {
-            if(event.getCode() == KeyCode.ENTER) { setCanvasSize(Integer.valueOf(canvasSizeTextField.getText())); }
+            if(event.getCode() == KeyCode.ENTER) {
+                setCanvasSize(Integer.valueOf(canvasSizeTextField.getText()));
+            }
         });
 
         //Add Handler for Rotation

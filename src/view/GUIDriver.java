@@ -35,6 +35,7 @@ public class GUIDriver extends Application{
             FXMLLoader loader = new FXMLLoader(getClass().getResource("View.fxml"));
             Parent root = loader.load();
             runScene = new Scene(root);
+            runScene.getStylesheets().add(getClass().getResource("viewCSS.css").toExternalForm());
             controller = loader.getController();
             controller.setStage(primaryStage);
             controller.setCanvasSize(CANVAS_SIZE);
