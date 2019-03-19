@@ -226,9 +226,4 @@ public class GTriangle extends Gizmo {
         Color newColor = new Color(red,green,blue,1.0);
         setColor(newColor);
     }
-
-    @Override
-    public void deactivate() {
-
-    }
 }

@@ -66,11 +66,6 @@ class IGizmoTriangleTest {
     }
 
     @Test
-    void deactivate(){
-        gizmo.deactivate();
-    }
-
-    @Test
     void getKeybindings(){
 
     }

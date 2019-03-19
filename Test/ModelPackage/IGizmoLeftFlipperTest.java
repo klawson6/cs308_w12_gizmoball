@@ -56,12 +56,10 @@ class IGizmoLeftFlipperTest {
     }
 
     @Test
-    void activateDeactivateTest(){
+    void activateTest(){
         assertFalse(((GFlipper) gizmo).isActivated());
         gizmo.activate();
         assertTrue(((GFlipper) gizmo).isActivated());
-        gizmo.deactivate();
-        assertFalse(((GFlipper) gizmo).isActivated());
     }
 
     @Test

@@ -23,8 +23,6 @@ public interface IGizmo {
 
     void activate();
 
-    void deactivate();
-
     HashMap<KeyEvent, String> getKeybindings();
 
 //    boolean addKeyBinding(KeyEvent key, String action);

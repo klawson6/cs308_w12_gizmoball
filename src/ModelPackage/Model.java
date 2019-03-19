@@ -386,15 +386,6 @@ public class Model extends Observable implements IModel {
     }
 
     @Override
-    public void deactivateGizmo(IGizmo g) {
-        if (g != null) {
-            g.deactivate();
-            setChanged();
-            notifyObservers();
-        }
-    }
-
-    @Override
     public boolean createBall(double xPos, double yPos, double xVelocity, double yVelocity) {
         //Get top left of where ball if placed
         //int removes all numbers after decimal, effectively rounding down
@@ -673,6 +664,12 @@ public class Model extends Observable implements IModel {
             ball.setCircle(ball.getStartingX(), ball.getStartingY());
             ball.startBall();
             ball.setVelocity(ball.getStartingVelocity().x(), ball.getStartingVelocity().y());
+        }
+        // Reset Flipper Angles
+        for(Gizmo g : this.getModelGizmoList()){
+            if(g.getGizmoType().equals(GizmoType.RIGHTFLIPPER) || g.getGizmoType().equals(GizmoType.LEFTFLIPPER)){
+                ((GFlipper) g).setAngleDegrees(0);
+            }
         }
     }
 

@@ -92,10 +92,4 @@ public class GCircle extends Gizmo {
         Color newColor = new Color(red,green,blue,1.0);
         setColor(newColor);
     }
-
-    @Override
-    //Sto gizmo action
-    public void deactivate() {
-
-    }
 }

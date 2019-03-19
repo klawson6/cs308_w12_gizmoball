@@ -311,12 +311,10 @@ class ModelTest extends Model {
     }
 
     @Test
-    void activateDeactivateGizmoTest(){
+    void activateGizmoTest(){
         GFlipper gizmo = new GFlipper(2, 2, true);
         m.activateGizmo(gizmo);
         assertTrue(gizmo.isActivated());
-        m.deactivateGizmo(gizmo);
-        assertFalse(gizmo.isActivated());
     }
 
 }

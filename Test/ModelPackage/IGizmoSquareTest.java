@@ -66,11 +66,6 @@ class IGizmoSquareTest {
     }
 
     @Test
-    void deactivate(){
-        gizmo.deactivate();
-    }
-
-    @Test
     void getKeybindings(){
 
     }

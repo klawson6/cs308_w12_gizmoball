@@ -66,15 +66,6 @@ class IGizmoAbsorberTest {
     }
 
     @Test
-    void deactivate(){
-        GAbsorber castedAbsorber = (GAbsorber) gizmo;
-        Ball ball = new Ball(1,1, 1, 1);
-        castedAbsorber.addAbsorbedBall(ball);
-        castedAbsorber.deactivate();
-        assertEquals(new Vect(0, -50), ball.getVelocity());
-    }
-
-    @Test
     void getKeybindings(){
 
     }

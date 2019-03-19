@@ -371,7 +371,6 @@ public class Controller implements Initializable, Observer {
         if(runToolBar.isManaged()){ // From run to build mode
 
             //Stop if running
-            // TODO Reset ball position
             model.reset();
             stopTimeline();
 

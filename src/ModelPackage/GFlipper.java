@@ -8,9 +8,9 @@ import java.util.Set;
 
 public class GFlipper extends Gizmo{
 
-    private final static int ROTATION_RATE = 10;
+    private final static double ROTATION_RATE = 10.8;
 
-    private int angleDegrees;
+    private double angleDegrees;
     private boolean isLeft;
     private boolean isActivated;
     private int xPosition;
@@ -168,7 +168,7 @@ public class GFlipper extends Gizmo{
     }
 
     public int getRotation() {
-        return angleDegrees;
+        return (int) angleDegrees;
     }
 
     @Override
@@ -191,9 +191,9 @@ public class GFlipper extends Gizmo{
     public boolean rotate() {
         //Does nothing for flipper
 
-        int rotation = angleDegrees + ROTATION_RATE;
+        double rotation = angleDegrees + ROTATION_RATE;
         if (rotation > 90) {
-            angleDegrees = 90;
+            angleDegrees = 90.0;
         } else {
             angleDegrees = rotation;
         }
@@ -282,7 +282,7 @@ public class GFlipper extends Gizmo{
     }
 
     public void antirotate(){
-        int rotation = angleDegrees - ROTATION_RATE;
+        double rotation = angleDegrees - ROTATION_RATE;
         if(rotation < 0){
             angleDegrees = 0;
         }else {
@@ -294,12 +294,6 @@ public class GFlipper extends Gizmo{
 
     @Override
     public void activate(){
-        //FIXME rotate flipper?
-            isActivated = true;
-    }
-
-    @Override
-    public void deactivate() {
-        isActivated = false;
+        isActivated = !isActivated;
     }
 }
