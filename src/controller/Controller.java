@@ -17,8 +17,10 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
+import javafx.scene.shape.Shape;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -40,7 +42,7 @@ public class Controller implements Initializable, Observer {
     private boolean isBuilding = false;
 
     @FXML private ResizableCanvas canvas;
-    @FXML private VBox rootPane;
+    @FXML private HBox rootPane;
     @FXML private ImageView saveImg, loadImg, exitImg, buildImg, startImg, pauseImg, tickImg, runImg, addBallImg, kConnectImg, kDisconnectImg, connectImg, disconnectImg, moveImg, rotateImg, deleteGizmoImg, deleteBallImg;
     @FXML private Button stopButton, tickButton, runButton, keyConnect,keyDisconnect,connect,disconnect;
     @FXML private ToolBar commonToolBar, runToolBar, buildToolBar1, buildToolBar2;
@@ -255,7 +257,6 @@ public class Controller implements Initializable, Observer {
             canvas.requestFocus();
             moveImg.requestFocus();
         });
-        infoLabel.setWrapText(true);
 
     }
 

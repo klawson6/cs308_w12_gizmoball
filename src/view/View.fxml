@@ -4,152 +4,150 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import view.ResizableCanvas?>
-<VBox fx:id="rootPane" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1"
+<HBox fx:id="rootPane" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="controller.Controller" stylesheets="@viewCSS.css">
-    <HBox>
-        <VBox fx:id="menus" HBox.hgrow="ALWAYS">
-            <ToolBar fx:id="commonToolBar" prefHeight="100" HBox.hgrow="ALWAYS">
-                <VBox fx:id="saveBox" prefHeight="75" prefWidth="75" alignment="CENTER">
-                    <ImageView fx:id="saveImg" fitHeight="50" fitWidth="50" HBox.hgrow="ALWAYS"
+        <VBox fx:id="menus" HBox.hgrow="ALWAYS" maxWidth="700" maxHeight="700">
+            <ToolBar fx:id="commonToolBar" maxHeight="200" VBox.vgrow="ALWAYS" HBox.hgrow="ALWAYS">
+                <VBox fx:id="saveBox" prefHeight="100" prefWidth="100" alignment="CENTER">
+                    <ImageView fx:id="saveImg" fitHeight="75" fitWidth="75" HBox.hgrow="ALWAYS"
                                pickOnBounds="true" preserveRatio="true">
                         <Image url="@Pictures/saveImg.png"/>
                     </ImageView>
-                    <Label text="SAVE" prefHeight="10" prefWidth="50" alignment="CENTER" translateY="2"/>
+                    <Label text="SAVE" prefHeight="10" prefWidth="75" alignment="CENTER" translateY="4"/>
                 </VBox>
 
-                <VBox fx:id="loadBox" prefHeight="75" prefWidth="75" alignment="CENTER">
-                    <ImageView fx:id="loadImg" fitHeight="50" fitWidth="50" HBox.hgrow="ALWAYS"
+                <VBox fx:id="loadBox" prefHeight="100" prefWidth="100" alignment="CENTER">
+                    <ImageView fx:id="loadImg" fitHeight="75" fitWidth="75" HBox.hgrow="ALWAYS"
                                pickOnBounds="true" preserveRatio="true">
                         <Image url="@Pictures/loadImg.png"/>
                     </ImageView>
-                    <Label text="LOAD" prefHeight="10" prefWidth="50" alignment="CENTER" translateY="2"/>
+                    <Label text="LOAD" prefHeight="10" prefWidth="75" alignment="CENTER" translateY="4"/>
                 </VBox>
 
-                <VBox fx:id="exitBox" prefHeight="75" prefWidth="75" alignment="CENTER">
-                    <ImageView fx:id="exitImg" fitHeight="50" fitWidth="50" HBox.hgrow="ALWAYS"
+                <VBox fx:id="exitBox" prefHeight="100" prefWidth="100" alignment="CENTER">
+                    <ImageView fx:id="exitImg" fitHeight="75" fitWidth="75" HBox.hgrow="ALWAYS"
                                pickOnBounds="true" preserveRatio="true">
                         <Image url="@Pictures/exitImg.png"/>
                     </ImageView>
-                    <Label text="QUIT" prefHeight="10" prefWidth="50" alignment="CENTER" translateY="2"/>
+                    <Label text="QUIT" prefHeight="10" prefWidth="75" alignment="CENTER" translateY="4"/>
                 </VBox>
                 <Separator orientation="VERTICAL"/>
                 <!--<Label text="Canvas Size:" prefHeight="50"/>-->
-                <VBox fx:id="resizeBox" prefHeight="75" prefWidth="75" alignment="CENTER">
-                    <ImageView fx:id="resizeImg" fitHeight="50" fitWidth="50" HBox.hgrow="ALWAYS"
+                <VBox fx:id="resizeBox" prefHeight="100" prefWidth="100" alignment="CENTER">
+                    <ImageView fx:id="resizeImg" fitHeight="75" fitWidth="75" HBox.hgrow="ALWAYS"
                                pickOnBounds="true" preserveRatio="true">
                         <Image url="@Pictures/resizeImg.png"/>
                     </ImageView>
-                    <Label text="RESIZE" prefHeight="10" prefWidth="50" alignment="CENTER" translateY="2"/>
+                    <Label text="RESIZE" prefHeight="10" prefWidth="75" alignment="CENTER" translateY="4"/>
                 </VBox>
 
                 <TextField fx:id="canvasSizeTextField" prefHeight="25" prefWidth="75"/>
-                <Separator orientation="VERTICAL"/>
-                <Label fx:id="infoLabel" maxWidth="250"/>
             </ToolBar>
+            <Label fx:id="infoLabel" textAlignment="CENTER" alignment="CENTER" maxWidth="250" HBox.hgrow="ALWAYS"/>
             <Pane fx:id="fillerBar" HBox.hgrow="ALWAYS"/>
             <VBox>
-                <ToolBar fx:id="buildToolBar1" prefHeight="100" HBox.hgrow="ALWAYS">
+                <ToolBar fx:id="buildToolBar1" prefHeight="75" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS">
                     <!--<Button fx:id="runButton" text="Run Mode" prefHeight="50" prefWidth="75"/>-->
-                    <VBox fx:id="runBox" prefHeight="75" prefWidth="81" alignment="CENTER">
+                    <VBox fx:id="runBox" prefHeight="70" prefWidth="70" alignment="CENTER">
                         <ImageView fx:id="runImg" fitHeight="50" fitWidth="50" HBox.hgrow="ALWAYS"
                                    pickOnBounds="true" preserveRatio="true">
                             <Image url="@Pictures/startImg.png"/>
                         </ImageView>
-                        <Label text="RUN MODE" prefHeight="25" prefWidth="81" alignment="CENTER" translateY="2"
+                        <Label text="RUN MODE" prefHeight="25" prefWidth="50" alignment="CENTER" translateY="2"
                                wrapText="true"/>
                     </VBox>
                     <Separator orientation="VERTICAL"/>
-                    <Label text="ADD GIZMO:" prefHeight="50" prefWidth="100"/>
-                    <ChoiceBox fx:id="gizmoChoiceBox" prefHeight="50" prefWidth="75"/>
+                    <Label text="ADD GIZMO:" prefHeight="50" prefWidth="50" textAlignment="CENTER"/>
+                    <ChoiceBox fx:id="gizmoChoiceBox" prefHeight="50" prefWidth="110"/>
                     <!--<Button fx:id="addBallButton" text="Add Ball" prefHeight="50" prefWidth="75"/>-->
-                    <VBox fx:id="ballBox" prefHeight="75" prefWidth="81" alignment="CENTER">
+                    <VBox fx:id="ballBox" prefHeight="70" prefWidth="70" alignment="CENTER">
                         <ImageView fx:id="addBallImg" fitHeight="50" fitWidth="50" HBox.hgrow="ALWAYS"
                                    pickOnBounds="true" preserveRatio="true">
                             <Image url="@Pictures/addBallImg.png"/>
                         </ImageView>
-                        <Label text="ADD BALL" prefHeight="25" prefWidth="81" alignment="CENTER" translateY="2"
+                        <Label text="ADD BALL" prefHeight="25" prefWidth="50" alignment="CENTER" translateY="2"
                                wrapText="true"/>
                     </VBox>
                     <Separator orientation="VERTICAL"/>
                     <!--<Button fx:id="keyConnect" text="Key connect" prefHeight="50" prefWidth="75"/>-->
-                    <VBox fx:id="kConnectBox" prefHeight="75" prefWidth="120" alignment="CENTER">
+                    <VBox fx:id="kConnectBox" prefHeight="70" prefWidth="70" alignment="CENTER">
                         <ImageView fx:id="kConnectImg" fitHeight="50" fitWidth="50" HBox.hgrow="ALWAYS"
                                    pickOnBounds="true" preserveRatio="true">
                             <Image url="@Pictures/kConnectImg.png"/>
                         </ImageView>
-                        <Label text="KEY CONNECT" prefHeight="25" prefWidth="120" alignment="CENTER" translateY="2"
+                        <Label text="KEY CONNECT" prefHeight="25" prefWidth="50" alignment="CENTER" translateY="2"
                                wrapText="true"/>
                     </VBox>
                     <!--<Button fx:id="keyDisconnect" text="Key disconnect" prefHeight="50" prefWidth="75"/>-->
-                    <VBox fx:id="kDisconnectBox" prefHeight="75" prefWidth="120" alignment="CENTER">
+                    <VBox fx:id="kDisconnectBox" prefHeight="70" prefWidth="70" alignment="CENTER">
                         <ImageView fx:id="kDisconnectImg" fitHeight="50" fitWidth="50" HBox.hgrow="ALWAYS"
                                    pickOnBounds="true" preserveRatio="true">
                             <Image url="@Pictures/kDisconnectImg.png"/>
                         </ImageView>
-                        <Label text="KEY DISCONNECT" prefHeight="25" prefWidth="120" alignment="CENTER" translateY="2"
+                        <Label text="KEY DISCONNECT" prefHeight="25" prefWidth="50" alignment="CENTER" translateY="2"
                                wrapText="true"/>
                     </VBox>
                 </ToolBar>
-                <ToolBar fx:id="buildToolBar2" prefHeight="100" HBox.hgrow="ALWAYS">
+                <ToolBar fx:id="buildToolBar2" prefHeight="75" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS">
                     <!--<Separator orientation="VERTICAL"/>-->
                     <!--<Button fx:id="connect" text="Connect" prefHeight="50" prefWidth="75"/>-->
-                    <VBox fx:id="connectBox" prefHeight="75" prefWidth="130" alignment="CENTER">
+                    <VBox fx:id="connectBox" prefHeight="70" prefWidth="70" alignment="CENTER">
                         <ImageView fx:id="connectImg" fitHeight="50" fitWidth="50" HBox.hgrow="ALWAYS"
                                    pickOnBounds="true" preserveRatio="true">
                             <Image url="@Pictures/connectImg.png"/>
                         </ImageView>
-                        <Label text="CONNECT GIZMOS" prefHeight="25" prefWidth="130" alignment="CENTER" translateY="2"
+                        <Label text="CONNECT GIZMOS" prefHeight="25" prefWidth="50" alignment="CENTER" translateY="2"
                                wrapText="true"/>
                     </VBox>
                     <!--<Button fx:id="disconnect" text="Disconnect" prefHeight="50" prefWidth="75"/>-->
-                    <VBox fx:id="disconnectBox" prefHeight="75" prefWidth="150" alignment="CENTER">
+                    <VBox fx:id="disconnectBox" prefHeight="70" prefWidth="70" alignment="CENTER">
                         <ImageView fx:id="disconnectImg" fitHeight="50" fitWidth="50" HBox.hgrow="ALWAYS"
                                    pickOnBounds="true" preserveRatio="true">
                             <Image url="@Pictures/disconnectImg.png"/>
                         </ImageView>
-                        <Label text="DISCONNECT GIZMOS" prefHeight="25" prefWidth="150" alignment="CENTER"
+                        <Label text="DISCONNECT GIZMOS" prefHeight="25" prefWidth="50" alignment="CENTER"
                                translateY="2" wrapText="true"/>
                     </VBox>
                     <Separator orientation="VERTICAL"/>
                     <!--<Button fx:id="moveGizmo" text="Move Gizmo" prefHeight="50" prefWidth="75"/>-->
-                    <VBox fx:id="moveBox" prefHeight="75" prefWidth="90" alignment="CENTER">
+                    <VBox fx:id="moveBox" prefHeight="70" prefWidth="70" alignment="CENTER">
                         <ImageView fx:id="moveImg" fitHeight="50" fitWidth="50" HBox.hgrow="ALWAYS"
                                    pickOnBounds="true" preserveRatio="true">
                             <Image url="@Pictures/moveImg.png"/>
                         </ImageView>
-                        <Label text="MOVE GIZMO" prefHeight="25" prefWidth="90" alignment="CENTER" translateY="2"
+                        <Label text="MOVE GIZMO" prefHeight="25" prefWidth="50" alignment="CENTER" translateY="2"
                                wrapText="true"/>
                     </VBox>
                     <!--<Button fx:id="rotateButton" text="Rotate" prefHeight="50" prefWidth="75"/>-->
-                    <VBox fx:id="rotateBox" prefHeight="75" prefWidth="130" alignment="CENTER">
+                    <VBox fx:id="rotateBox" prefHeight="70" prefWidth="70" alignment="CENTER">
                         <ImageView fx:id="rotateImg" fitHeight="50" fitWidth="50" HBox.hgrow="ALWAYS"
                                    pickOnBounds="true" preserveRatio="true">
                             <Image url="@Pictures/rotateImg.png"/>
                         </ImageView>
-                        <Label text="ROTATE TRIANGLE" prefHeight="25" prefWidth="130" alignment="CENTER" translateY="2"
+                        <Label text="ROTATE TRIANGLE" prefHeight="25" prefWidth="50" alignment="CENTER" translateY="2"
                                wrapText="true"/>
                     </VBox>
                     <!--<Button fx:id="deleteButton" text="Delete Gizmo" prefHeight="50" prefWidth="75"/>-->
-                    <VBox fx:id="deleteGizmoBox" prefHeight="75" prefWidth="100" alignment="CENTER">
+                    <VBox fx:id="deleteGizmoBox" prefHeight="70" prefWidth="70" alignment="CENTER">
                         <ImageView fx:id="deleteGizmoImg" fitHeight="50" fitWidth="50" HBox.hgrow="ALWAYS"
                                    pickOnBounds="true" preserveRatio="true">
                             <Image url="@Pictures/deleteGizmoImg.png"/>
                         </ImageView>
-                        <Label text="DELETE GIZMO" prefHeight="25" prefWidth="100" alignment="CENTER" translateY="2"
+                        <Label text="DELETE GIZMO" prefHeight="25" prefWidth="50" alignment="CENTER" translateY="2"
                                wrapText="true"/>
                     </VBox>
                     <!--<Button fx:id="deleteBall" text="Delete Ball" prefHeight="50" prefWidth="75"/>-->
-                    <VBox fx:id="deleteBallBox" prefHeight="75" prefWidth="100" alignment="CENTER">
+                    <VBox fx:id="deleteBallBox" prefHeight="70" prefWidth="70" alignment="CENTER">
                         <ImageView fx:id="deleteBallImg" fitHeight="50" fitWidth="50" HBox.hgrow="ALWAYS"
                                    pickOnBounds="true" preserveRatio="true">
                             <Image url="@Pictures/deleteBallImg.png"/>
                         </ImageView>
-                        <Label text="DELETE BALL" prefHeight="25" prefWidth="100" alignment="CENTER" translateY="2"
+                        <Label text="DELETE BALL" prefHeight="25" prefWidth="50" alignment="CENTER" translateY="2"
                                wrapText="true"/>
                     </VBox>
                 </ToolBar>
             </VBox>
-            <ToolBar fx:id="runToolBar" prefHeight="100" HBox.hgrow="ALWAYS">
+            <ToolBar fx:id="runToolBar" prefHeight="100" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS">
                 <!--<Button fx:id="buildButton" text="Build Mode" prefHeight="50" prefWidth="75"/>-->
                 <VBox fx:id="buildBox" prefHeight="75" prefWidth="81" alignment="CENTER">
                     <ImageView fx:id="buildImg" fitHeight="50" fitWidth="50" HBox.hgrow="ALWAYS"
@@ -189,7 +187,6 @@
                 </VBox>
             </ToolBar>
         </VBox>
-    </HBox>
     <ResizableCanvas fx:id="canvas">
     </ResizableCanvas>
-</VBox>
+</HBox>

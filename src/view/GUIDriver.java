@@ -11,7 +11,7 @@ import java.io.IOException;
 
 public class GUIDriver extends Application{
 
-    final static int CANVAS_SIZE = 1000;
+    final static int CANVAS_SIZE = 700;
 
     private Controller controller;
     private Scene runScene;

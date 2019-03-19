@@ -2,14 +2,29 @@
     /*-fx-focus-traversable: false ;*/
 }
 
+/**{*/
+    /*font-size: 3px;*/
+/*}*/
+
+.label, .choice-box, .choice-box > .label{
+    /*-fx-font-size: 10;*/
+}
+
 .label {
+    -fx-text-fill: #ffffff;
+    -fx-wrap-text: true;
+}
+
+.choice-box > .label {
     -fx-text-fill: #ffffff;
 }
 
-.button, .choice-box > .label {
-    -fx-text-fill: #000000;
+.choice-box{
+    -fx-border-width: 3;
+    -fx-border-color: #7171C2;
+    -fx-border-style: solid;
+    -fx-background-color: #2f2f50;
 }
-
 
 #menus {
     -fx-border-width: 5;
