@@ -57,12 +57,16 @@ class IGizmoCircleTest {
 
     @Test
     void activate(){
-
+        for(int i = 0; i < 3; i++){
+            Color previousColour = gizmo.getColour();
+            gizmo.activate();
+            assertNotEquals(gizmo.getColour(), previousColour);
+        }
     }
 
     @Test
     void deactivate(){
-
+        gizmo.deactivate();
     }
 
     @Test
