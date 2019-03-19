@@ -4,11 +4,15 @@
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import view.ResizableCanvas?>
 
-<?import javafx.scene.control.TextField?>
 <VBox fx:id="rootPane" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Controller" stylesheets="@viewCSS.css">
     <ToolBar fx:id="commonToolBar">
         <Button fx:id="saveButton" text="Save" />
@@ -25,17 +29,17 @@
         <Separator orientation="VERTICAL" />
         <Label text="Add Gizmo:" />
         <ChoiceBox fx:id="gizmoChoiceBox" />
-        <Button fx:id="addBallButton" text="Add Ball"/>
+        <Button fx:id="addBallButton" text="Add Ball" />
         <Separator orientation="VERTICAL" />
         <Button fx:id="keyConnect" text="Key connect" />
-        <Button fx:id ="keyDisconnect" text="Key disconnect" />
+        <Button fx:id="keyDisconnect" text="Key disconnect" />
         <Separator orientation="VERTICAL" />
-        <Button fx:id = "connect" text="Connect" />
-        <Button fx:id = "disconnect" text="Disconnect" />
-        <Button fx:id="moveGizmo" text="Move Gizmo"/>
+        <Button fx:id="connect" text="Connect" />
+        <Button fx:id="disconnect" text="Disconnect" />
+        <Button fx:id="moveGizmo" text="Move Gizmo" />
         <Button fx:id="rotateButton" text="Rotate" />
         <Button fx:id="deleteButton" text="Delete Gizmo" />
-        <Button fx:id="deleteBall" text="Delete Ball"/>
+        <Button fx:id="deleteBall" text="Delete Ball" />
     </ToolBar>
     <ToolBar fx:id="runToolBar">
         <Button fx:id="buildButton" text="Build Mode" />
@@ -44,6 +48,93 @@
         <Button fx:id="stopButton" text="Stop" />
         <Button fx:id="tickButton" text="Tick" />
     </ToolBar>
+    <ToolBar fx:id="editVariables">
+
+      <GridPane>
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+            <RowConstraints />
+         </rowConstraints>
+         <children>
+            <Label text="Gravity" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="0" />
+             <GridPane GridPane.columnIndex="0" GridPane.rowIndex="1">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+               <children>
+                    <Slider fx:id="gravitySlider" max="50.0" min="-50.0" minorTickCount="5" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="25.0" />
+                        <TextField fx:id="gravityValue" GridPane.columnIndex="1" />
+               </children>
+            </GridPane>
+         </children>
+      </GridPane>
+
+      <GridPane>
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+            <RowConstraints />
+         </rowConstraints>
+
+
+          <Label text="mu" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="0" />
+
+
+            <GridPane GridPane.columnIndex="0" GridPane.rowIndex="1">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+
+                  <Slider fx:id="muSlider" max="1.0" min="0" minorTickCount="5" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="0.025" />
+                  <TextField fx:id="muValue" GridPane.columnIndex="1" />
+        </GridPane>
+      </GridPane>
+
+      <GridPane>
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+            <RowConstraints />
+         </rowConstraints>
+         <children>
+            <Label text="mu2" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="0" />
+            <GridPane GridPane.columnIndex="0" GridPane.rowIndex="1">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+               <children>
+                  <Slider fx:id="mu2Slider" max="1.0" min="0" minorTickCount="5" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="0.025" />
+                  <TextField fx:id="mu2Value" GridPane.columnIndex="1" />
+               </children>
+            </GridPane>
+         </children>
+      </GridPane>
+
+    </ToolBar>
+
     <ResizableCanvas fx:id="canvas">
     </ResizableCanvas>
+
 </VBox>

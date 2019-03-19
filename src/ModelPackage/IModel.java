@@ -41,4 +41,10 @@ public interface IModel  {
     void reset();
 
     boolean deleteBall(double x, double y);
+
+    void setGravity(double value);
+
+    void setMu(double value);
+
+    void setMu2(double value);
 }

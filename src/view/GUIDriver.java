@@ -40,10 +40,16 @@ public class GUIDriver extends Application{
             controller.setCanvasSize(CANVAS_SIZE);
 
         }catch (IOException e){
+            e.printStackTrace();
+
             System.err.println("Error when loading the view! Please check the FXML file doesn't have any errors!");
             System.exit(-1);
         }
+
+
     }
+
+
 
 
     public static void main(String[] args) {

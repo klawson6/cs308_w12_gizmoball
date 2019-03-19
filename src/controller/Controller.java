@@ -8,7 +8,9 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -29,6 +31,13 @@ import java.util.*;
 
 public class Controller implements Initializable, Observer {
 
+    @FXML public ToolBar editVariables;
+    @FXML public Slider gravitySlider;
+    @FXML public TextField gravityValue;
+    @FXML public Slider muSlider;
+    @FXML public TextField muValue;
+    @FXML public Slider mu2Slider;
+    @FXML public TextField mu2Value;
     private Stage stage;
     private IModel model;
     private Timeline timeline;
@@ -64,6 +73,11 @@ public class Controller implements Initializable, Observer {
         initialiseCanvas();
         initialiseToolBars();
         initialiseTimeline();
+
+        gravityValue.setText(String.valueOf(gravitySlider.getValue()));
+        muValue.setText(String.valueOf(muSlider.getValue()));
+        mu2Value.setText(String.valueOf(mu2Slider.getValue()));
+
     }
 
     private void initialiseToolBars(){
@@ -257,6 +271,76 @@ public class Controller implements Initializable, Observer {
             addBallButton.requestFocus();
         });
 
+       gravitySlider.valueProperty().addListener(new ChangeListener<Number>() {
+           @Override
+           public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+               gravityValue.setText(String.valueOf(newValue));
+               model.setGravity(gravitySlider.getValue());
+           }
+       });
+
+        gravityValue.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                if(event.getCode() == KeyCode.ENTER){
+                    try {
+                        gravitySlider.setValue(Double.parseDouble(gravityValue.getText()));
+                        model.setGravity(gravitySlider.getValue());
+                    }catch (NumberFormatException e){
+                        //Don't change gravity as something wasn't right
+                    }
+
+                }
+            }
+        });
+
+        muSlider.valueProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                muValue.setText(String.valueOf(newValue));
+                model.setMu(muSlider.getValue());
+            }
+        });
+
+        muValue.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                if(event.getCode() == KeyCode.ENTER){
+                    try {
+                        muSlider.setValue(Double.parseDouble(muValue.getText()));
+                        model.setMu(muSlider.getValue());
+                    }catch (NumberFormatException e){
+                        //Don't change gravity as something wasn't right
+                    }
+
+                }
+            }
+        });
+
+        mu2Slider.valueProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                mu2Value.setText(String.valueOf(newValue));
+                model.setMu2(mu2Slider.getValue());
+            }
+        });
+
+        mu2Value.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                if(event.getCode() == KeyCode.ENTER){
+                    try {
+                        mu2Slider.setValue(Double.parseDouble(muValue.getText()));
+                        model.setMu2(mu2Slider.getValue());
+                    }catch (NumberFormatException e){
+                        //Don't change gravity as something wasn't right
+                    }
+
+                }
+            }
+        });
+
+
     }
 
 
@@ -275,6 +359,8 @@ public class Controller implements Initializable, Observer {
             isBuilding = true;
             runToolBar.setManaged(false);
             runToolBar.setVisible(false);
+            //editVariables.setManaged(false);
+            //editVariables.setVisible(false);
             buildToolBar.setManaged(true);
             buildToolBar.setVisible(true);
             //FIXME handler on root pane?
@@ -294,6 +380,8 @@ public class Controller implements Initializable, Observer {
             runToolBar.setVisible(true);
             buildToolBar.setManaged(false);
             buildToolBar.setVisible(false);
+            editVariables.setManaged(true);
+            editVariables.setVisible(true);
 
 
             canvas.removeEventHandler(MouseEvent.ANY, mouseHandler);

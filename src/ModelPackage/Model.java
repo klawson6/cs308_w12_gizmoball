@@ -15,8 +15,8 @@ public class Model extends Observable implements IModel {
 
     private double gravity = 25;
     private double friction = 10;
-    private final double mu = 0.025;
-    private final double mu2 = 0.025;
+    private double mu = 0.025;
+    private double mu2 = 0.025;
 
     private LineSegment[] borders = new LineSegment[4];
     private Set<Gizmo> gizmoList = new HashSet<>();
@@ -682,6 +682,21 @@ public class Model extends Observable implements IModel {
         notifyObservers();
 
         return outcome;
+    }
+
+    @Override
+    public void setGravity(double value) {
+        gravity = value;
+    }
+
+    @Override
+    public void setMu(double value) {
+        mu = value;
+    }
+
+    @Override
+    public void setMu2(double value) {
+        mu2 = value;
     }
 
     /**
