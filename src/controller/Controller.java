@@ -232,7 +232,7 @@ public class Controller implements Initializable, Observer {
                 if(gizmoChoiceBox.isFocused()){
                     //Focused so use Handler
                         canvas.removeEventHandler(MouseEvent.ANY, mouseHandler);
-                        mouseHandler = new PlaceGizmoHandler(model, canvas, gizmoChoiceBox);
+                        mouseHandler = new PlaceGizmoHandler(model, canvas, gizmoChoiceBox,infoLabel);
                         canvas.addEventHandler(MouseEvent.ANY, mouseHandler);
                         setInfoLabel("Click on the grid to place a Gizmo.");
                     }
@@ -282,7 +282,7 @@ public class Controller implements Initializable, Observer {
             canvas.removeEventHandler(MouseEvent.ANY,mouseHandler);
 
             //Default Handler will be place Gizmo's from selection
-            mouseHandler = new PlaceGizmoHandler(model, canvas,gizmoChoiceBox);
+            mouseHandler = new PlaceGizmoHandler(model, canvas,gizmoChoiceBox, infoLabel);
 
             canvas.addEventHandler(MouseEvent.ANY, mouseHandler);
             //canvas.removeEventHandler(KeyEvent.ANY,keyBindHandler);

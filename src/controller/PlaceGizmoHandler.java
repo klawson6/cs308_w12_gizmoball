@@ -1,16 +1,13 @@
 package controller;
 
-import ModelPackage.Gizmo;
 import ModelPackage.GizmoType;
+import ModelPackage.IGizmo;
 import ModelPackage.IModel;
 import javafx.event.EventHandler;
 import javafx.scene.control.ChoiceBox;
-import javafx.scene.input.Dragboard;
-import javafx.scene.input.MouseDragEvent;
+import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import view.ResizableCanvas;
-
-import java.awt.*;
 
 public class PlaceGizmoHandler implements EventHandler<MouseEvent> {
 
@@ -21,12 +18,14 @@ public class PlaceGizmoHandler implements EventHandler<MouseEvent> {
     private int startY;
     private int endX;
     private int endY;
+    Label info;
 
-    PlaceGizmoHandler(IModel model, ResizableCanvas canvas, ChoiceBox<GizmoType> gizmoTypeChoiceBox){
+    PlaceGizmoHandler(IModel model, ResizableCanvas canvas, ChoiceBox<GizmoType> gizmoTypeChoiceBox, Label infoLabel){
 
         this.canvas = canvas;
         this.model = model;
         this.gizmoTypeChoiceBox = gizmoTypeChoiceBox;
+        this.info = infoLabel;
 
     }
 
@@ -47,7 +46,13 @@ public class PlaceGizmoHandler implements EventHandler<MouseEvent> {
                 startY = (int) (event.getY() / hGridSquareSize);
 
                 if (!gizmoTypeChoiceBox.getValue().equals(GizmoType.ABSORBER)) {
-                    model.createGizmo(gizmoTypeChoiceBox.getValue(), startX, startY, endX, endY);
+                   boolean status = model.createGizmo(gizmoTypeChoiceBox.getValue(), startX, startY, endX, endY);
+                   if(status){
+                       info.setText(gizmoTypeChoiceBox.getValue().toString() + " was created sucessfully");
+                   }else{
+                       IGizmo gizmo = model.getGizmo(startX,startY);
+                       info.setText(gizmoTypeChoiceBox.getValue().toString() + " was not created successfully due to " + gizmo.getGizmoType() + " at x: " + gizmo.getStartxPosition() + ", y: " + gizmo.getStartyPosition());
+                   }
                 }
             }
 

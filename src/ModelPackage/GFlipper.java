@@ -13,7 +13,7 @@ public class GFlipper extends Gizmo{
     private boolean isActivated;
     private int xPosition;
     private int yPosition;
-    final private double coefficent = 1;
+    final private double coefficent = 0.95;
     private String id;
 
     private Set<LineSegment> composingLines = super.composingLines;
@@ -34,6 +34,7 @@ public class GFlipper extends Gizmo{
             this.yPosition = yPosition;
             setCoefficent(coefficent);
             setColor(defaultColor);
+            rotatePhysics();
 
 
         this.isLeft = isLeft;
@@ -236,14 +237,35 @@ public class GFlipper extends Gizmo{
         Vect centre1 = circle.getCenter();
         Vect centre2 = circle1.getCenter();
 
+        //Need to move at radius distance of circle. this will make it perpendicular
         LineSegment lineBetween = new LineSegment(centre1,centre2);
+
         double distance = lineBetween.length();
+        //Distance will be as hypotenuse
+        //Need trig
+
+        double x;
+        double y;
+
+        //Y component to move
+        y = Math.cos(Math.toRadians(getRotation())) * distance;
+        //X component to move
+        x = Math.tan(Math.toRadians(getRotation())) * y;
+
+
+
         Angle angle = lineBetween.angle();
-        Vect centrepoint = new Vect(centre1.x()+(distance/2),centre1.y()+(distance/2));
+        Vect centrepoint = new Vect(centre1.x()+x/2,centre1.y()+y/2);
 
-        Geometry.rotateAround(lineSegment,centrepoint,new Angle(Math.toRadians(getRotation())));
-        Geometry.rotateAround(lineSegment1,centrepoint,new Angle(Math.toRadians(getRotation())));
+        Vect perp = new Vect(new Angle(Math.toRadians(90)),circle.getRadius());
+        Vect CircleTopRight = circle.getCenter().plus(perp);
+        Vect CircleTopLeft = circle.getCenter().minus(perp);
+        Vect CircleBottomRight = circle1.getCenter().plus(perp);
+        Vect CircleBottomLeft = circle1.getCenter().minus(perp);
+        lineSegment = new LineSegment(CircleTopRight,CircleBottomRight);
+        lineSegment1 = new LineSegment(CircleTopLeft,CircleBottomLeft);
 
+        /*
         if(isLeft){
             lineSegment = Geometry.rotateAround(lineSegment,centrepoint,new Angle(-Math.toRadians(getRotation())));
             lineSegment1 = Geometry.rotateAround(lineSegment1,centrepoint,new Angle(-Math.toRadians(getRotation())));
@@ -251,7 +273,7 @@ public class GFlipper extends Gizmo{
             lineSegment = Geometry.rotateAround(lineSegment,centrepoint,new Angle(-Math.toRadians(getRotation())));
             lineSegment1 = Geometry.rotateAround(lineSegment1,centrepoint,new Angle(-Math.toRadians(getRotation())));
         }
-
+*/
         composingLines.add(lineSegment);
         composingLines.add(lineSegment1);
 
@@ -259,6 +281,7 @@ public class GFlipper extends Gizmo{
 
     public void antirotate(){
         int rotation = angleDegrees - 5;
+        rotatePhysics();
         if(rotation < 0){
             angleDegrees = 0;
         }else {
