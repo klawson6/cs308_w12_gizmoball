@@ -180,14 +180,14 @@ public class GAbsorber extends Gizmo {
     @Override
     //Stops action
     public void deactivate() {
-//        if (!absorbedBall.isEmpty()) {
-//            Ball ball = absorbedBall.removeFirst();
-//            ball.setCircle(getEndxPosition() - 0.5, getEndyPosition() - 1);
-//            ball.modifyVelocity(new Vect(0, -50));
-//            System.out.println(ball.getVelocity());
-//            ball.startBall();
-//
-//        }
+        if (!absorbedBall.isEmpty()) {
+            Ball ball = absorbedBall.removeFirst();
+            ball.setCircle(getEndxPosition() - 0.5, getEndyPosition() - 1);
+            ball.modifyVelocity(new Vect(0, -50));
+            System.out.println(ball.getVelocity());
+            ball.startBall();
+
+        }
 
     }
 }

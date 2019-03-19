@@ -108,6 +108,19 @@ public class LoadFile {
                     String name = scan.next();
                     int xPos = scan.nextInt();
                     int yPos = scan.nextInt();
+                    /**
+                     * So basically for the right flipper, the coordinates given are the left coords
+                     * but we will place it on the right.
+                     *
+                     * | 1 | 2 |
+                     * | 3 | 4 |
+                     *
+                     * The coordinates given is 1 (& 3), but the flipper will be place in 2 (& 4).
+                     * Therefore need to redo boundary check
+                     *
+                     * To make code more readable, going to just reassign xPos
+                     */
+                    xPos++;
 
                     //Create gizmo
                     model.createGizmo(type,xPos,yPos,xPos,yPos,name);

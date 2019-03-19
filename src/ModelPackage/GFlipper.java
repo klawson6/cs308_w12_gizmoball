@@ -60,11 +60,15 @@ public class GFlipper extends Gizmo{
         addLines();
 
 
-            setxPosition(xPosition);
-            setyPosition(yPosition);
-            this.xPosition = xPosition;
-            this.yPosition = yPosition;
-            this.id = id;
+        this.isLeft = isLeft;
+
+        setxPosition(xPosition);
+        setyPosition(yPosition);
+        this.xPosition = xPosition;
+        this.yPosition = yPosition;
+        this.id = id;
+
+
     }
 
     //TODO add flipper collision detection

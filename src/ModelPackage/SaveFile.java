@@ -36,6 +36,8 @@ public class SaveFile {
             String toSave;
             if(gizmo.getGizmoType() == GizmoType.ABSORBER)
                 toSave =  gizmo.getGizmoType() + " " + gizmo.getId() + " " + gizmo.getStartxPosition() + " " + gizmo.getStartyPosition() + " " + gizmo.getEndxPosition() + " " + gizmo.getEndyPosition();
+            else if(gizmo.getGizmoType() == GizmoType.RIGHTFLIPPER)
+                toSave = gizmo.getGizmoType().toString().replace(" ","") + " " + gizmo.getId() + " " + (gizmo.getStartxPosition()-1) + " " + gizmo.getStartyPosition();
             else
                 toSave = gizmo.getGizmoType().toString().replace(" ","") + " " + gizmo.getId() + " " + gizmo.getStartxPosition() + " " + gizmo.getStartyPosition();
             infoToSave.add(toSave);
