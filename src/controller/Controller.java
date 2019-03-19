@@ -268,7 +268,7 @@ public class Controller implements Initializable, Observer {
             canvas.addEventHandler(MouseEvent.ANY, mouseHandler);
             setInfoLabel("Select Gizmo to Move");
             canvas.requestFocus();
-            addBallButton.requestFocus();
+            moveGizmo.requestFocus();
         });
 
        gravitySlider.valueProperty().addListener(new ChangeListener<Number>() {
@@ -276,7 +276,8 @@ public class Controller implements Initializable, Observer {
            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
                gravityValue.setText(String.valueOf(newValue));
                model.setGravity(gravitySlider.getValue());
-           }
+               canvas.requestFocus();
+               gravitySlider.requestFocus();}
        });
 
         gravityValue.setOnKeyPressed(new EventHandler<KeyEvent>() {
@@ -286,6 +287,8 @@ public class Controller implements Initializable, Observer {
                     try {
                         gravitySlider.setValue(Double.parseDouble(gravityValue.getText()));
                         model.setGravity(gravitySlider.getValue());
+                        canvas.requestFocus();
+                        //gravityValue.requestFocus();
                     }catch (NumberFormatException e){
                         //Don't change gravity as something wasn't right
                     }
@@ -299,6 +302,8 @@ public class Controller implements Initializable, Observer {
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
                 muValue.setText(String.valueOf(newValue));
                 model.setMu(muSlider.getValue());
+                canvas.requestFocus();
+                muSlider.requestFocus();
             }
         });
 
@@ -309,6 +314,8 @@ public class Controller implements Initializable, Observer {
                     try {
                         muSlider.setValue(Double.parseDouble(muValue.getText()));
                         model.setMu(muSlider.getValue());
+                        canvas.requestFocus();
+                        //muValue.requestFocus();
                     }catch (NumberFormatException e){
                         //Don't change gravity as something wasn't right
                     }
@@ -322,6 +329,8 @@ public class Controller implements Initializable, Observer {
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
                 mu2Value.setText(String.valueOf(newValue));
                 model.setMu2(mu2Slider.getValue());
+                canvas.requestFocus();
+                mu2Slider.requestFocus();
             }
         });
 
@@ -332,6 +341,8 @@ public class Controller implements Initializable, Observer {
                     try {
                         mu2Slider.setValue(Double.parseDouble(muValue.getText()));
                         model.setMu2(mu2Slider.getValue());
+                        canvas.requestFocus();
+                        //mu2Value.requestFocus();
                     }catch (NumberFormatException e){
                         //Don't change gravity as something wasn't right
                     }
