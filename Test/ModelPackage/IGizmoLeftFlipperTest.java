@@ -5,7 +5,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 class IGizmoLeftFlipperTest {
 
@@ -37,12 +37,12 @@ class IGizmoLeftFlipperTest {
 
     @Test
     void getEndxPosition(){
-        assertEquals(gizmo.getEndxPosition(), 0);
+        assertEquals(1, gizmo.getEndxPosition());
     }
 
     @Test
     void getEndyPosition(){
-        assertEquals(gizmo.getEndyPosition(), 0);
+        assertEquals(1, gizmo.getEndyPosition());
     }
 
     @Test
@@ -56,14 +56,12 @@ class IGizmoLeftFlipperTest {
     }
 
     @Test
-    void activate(){
+    void activateDeactivateTest(){
+        assertFalse(((GFlipper) gizmo).isActivated());
         gizmo.activate();
-        assertEquals(gizmo.getRotation(), 90);
-    }
-
-    @Test
-    void deactivate(){
-
+        assertTrue(((GFlipper) gizmo).isActivated());
+        gizmo.deactivate();
+        assertFalse(((GFlipper) gizmo).isActivated());
     }
 
     @Test
