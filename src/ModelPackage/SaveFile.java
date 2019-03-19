@@ -10,10 +10,7 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class SaveFile {
 
@@ -64,10 +61,32 @@ public class SaveFile {
             toSave = "Ball B " + ball.getXPosition() + " " + ball.getYPosition() + " " + ball.getVelocity().x() + " " + ball.getVelocity().y();
             infoToSave.add(toSave);
         }
+        infoToSave.add("");
 
         ///////////////////////////////////////////// Key Connects /////////////////////////////////////////////
-        //todo add key connects
+        for(Gizmo gizmo: gizmos){
+            HashMap <KeyEvent, String> connectHashMap = gizmo.getKeybindings();
+            Set<KeyEvent> connections = connectHashMap.keySet();
+            for(KeyEvent k: connections){
+                //KeyConnect key 87 up RF137
+                toSave = "KeyConnect key " + k.getCode().getCode() + " up " + gizmo.getId();
+                infoToSave.add(toSave);
+                toSave = "KeyConnect key " + k.getCode().getCode() + " down " + gizmo.getId();
+                infoToSave.add(toSave);
+            }
+        }
+        infoToSave.add("");
 
+        ///////////////////////////////////////////// Connections /////////////////////////////////////////////
+        for(Gizmo gizmo: gizmos){
+            Set <String> connections = gizmo.getGizmoConnectionIds();
+            for(String c: connections){
+                //KeyConnect key 87 up RF137
+                toSave = "Connect " + gizmo.getId() + " " + c;
+                infoToSave.add(toSave);
+            }
+        }
+        infoToSave.add("");
 
 
         ////////////////////////Actually save//////////////////////////

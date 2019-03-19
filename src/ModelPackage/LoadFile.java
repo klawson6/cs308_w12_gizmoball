@@ -146,6 +146,8 @@ public class LoadFile {
                     else
                         System.out.println("Error. Gizmo " + toMove + " does not exist.");
 
+
+                    //KeyEvent.KEY_PRESSED, event.getCharacter(), event.getText(), event.getCode(),
                 } else if (info.startsWith("Connect")) {
                     String type = scan.next();
                     String giz1 = scan.next();
