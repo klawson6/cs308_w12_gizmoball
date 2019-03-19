@@ -330,6 +330,9 @@ public class Controller implements Initializable, Observer {
     }
 
     public void setCanvasSize(int canvasSize) {
+        if(canvasSize % 20 != 0){
+            canvasSize = 20*(Math.round(canvasSize/20));
+        }
         if(canvasSize < 200){
             canvasSize = 200;
             canvasSizeTextField.setText(String.valueOf(canvasSize));
