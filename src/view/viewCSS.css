@@ -1,5 +1,5 @@
 .root, .root * {
-    -fx-focus-traversable: false ;
+    /*-fx-focus-traversable: false ;*/
 }
 
 .label {
@@ -17,14 +17,21 @@
     -fx-background-color: #2f2f50;
 }
 
-#commonToolBar, #buildToolBar, #runToolBar{
+#commonToolBar, #buildToolBar1, #buildToolBar2, #runToolBar{
     -fx-background-color: #2f2f50;
-    /*-fx-alignment: center;*/
     -fx-spacing: 3em;
     /*-fx-border-width: 5;*/
     /*-fx-border-color: #7171C2;*/
     /*-fx-border-style: solid;*/
 }
 
-.button{
+#buildToolBar1, #buildToolBar2, #runToolBar {
+    -fx-alignment: center;
+}
+
+#fillerBar{
+    -fx-border-width: 2.5;
+    -fx-border-color: #7171C2;
+    -fx-border-style: solid;
+    -fx-background-color: #7171C2;
 }
