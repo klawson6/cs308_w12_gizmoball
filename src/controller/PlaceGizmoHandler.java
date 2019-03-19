@@ -72,7 +72,13 @@ public class PlaceGizmoHandler implements EventHandler<MouseEvent> {
                     int maxY = Math.max(startY,endY);
                     int minX = Math.min(startX,endX);
                     int minY = Math.min(startY,endY);
-                    model.createGizmo(gizmoTypeChoiceBox.getValue(), minX, minY, maxX, maxY);
+                    boolean status = model.createGizmo(gizmoTypeChoiceBox.getValue(), minX, minY, maxX, maxY);
+
+                    if(status) {
+                        info.setText("Create Absorber at x : " + minX + ", y : " + minY + ", to x : " + maxX + ", y : " + maxY);
+                    }else{
+                        info.setText("Failed to create Absorber");
+                    }
                 }
                 System.out.println("StartX : " + startX + ", Start Y : " + startY);
                 System.out.println("EndX : " + endX + ", End Y : " + endY);
