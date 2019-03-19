@@ -141,7 +141,7 @@ public class Controller implements Initializable, Observer {
 
         rotateButton.setOnAction(event -> {
             canvas.removeEventHandler(MouseEvent.ANY,mouseHandler);
-            mouseHandler = new RotationHandler(model, canvas);
+            mouseHandler = new RotationHandler(model, canvas, infoLabel);
             canvas.addEventHandler(MouseEvent.ANY, mouseHandler);
             canvas.requestFocus();
             rotateButton.requestFocus();
