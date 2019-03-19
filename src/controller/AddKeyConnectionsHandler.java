@@ -43,72 +43,74 @@ public class AddKeyConnectionsHandler implements EventHandler<MouseEvent> {
 
                 IGizmo g = model.getGizmo(startX, startY);
 
-                if (g != null && (g.getGizmoType().equals(GizmoType.ABSORBER) || g.getGizmoType().equals(GizmoType.LEFTFLIPPER) || g.getGizmoType().equals(GizmoType.RIGHTFLIPPER))) {
-                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setTitle("Add a key binding");
-                    alert.setHeaderText("Please press a key to add a connection!");
+                if (g != null) {
+                    if (g.getGizmoType().equals(GizmoType.ABSORBER) || g.getGizmoType().equals(GizmoType.LEFTFLIPPER) || g.getGizmoType().equals(GizmoType.RIGHTFLIPPER)) {
+                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                        alert.setTitle("Add a key binding");
+                        alert.setHeaderText("Please press a key to add a connection!");
 
-                    ToggleGroup group = new ToggleGroup();
-                    Label label = new Label("Please press a key to add a connection");
-                    RadioButton rb1 = new RadioButton("On key press");
-                    rb1.setUserData("press");
-                    rb1.setToggleGroup(group);
-                    RadioButton rb2 = new RadioButton("On key release");
-                    rb2.setUserData("release");
-                    rb2.setToggleGroup(group);
-                    rb1.setSelected(true);
+                        ToggleGroup group = new ToggleGroup();
+                        Label label = new Label("Please press a key to add a connection");
+                        RadioButton rb1 = new RadioButton("On key press");
+                        rb1.setUserData("press");
+                        rb1.setToggleGroup(group);
+                        RadioButton rb2 = new RadioButton("On key release");
+                        rb2.setUserData("release");
+                        rb2.setToggleGroup(group);
+                        rb1.setSelected(true);
 
-                    if(g.getGizmoType().equals(GizmoType.RIGHTFLIPPER) || g.getGizmoType().equals(GizmoType.LEFTFLIPPER)){
-                        rb2.setVisible(false);
-                    }
+                        if (g.getGizmoType().equals(GizmoType.RIGHTFLIPPER) || g.getGizmoType().equals(GizmoType.LEFTFLIPPER)) {
+                            rb2.setVisible(false);
+                        }
 
-                    //Add radio buttons to a pane
-                    GridPane gp = new GridPane();
-                    gp.add(rb1,0,0);
-                    gp.add(rb2,1,0);
-                    gp.setHgap(10);
-                    ColumnConstraints c    = new ColumnConstraints();
-                    alert.getDialogPane().setContent(gp);
-                    alert.getDialogPane().lookupButton(ButtonType.OK).setVisible(false);
-                    //Add an key event handler to pick up the key pressed
-                    alert.getDialogPane().getContent().addEventHandler(KeyEvent.ANY, new EventHandler<KeyEvent>() {
-                        @Override
-                        public void handle(KeyEvent event) {
+                        //Add radio buttons to a pane
+                        GridPane gp = new GridPane();
+                        gp.add(rb1, 0, 0);
+                        gp.add(rb2, 1, 0);
+                        gp.setHgap(10);
+                        ColumnConstraints c = new ColumnConstraints();
+                        alert.getDialogPane().setContent(gp);
+                        alert.getDialogPane().lookupButton(ButtonType.OK).setVisible(false);
+                        //Add an key event handler to pick up the key pressed
+                        alert.getDialogPane().getContent().addEventHandler(KeyEvent.ANY, new EventHandler<KeyEvent>() {
+                            @Override
+                            public void handle(KeyEvent event) {
 
-                            //If ESC button is pressed just close the dialog window
-                            if (!event.getCode().getName().equals("Esc")) {
-                                if (group.getSelectedToggle().getUserData().toString().equals("press")) {
-                                    addOnKeyPressed(event);
-                                    if(g.getGizmoType().equals(GizmoType.RIGHTFLIPPER) || g.getGizmoType().equals(GizmoType.LEFTFLIPPER)){
+                                //If ESC button is pressed just close the dialog window
+                                if (!event.getCode().getName().equals("Esc")) {
+                                    if (group.getSelectedToggle().getUserData().toString().equals("press")) {
+                                        addOnKeyPressed(event);
+                                        if (g.getGizmoType().equals(GizmoType.RIGHTFLIPPER) || g.getGizmoType().equals(GizmoType.LEFTFLIPPER)) {
+                                            addOnKeyReleased(event);
+                                        }
+                                    } else {
                                         addOnKeyReleased(event);
                                     }
-                                } else {
-                                    addOnKeyReleased(event);
+
+
                                 }
-
-
+                                event.consume();
+                                alert.close();
                             }
-                            event.consume();
-                            alert.close();
-                        }
-                    });
-                    alert.show();
-
+                        });
+                        alert.show();
+                    } else {
+                        Alert error = new Alert(Alert.AlertType.ERROR);
+                        error.setTitle("Keybinding Cannot Be Applied");
+                        error.setHeaderText("Key connection cannot be applied to " + g.getGizmoType() + "s!");
+                        error.show();
+                    }
                 }
             }
-
-
-
         }
     }
 
-    private void addOnKeyPressed(KeyEvent event){
+    private void addOnKeyPressed(KeyEvent event) {
         KeyEvent binding = new KeyEvent(KeyEvent.KEY_PRESSED, event.getCharacter(), event.getText(), event.getCode(), false, false, false, false);
-        if (model.addKeyConnection(startX,startY,binding)) {
+        if (model.addKeyConnection(startX, startY, binding)) {
             //System.out.println("Added Key connection to key '" + event.getCode().getName() + "' on key press!");
             infoLabel.setText("Added Key connection to key '" + event.getCode().getName() + "' on key press!");
-        }
-        else {
+        } else {
             Alert error = new Alert(Alert.AlertType.ERROR);
             error.setTitle("Keybinding exists");
             error.setHeaderText("Key connection already exists on gizmo!");
@@ -116,13 +118,12 @@ public class AddKeyConnectionsHandler implements EventHandler<MouseEvent> {
         }
     }
 
-    private void addOnKeyReleased(KeyEvent event){
+    private void addOnKeyReleased(KeyEvent event) {
         KeyEvent binding = new KeyEvent(KeyEvent.KEY_RELEASED, event.getCharacter(), event.getText(), event.getCode(), false, false, false, false);
-        if (model.addKeyConnection(startX,startY,binding)) {
+        if (model.addKeyConnection(startX, startY, binding)) {
             //System.out.println("Added Key connection to key '" + event.getCode().getName() + "' on key release!");
             infoLabel.setText("Added Key connection to key '" + event.getCode().getName() + "' on key release!");
-        }
-        else {
+        } else {
             Alert error = new Alert(Alert.AlertType.ERROR);
             error.setTitle("Key binding exists");
             error.setHeaderText("Key connection already exists on gizmo!");
