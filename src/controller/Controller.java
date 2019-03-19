@@ -116,7 +116,7 @@ public class Controller implements Initializable, Observer {
     }
 
     private void initialiseTimeline(){
-        timeline = new Timeline(new KeyFrame(Duration.millis(50), event -> {
+        timeline = new Timeline(new KeyFrame(Duration.millis(10), event -> {
             model.moveBall();
             model.checkFlippers();
         }));

@@ -495,7 +495,7 @@ public class Model extends Observable implements IModel {
      */
 
     public void moveBall() {
-        double moveTime = 0.05; //20fps
+        double moveTime = 0.01; //20fps
 
         for (Ball ball : balls) {
 
