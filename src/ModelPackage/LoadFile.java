@@ -1,39 +1,42 @@
 package ModelPackage;
 
-import com.sun.javafx.scene.input.KeyCodeMap;
+import javafx.scene.control.Alert;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
-//import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
+
+//import java.awt.event.KeyEvent;
 
 public class LoadFile {
 
     private String filename;
     private Scanner wholeLine, scan;
     private File file;
+    private boolean faulty;
 
-    public LoadFile(File fileArg){
+    public LoadFile(File fileArg) {
         //Current file name, will want user prompt most likely in future
         //filename = "Documents/example_file.txt";
 //        filename = "Documents/test.txt";
 
         //Check file exists
         file = fileArg;
+        faulty = false;
 
         try {
             wholeLine = new Scanner(file);
             wholeLine.useDelimiter("\n");
-        }catch(FileNotFoundException e){
+        } catch (FileNotFoundException e) {
             System.out.println("Error. File " + filename + " not found");
         }
     }
 
-    public Model run(){
+    public Model run() {
         //Only proceed if file is there
-        if(file.exists()) {
+        if (file.exists() && file.getName().endsWith(".txt")) {
 
             Model model = new Model(); //Create new model
 
@@ -53,7 +56,7 @@ public class LoadFile {
                     int yPos = scan.nextInt();
 
                     //Create gizmo with ID
-                    model.createGizmo(type,xPos,yPos,xPos,yPos,name);
+                    model.createGizmo(type, xPos, yPos, xPos, yPos, name);
 
                 } else if (info.startsWith("Circle")) {
                     scan.next();
@@ -64,7 +67,7 @@ public class LoadFile {
                     int yPos = scan.nextInt();
 
                     //Create gizmo with ID
-                    model.createGizmo(type,xPos,yPos,xPos,yPos,name);
+                    model.createGizmo(type, xPos, yPos, xPos, yPos, name);
 
                 } else if (info.startsWith("Triangle")) {
                     scan.next();
@@ -75,7 +78,7 @@ public class LoadFile {
                     int yPos = scan.nextInt();
 
                     //Create gizmo with ID
-                    model.createGizmo(type,xPos,yPos,xPos,yPos,name);
+                    model.createGizmo(type, xPos, yPos, xPos, yPos, name);
 
                 } else if (info.startsWith("Rotate")) {
                     //Get information from line.
@@ -83,11 +86,12 @@ public class LoadFile {
                     String toRotate = scan.next();
 
                     Gizmo gizmo = model.getGizmo(toRotate);
-                    if(gizmo != null)
+                    if (gizmo != null)
                         model.rotateGizmo(gizmo); //Rotate
-                    else{
+                    else {
                         System.out.println("Error. Gizmo " + toRotate + " is not valid");
                         System.out.println(info);
+                        faulty = true;
                     }
 
                 } else if (info.startsWith("LeftFlipper")) {
@@ -99,7 +103,7 @@ public class LoadFile {
                     int yPos = scan.nextInt();
 
                     //Create gizmo with ID
-                    model.createGizmo(type,xPos,yPos,xPos,yPos,name);
+                    model.createGizmo(type, xPos, yPos, xPos, yPos, name);
 
                 } else if (info.startsWith("RightFlipper")) {
                     scan.next();
@@ -123,7 +127,7 @@ public class LoadFile {
                     xPos++;
 
                     //Create gizmo
-                    model.createGizmo(type,xPos,yPos,xPos,yPos,name);
+                    model.createGizmo(type, xPos, yPos, xPos, yPos, name);
 
                 } else if (info.startsWith("KeyConnect")) {
                     String type = scan.next();
@@ -138,20 +142,20 @@ public class LoadFile {
                     KeyCode keyCode = KeyCode.getKeyCode(letter);
                     KeyEvent k = null;
 
-                    if(direction.equalsIgnoreCase("up"))
-                        k = new KeyEvent(KeyEvent.KEY_RELEASED, letter, "", keyCode,false,false,false,false);
-                    else if(direction.equalsIgnoreCase("down"))
-                        k = new KeyEvent(KeyEvent.KEY_PRESSED, letter, "", keyCode,false,false,false,false);
-
+                    if (direction.equalsIgnoreCase("up"))
+                        k = new KeyEvent(KeyEvent.KEY_RELEASED, letter, "", keyCode, false, false, false, false);
+                    else if (direction.equalsIgnoreCase("down"))
+                        k = new KeyEvent(KeyEvent.KEY_PRESSED, letter, "", keyCode, false, false, false, false);
 
 
                     //Check gizmo exists before adding key connection.
                     Gizmo gizmo = model.getGizmo(toMove);
-                    if(gizmo!=null)
-                        model.addKeyConnection(k,gizmo); //Add connection
-                    else
+                    if (gizmo != null)
+                        model.addKeyConnection(k, gizmo); //Add connection
+                    else {
                         System.out.println("Error. Gizmo " + toMove + " does not exist.");
-
+                        faulty = true;
+                    }
 
                     //KeyEvent.KEY_PRESSED, event.getCharacter(), event.getText(), event.getCode(),
                 } else if (info.startsWith("Connect")) {
@@ -161,14 +165,16 @@ public class LoadFile {
 
                     Gizmo g1 = model.getGizmo(giz1);
                     Gizmo g2 = model.getGizmo(giz2);
-                    if(g1 != null && g2 != null) {
+                    if (g1 != null && g2 != null) {
                         model.addGizmoConnection(g1, g2); //Add connection
-                    }else{
-                        if(g1 == null){
+                    } else {
+                        if (g1 == null) {
                             System.out.println("Error. Gizmo " + giz1 + " is not valid");
+                            faulty = true;
                         }
-                        if(g2 == null){
+                        if (g2 == null) {
                             System.out.println("Error. Gizmo " + giz2 + " is not valid");
+                            faulty = true;
                         }
                     }
 
@@ -182,7 +188,7 @@ public class LoadFile {
                     double yVel = Double.parseDouble(scan.next());
 
                     //Add ball
-                    model.addBall(new Ball(xPos,yPos,xVel, yVel));
+                    model.addBall(new Ball(xPos, yPos, xVel, yVel));
 
                 } else if (info.startsWith("Absorber")) {
                     scan.next();
@@ -195,20 +201,40 @@ public class LoadFile {
                     int y2 = scan.nextInt();
 
                     //Create gizmo with ID
-                    model.createGizmo(type,x1,y1,x2,y2,name);
+                    model.createGizmo(type, x1, y1, x2, y2, name);
                 } else if (info.equals("")) {
 
+                } else {
+                    faulty = false;
                 }
             }
+            errorAlert();
             //close scanners
             scan.close();
             wholeLine.close();
 
             return model;
-        }else{
+        } else {
             System.out.println("File doesn't exist");
+            errorAlertFileType();
         }
         return new Model(); //return empty model
+    }
+
+    private void errorAlert() {
+        if (faulty) {
+            Alert error = new Alert(Alert.AlertType.ERROR);
+            error.setTitle("File Error");
+            error.setHeaderText("There is an error(s) in the loaded file, game may be missing expected features.");
+            error.show();
+        }
+    }
+
+    private void errorAlertFileType() {
+        Alert error = new Alert(Alert.AlertType.ERROR);
+        error.setTitle("File Error");
+        error.setHeaderText("File type not supported, please selected a .txt file.");
+        error.show();
     }
 
     /**
