@@ -9,7 +9,7 @@
 <?import view.ResizableCanvas?>
 
 <?import javafx.scene.control.TextField?>
-<VBox fx:id="rootPane" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Controller">
+<VBox fx:id="rootPane" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Controller" stylesheets="@viewCSS.css">
     <ToolBar fx:id="commonToolBar">
         <Button fx:id="saveButton" text="Save" />
         <Button fx:id="loadButton" text="Load" />
