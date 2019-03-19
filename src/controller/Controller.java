@@ -148,7 +148,7 @@ public class Controller implements Initializable, Observer {
 
         // Resize Canvas
         canvasSizeTextField.setOnKeyPressed((event) -> {
-            if(event.getCode() == KeyCode.ENTER) { setCanvasSize(Integer.valueOf(canvasSizeTextField.getText())); }
+            if(event.getCode() == KeyCode.ENTER) { setCanvasSize(Integer.valueOf(canvasSizeTextField.getText())); canvas.requestFocus();}
         });
 
         //Add Handler for Rotation
