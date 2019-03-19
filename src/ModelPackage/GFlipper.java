@@ -210,10 +210,6 @@ public class GFlipper extends Gizmo{
         Circle circle = new Circle(xPosition + 0.5, yPosition + 0.5, 0.5);
         Circle circle1 = new Circle(xPosition + 0.5, yPosition + 1.5, 0.5);
 
-        if(getRotation()>50){
-            System.out.println("break");
-        }
-
         if(isLeft){
             circle1 = Geometry.rotateAround(circle1,circle.getCenter(),new Angle(-Math.toRadians(getRotation())));
         }else{
