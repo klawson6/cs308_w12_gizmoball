@@ -6,6 +6,7 @@ import javafx.scene.input.KeyEvent;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.List;
 import java.util.Scanner;
 
 //import java.awt.event.KeyEvent;
@@ -141,6 +142,7 @@ public class LoadFile {
                     String letter = java.awt.event.KeyEvent.getKeyText(id);
                     KeyCode keyCode = KeyCode.getKeyCode(letter);
                     KeyEvent k = null;
+                    System.out.println(letter + " " + toMove);
 
                     if (direction.equalsIgnoreCase("up"))
                         k = new KeyEvent(KeyEvent.KEY_RELEASED, letter, "", keyCode, false, false, false, false);
@@ -202,9 +204,36 @@ public class LoadFile {
 
                     //Create gizmo with ID
                     model.createGizmo(type, x1, y1, x2, y2, name);
-                } else if (info.equals("")) {
+                } else if (info.startsWith("Gravity")) {
+                    String type = scan.next();
+                    double gravity = scan.nextDouble();
 
-                } else {
+                    model.setGravity(gravity);
+                } else if(info.startsWith("Move")){
+                    String type = scan.next();
+                    String name = scan.next();
+                    int xPos = scan.nextInt();
+                    int yPos = scan.nextInt();
+
+                    Gizmo gizmo = model.getGizmo(name);
+                    if(gizmo != null)
+                        gizmo.move(xPos,yPos);
+
+
+
+                } else if(info.startsWith("Friction")){
+                    String type = scan.next();
+                    double mu1 = scan.nextDouble();
+                    double mu2 = scan.nextDouble();
+
+                    model.setMu(mu1);
+                    model.setMu2(mu2);
+
+
+
+                } else if(info.startsWith("")){
+
+                } else{
                     faulty = false;
                 }
             }

@@ -689,14 +689,26 @@ public class Model extends Observable implements IModel {
         gravity = value;
     }
 
+    public double getGravity(){
+        return gravity;
+    }
+
     @Override
     public void setMu(double value) {
         mu = value;
     }
 
+    public double getMu(){
+        return mu;
+    }
+
     @Override
     public void setMu2(double value) {
         mu2 = value;
+    }
+
+    public double getMu2(){
+        return mu2;
     }
 
     /**

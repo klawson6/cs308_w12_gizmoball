@@ -69,9 +69,14 @@ public class SaveFile {
             Set<KeyEvent> connections = connectHashMap.keySet();
             for(KeyEvent k: connections){
                 //KeyConnect key 87 up RF137
-                toSave = "KeyConnect key " + k.getCode() + " up " + gizmo.getId();
-                infoToSave.add(toSave);
-                toSave = "KeyConnect key " + k.getCode() + " down " + gizmo.getId();
+                toSave = "";
+                if(k.getEventType() == KeyEvent.KEY_TYPED)
+                    toSave = "KeyConnect key " + k.getCode() + " down " + gizmo.getId();
+
+                if(k.getEventType() == KeyEvent.KEY_RELEASED)
+                    toSave = "KeyConnect key " + k.getCode() + " up " + gizmo.getId();
+
+
                 infoToSave.add(toSave);
             }
         }

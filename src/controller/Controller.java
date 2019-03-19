@@ -471,6 +471,10 @@ public class Controller implements Initializable, Observer {
             //Update key listener
             keyBindHandler = new MagicKeyHandler(new KeyBindingHandler(model));
             rootPane.addEventHandler(KeyEvent.ANY,keyBindHandler);
+            System.out.println(model.getGravity());
+            gravitySlider.setValue(model.getGravity());
+            muSlider.setValue(model.getMu());
+            mu2Slider.setValue(model.getMu2());
         }else{
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Error");
