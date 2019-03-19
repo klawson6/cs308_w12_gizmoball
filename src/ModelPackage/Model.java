@@ -313,6 +313,10 @@ public class Model extends Observable implements IModel {
         Gizmo gizmo = getGizmo(xPos, yPos);
         Gizmo location = getGizmo(newxPos, newyPos);
 
+        if(gizmo == null){
+            return false;
+        }
+
         int Startx = gizmo.getStartxPosition();
         int Starty = gizmo.getStartyPosition();
         int Endx = gizmo.getEndxPosition();
