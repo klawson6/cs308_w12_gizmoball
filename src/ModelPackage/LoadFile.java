@@ -136,8 +136,14 @@ public class LoadFile {
 
                     String letter = java.awt.event.KeyEvent.getKeyText(id);
                     KeyCode keyCode = KeyCode.getKeyCode(letter);
+                    KeyEvent k = null;
 
-                    KeyEvent k = new KeyEvent(KeyEvent.KEY_PRESSED, letter, "", keyCode,false,false,false,false);
+                    if(direction.equalsIgnoreCase("up"))
+                        k = new KeyEvent(KeyEvent.KEY_RELEASED, letter, "", keyCode,false,false,false,false);
+                    else if(direction.equalsIgnoreCase("down"))
+                        k = new KeyEvent(KeyEvent.KEY_PRESSED, letter, "", keyCode,false,false,false,false);
+
+
 
                     //Check gizmo exists before adding key connection.
                     Gizmo gizmo = model.getGizmo(toMove);
