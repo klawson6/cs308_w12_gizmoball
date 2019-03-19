@@ -12,7 +12,7 @@
                 <VBox fx:id="saveBox" prefHeight="75" prefWidth="75" alignment="CENTER">
                     <ImageView fx:id="saveImg" fitHeight="50" fitWidth="50" HBox.hgrow="ALWAYS"
                                pickOnBounds="true" preserveRatio="true">
-                        <Image url="@saveImg.png"/>
+                        <Image url="@Pictures/saveImg.png"/>
                     </ImageView>
                     <Label text="SAVE" prefHeight="10" prefWidth="50" alignment="CENTER" translateY="2"/>
                 </VBox>
@@ -20,7 +20,7 @@
                 <VBox fx:id="loadBox" prefHeight="75" prefWidth="75" alignment="CENTER">
                     <ImageView fx:id="loadImg" fitHeight="50" fitWidth="50" HBox.hgrow="ALWAYS"
                                pickOnBounds="true" preserveRatio="true">
-                        <Image url="@loadImg.png"/>
+                        <Image url="@Pictures/loadImg.png"/>
                     </ImageView>
                     <Label text="LOAD" prefHeight="10" prefWidth="50" alignment="CENTER" translateY="2"/>
                 </VBox>
@@ -28,7 +28,7 @@
                 <VBox fx:id="exitBox" prefHeight="75" prefWidth="75" alignment="CENTER">
                     <ImageView fx:id="exitImg" fitHeight="50" fitWidth="50" HBox.hgrow="ALWAYS"
                                pickOnBounds="true" preserveRatio="true">
-                        <Image url="@exitImg.png"/>
+                        <Image url="@Pictures/exitImg.png"/>
                     </ImageView>
                     <Label text="QUIT" prefHeight="10" prefWidth="50" alignment="CENTER" translateY="2"/>
                 </VBox>
@@ -37,7 +37,7 @@
                 <VBox fx:id="resizeBox" prefHeight="75" prefWidth="75" alignment="CENTER">
                     <ImageView fx:id="resizeImg" fitHeight="50" fitWidth="50" HBox.hgrow="ALWAYS"
                                pickOnBounds="true" preserveRatio="true">
-                        <Image url="@resizeImg.png"/>
+                        <Image url="@Pictures/resizeImg.png"/>
                     </ImageView>
                     <Label text="RESIZE" prefHeight="10" prefWidth="50" alignment="CENTER" translateY="2"/>
                 </VBox>
@@ -53,7 +53,7 @@
                     <VBox fx:id="runBox" prefHeight="75" prefWidth="81" alignment="CENTER">
                         <ImageView fx:id="runImg" fitHeight="50" fitWidth="50" HBox.hgrow="ALWAYS"
                                    pickOnBounds="true" preserveRatio="true">
-                            <Image url="@startImg.png"/>
+                            <Image url="@Pictures/startImg.png"/>
                         </ImageView>
                         <Label text="RUN MODE" prefHeight="25" prefWidth="81" alignment="CENTER" translateY="2"
                                wrapText="true"/>
@@ -65,7 +65,7 @@
                     <VBox fx:id="ballBox" prefHeight="75" prefWidth="81" alignment="CENTER">
                         <ImageView fx:id="addBallImg" fitHeight="50" fitWidth="50" HBox.hgrow="ALWAYS"
                                    pickOnBounds="true" preserveRatio="true">
-                            <Image url="@addBallImg.png"/>
+                            <Image url="@Pictures/addBallImg.png"/>
                         </ImageView>
                         <Label text="ADD BALL" prefHeight="25" prefWidth="81" alignment="CENTER" translateY="2"
                                wrapText="true"/>
@@ -75,7 +75,7 @@
                     <VBox fx:id="kConnectBox" prefHeight="75" prefWidth="120" alignment="CENTER">
                         <ImageView fx:id="kConnectImg" fitHeight="50" fitWidth="50" HBox.hgrow="ALWAYS"
                                    pickOnBounds="true" preserveRatio="true">
-                            <Image url="@kConnectImg.png"/>
+                            <Image url="@Pictures/kConnectImg.png"/>
                         </ImageView>
                         <Label text="KEY CONNECT" prefHeight="25" prefWidth="120" alignment="CENTER" translateY="2"
                                wrapText="true"/>
@@ -84,7 +84,7 @@
                     <VBox fx:id="kDisconnectBox" prefHeight="75" prefWidth="120" alignment="CENTER">
                         <ImageView fx:id="kDisconnectImg" fitHeight="50" fitWidth="50" HBox.hgrow="ALWAYS"
                                    pickOnBounds="true" preserveRatio="true">
-                            <Image url="@kDisconnectImg.png"/>
+                            <Image url="@Pictures/kDisconnectImg.png"/>
                         </ImageView>
                         <Label text="KEY DISCONNECT" prefHeight="25" prefWidth="120" alignment="CENTER" translateY="2"
                                wrapText="true"/>
@@ -96,7 +96,7 @@
                     <VBox fx:id="connectBox" prefHeight="75" prefWidth="130" alignment="CENTER">
                         <ImageView fx:id="connectImg" fitHeight="50" fitWidth="50" HBox.hgrow="ALWAYS"
                                    pickOnBounds="true" preserveRatio="true">
-                            <Image url="@connectImg.png"/>
+                            <Image url="@Pictures/connectImg.png"/>
                         </ImageView>
                         <Label text="CONNECT GIZMOS" prefHeight="25" prefWidth="130" alignment="CENTER" translateY="2"
                                wrapText="true"/>
@@ -105,7 +105,7 @@
                     <VBox fx:id="disconnectBox" prefHeight="75" prefWidth="150" alignment="CENTER">
                         <ImageView fx:id="disconnectImg" fitHeight="50" fitWidth="50" HBox.hgrow="ALWAYS"
                                    pickOnBounds="true" preserveRatio="true">
-                            <Image url="@disconnectImg.png"/>
+                            <Image url="@Pictures/disconnectImg.png"/>
                         </ImageView>
                         <Label text="DISCONNECT GIZMOS" prefHeight="25" prefWidth="150" alignment="CENTER"
                                translateY="2" wrapText="true"/>
@@ -115,7 +115,7 @@
                     <VBox fx:id="moveBox" prefHeight="75" prefWidth="90" alignment="CENTER">
                         <ImageView fx:id="moveImg" fitHeight="50" fitWidth="50" HBox.hgrow="ALWAYS"
                                    pickOnBounds="true" preserveRatio="true">
-                            <Image url="@moveImg.png"/>
+                            <Image url="@Pictures/moveImg.png"/>
                         </ImageView>
                         <Label text="MOVE GIZMO" prefHeight="25" prefWidth="90" alignment="CENTER" translateY="2"
                                wrapText="true"/>
@@ -124,7 +124,7 @@
                     <VBox fx:id="rotateBox" prefHeight="75" prefWidth="130" alignment="CENTER">
                         <ImageView fx:id="rotateImg" fitHeight="50" fitWidth="50" HBox.hgrow="ALWAYS"
                                    pickOnBounds="true" preserveRatio="true">
-                            <Image url="@rotateImg.png"/>
+                            <Image url="@Pictures/rotateImg.png"/>
                         </ImageView>
                         <Label text="ROTATE TRIANGLE" prefHeight="25" prefWidth="130" alignment="CENTER" translateY="2"
                                wrapText="true"/>
@@ -133,7 +133,7 @@
                     <VBox fx:id="deleteGizmoBox" prefHeight="75" prefWidth="100" alignment="CENTER">
                         <ImageView fx:id="deleteGizmoImg" fitHeight="50" fitWidth="50" HBox.hgrow="ALWAYS"
                                    pickOnBounds="true" preserveRatio="true">
-                            <Image url="@deleteGizmoImg.png"/>
+                            <Image url="@Pictures/deleteGizmoImg.png"/>
                         </ImageView>
                         <Label text="DELETE GIZMO" prefHeight="25" prefWidth="100" alignment="CENTER" translateY="2"
                                wrapText="true"/>
@@ -142,7 +142,7 @@
                     <VBox fx:id="deleteBallBox" prefHeight="75" prefWidth="100" alignment="CENTER">
                         <ImageView fx:id="deleteBallImg" fitHeight="50" fitWidth="50" HBox.hgrow="ALWAYS"
                                    pickOnBounds="true" preserveRatio="true">
-                            <Image url="@deleteBallImg.png"/>
+                            <Image url="@Pictures/deleteBallImg.png"/>
                         </ImageView>
                         <Label text="DELETE BALL" prefHeight="25" prefWidth="100" alignment="CENTER" translateY="2"
                                wrapText="true"/>
@@ -154,7 +154,7 @@
                 <VBox fx:id="buildBox" prefHeight="75" prefWidth="81" alignment="CENTER">
                     <ImageView fx:id="buildImg" fitHeight="50" fitWidth="50" HBox.hgrow="ALWAYS"
                                pickOnBounds="true" preserveRatio="true">
-                        <Image url="@buildImg.png"/>
+                        <Image url="@Pictures/buildImg.png"/>
                     </ImageView>
                     <Label text="BUILD MODE" prefHeight="25" prefWidth="81" alignment="CENTER" translateY="2"
                            wrapText="true"/>
@@ -164,7 +164,7 @@
                 <VBox fx:id="startBox" prefHeight="75" prefWidth="75" alignment="CENTER">
                     <ImageView fx:id="startImg" fitHeight="50" fitWidth="50" HBox.hgrow="ALWAYS"
                                pickOnBounds="true" preserveRatio="true">
-                        <Image url="@startImg.png"/>
+                        <Image url="@Pictures/startImg.png"/>
                     </ImageView>
                     <Label text="START" prefHeight="25" prefWidth="50" alignment="CENTER" translateY="2"
                            wrapText="true"/>
@@ -173,7 +173,7 @@
                 <VBox fx:id="pauseBox" prefHeight="75" prefWidth="75" alignment="CENTER">
                     <ImageView fx:id="pauseImg" fitHeight="50" fitWidth="50" HBox.hgrow="ALWAYS"
                                pickOnBounds="true" preserveRatio="true">
-                        <Image url="@pauseImg.png"/>
+                        <Image url="@Pictures/pauseImg.png"/>
                     </ImageView>
                     <Label text="PAUSE" prefHeight="25" prefWidth="50" alignment="CENTER" translateY="2"
                            wrapText="true"/>
@@ -182,7 +182,7 @@
                 <VBox fx:id="tickBox" prefHeight="75" prefWidth="75" alignment="CENTER">
                     <ImageView fx:id="tickImg" fitHeight="50" fitWidth="50" HBox.hgrow="ALWAYS"
                                pickOnBounds="true" preserveRatio="true">
-                        <Image url="@tickImg.png"/>
+                        <Image url="@Pictures/tickImg.png"/>
                     </ImageView>
                     <Label text="TICK" prefHeight="25" prefWidth="50" alignment="CENTER" translateY="2"
                            wrapText="true"/>
