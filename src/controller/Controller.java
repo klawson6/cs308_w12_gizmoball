@@ -41,7 +41,7 @@ public class Controller implements Initializable, Observer {
 
     @FXML private ResizableCanvas canvas;
     @FXML private VBox rootPane;
-    @FXML private ImageView saveImg, loadImg, exitImg, buildImg, startImg;
+    @FXML private ImageView saveImg, loadImg, exitImg, buildImg, startImg, pauseImg, tickImg, runImg, addBallImg;
     @FXML private Button stopButton, tickButton, runButton, keyConnect,keyDisconnect,connect,disconnect;
     @FXML private ToolBar commonToolBar, runToolBar, buildToolBar;
     @FXML private Button rotateButton;
@@ -127,11 +127,11 @@ public class Controller implements Initializable, Observer {
 
     private void addButtonListeners(){
         //startButton.setOnAction(event -> startTimeline());
-        stopButton.setOnAction(event -> stopTimeline());
-        tickButton.setOnAction(event -> tick());
+        //stopButton.setOnAction(event -> stopTimeline());
+        //tickButton.setOnAction(event -> tick());
        // saveButton.setOnAction(event -> saveFile());
         //loadButton.setOnAction(event -> loadFile());
-        runButton.setOnAction(event -> toggleModes());
+       // runButton.setOnAction(event -> toggleModes());
        // buildButton.setOnAction(event -> toggleModes());
         //quitButton.setOnAction(event -> System.exit(0));
         saveImg.setOnMouseClicked(event -> saveFile());
@@ -139,6 +139,9 @@ public class Controller implements Initializable, Observer {
         exitImg.setOnMouseClicked(event -> System.exit(0));
         buildImg.setOnMouseClicked(event -> toggleModes());
         startImg.setOnMouseClicked(event -> startTimeline());
+        pauseImg.setOnMouseClicked(event -> stopTimeline());
+        tickImg.setOnMouseClicked(event -> tick());
+        runImg.setOnMouseClicked(event -> toggleModes());
         // Resize Canvas
         canvasSizeTextField.setOnKeyPressed((event) -> {
             if(event.getCode() == KeyCode.ENTER) {
@@ -248,7 +251,7 @@ public class Controller implements Initializable, Observer {
             }
         });
 
-        addBallButton.setOnAction(event -> {
+        addBallImg.setOnMouseClicked(event -> {
             canvas.removeEventHandler(MouseEvent.ANY, mouseHandler);
             mouseHandler = new AddBallHandler(model,canvas,infoLabel);
             canvas.addEventHandler(MouseEvent.ANY, mouseHandler);

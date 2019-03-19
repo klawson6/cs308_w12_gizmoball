@@ -49,11 +49,25 @@
                 <Label fx:id="infoLabel"/>
             </ToolBar>
             <ToolBar fx:id="buildToolBar" prefHeight="100" HBox.hgrow="ALWAYS">
-                <Button fx:id="runButton" text="Run Mode" prefHeight="50" prefWidth="75"/>
+                <!--<Button fx:id="runButton" text="Run Mode" prefHeight="50" prefWidth="75"/>-->
+                <VBox fx:id="runBox" prefHeight="75" prefWidth="81" alignment="CENTER">
+                    <ImageView fx:id="runImg" fitHeight="50" fitWidth="50" HBox.hgrow="ALWAYS"
+                               pickOnBounds="true" preserveRatio="true">
+                        <Image url="@startImg.png"/>
+                    </ImageView>
+                    <Label text="RUN MODE" prefHeight="25" prefWidth="81" alignment="CENTER" translateY="2" wrapText="true"/>
+                </VBox>
                 <Separator orientation="VERTICAL"/>
                 <Label text="Add Gizmo:" prefHeight="50" prefWidth="75"/>
                 <ChoiceBox fx:id="gizmoChoiceBox" prefHeight="50" prefWidth="75"/>
-                <Button fx:id="addBallButton" text="Add Ball" prefHeight="50" prefWidth="75"/>
+                <!--<Button fx:id="addBallButton" text="Add Ball" prefHeight="50" prefWidth="75"/>-->
+                <VBox fx:id="ballBox" prefHeight="75" prefWidth="81" alignment="CENTER">
+                    <ImageView fx:id="addBallImg" fitHeight="50" fitWidth="50" HBox.hgrow="ALWAYS"
+                               pickOnBounds="true" preserveRatio="true">
+                        <Image url="@addBallImg.png"/>
+                    </ImageView>
+                    <Label text="ADD BALL" prefHeight="25" prefWidth="81" alignment="CENTER" translateY="2" wrapText="true"/>
+                </VBox>
                 <Separator orientation="VERTICAL"/>
                 <Button fx:id="keyConnect" text="Key connect" prefHeight="50" prefWidth="75"/>
                 <Button fx:id="keyDisconnect" text="Key disconnect" prefHeight="50" prefWidth="75"/>
@@ -91,7 +105,14 @@
                     </ImageView>
                     <Label text="START" prefHeight="25" prefWidth="50" alignment="CENTER" translateY="2" wrapText="true"/>
                 </VBox>
-                <Button fx:id="tickButton" text="Tick" prefHeight="50" prefWidth="75"/>
+                <!--<Button fx:id="tickButton" text="Tick" prefHeight="50" prefWidth="75"/>-->
+                <VBox fx:id="tickBox" prefHeight="75" prefWidth="75" alignment="CENTER">
+                    <ImageView fx:id="tickImg" fitHeight="50" fitWidth="50" HBox.hgrow="ALWAYS"
+                               pickOnBounds="true" preserveRatio="true">
+                        <Image url="@tickImg.png"/>
+                    </ImageView>
+                    <Label text="TICK" prefHeight="25" prefWidth="50" alignment="CENTER" translateY="2" wrapText="true"/>
+                </VBox>
             </ToolBar>
 
         </VBox>
