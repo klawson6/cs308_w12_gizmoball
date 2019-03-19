@@ -241,7 +241,7 @@ public class Controller implements Initializable, Observer {
 
         addBallButton.setOnAction(event -> {
             canvas.removeEventHandler(MouseEvent.ANY, mouseHandler);
-            mouseHandler = new AddBallHandler(model,canvas);
+            mouseHandler = new AddBallHandler(model,canvas,infoLabel);
             canvas.addEventHandler(MouseEvent.ANY, mouseHandler);
             canvas.requestFocus();
             addBallButton.requestFocus();
@@ -311,7 +311,7 @@ public class Controller implements Initializable, Observer {
 
         addBallButton.setOnAction(event -> {
             canvas.removeEventHandler(MouseEvent.ANY, mouseHandler);
-            mouseHandler = new AddBallHandler(model,canvas);
+            mouseHandler = new AddBallHandler(model,canvas, infoLabel);
             canvas.addEventHandler(MouseEvent.ANY, mouseHandler);
             setInfoLabel("Click on the grid to add a Ball.");
         });

@@ -2,6 +2,7 @@ package controller;
 
 import ModelPackage.IModel;
 import javafx.event.EventHandler;
+import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import view.ResizableCanvas;
 
@@ -9,10 +10,12 @@ public class AddBallHandler implements EventHandler<MouseEvent> {
 
     private IModel model;
     private ResizableCanvas canvas;
+    private Label info;
 
-    public AddBallHandler(IModel model, ResizableCanvas canvas) {
+    public AddBallHandler(IModel model, ResizableCanvas canvas, Label infoLabel) {
         this.model = model;
         this.canvas = canvas;
+        info = infoLabel;
     }
 
     @Override
@@ -28,7 +31,13 @@ public class AddBallHandler implements EventHandler<MouseEvent> {
             double x = (event.getX() / wGridSquareSize);
             double y = (event.getY() / hGridSquareSize);
 
-            model.createBall(x, y, 0, 0);
+            boolean status = model.createBall(x, y, 0, 0);
+
+            if(status){
+                info.setText("Ball successfully created at x : " + x + ", y : " + y + ". With Velocity x = " + ", y = ");
+            }else{
+                info.setText("Failed to add ball");
+            }
 
         }
     }

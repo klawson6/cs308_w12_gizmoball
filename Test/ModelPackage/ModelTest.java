@@ -7,7 +7,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
-import java.util.List;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -114,7 +113,7 @@ class ModelTest extends Model {
 
     @Test
     void getBallTest() {
-        assertNull(m.getBall());
+        assertNull(m.getBall(0, 0));
     }
 
     @Test

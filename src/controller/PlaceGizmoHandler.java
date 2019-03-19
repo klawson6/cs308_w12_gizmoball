@@ -1,6 +1,7 @@
 package controller;
 
 import ModelPackage.GizmoType;
+import ModelPackage.IBall;
 import ModelPackage.IGizmo;
 import ModelPackage.IModel;
 import javafx.event.EventHandler;
@@ -51,7 +52,10 @@ public class PlaceGizmoHandler implements EventHandler<MouseEvent> {
                        info.setText(gizmoTypeChoiceBox.getValue().toString() + " was created sucessfully");
                    }else{
                        IGizmo gizmo = model.getGizmo(startX,startY);
+                       if(gizmo!=null){
                        info.setText(gizmoTypeChoiceBox.getValue().toString() + " was not created successfully due to " + gizmo.getGizmoType() + " at x: " + gizmo.getStartxPosition() + ", y: " + gizmo.getStartyPosition());
+                        }
+                       IBall ball = model.getBall(startX,startY);
                    }
                 }
             }

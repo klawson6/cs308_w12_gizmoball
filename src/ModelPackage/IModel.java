@@ -21,7 +21,7 @@ public interface IModel  {
     void checkFlippers();
 
     boolean createBall(double xPos, double yPos,double xVelocity, double yVelocity);
-    IBall getBall();
+    IBall getBall(int startX, int startY);
     void moveBall();
     boolean moveBallPostion(IBall ball, double newxPos, double newyPos);
 

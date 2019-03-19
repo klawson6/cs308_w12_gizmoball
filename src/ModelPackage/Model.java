@@ -43,9 +43,17 @@ public class Model extends Observable implements IModel {
     public boolean createGizmo(GizmoType type, int xStart, int yStart, int xEnd, int yEnd, String id) {
         Gizmo gizmo;
         Gizmo location = (Gizmo) getGizmo(xStart, yStart);
+
+        Ball balllocation = getBallCheck(xStart,yStart);
+
+        if(balllocation!=null){
+            return false;
+        }
+
         if (location != null) {
             return false;
         }
+
         switch (type) {
             case SQUARE:
                 gizmo = new GSquare(xStart, yStart, id);
@@ -65,6 +73,12 @@ public class Model extends Observable implements IModel {
                 Gizmo location4 = (Gizmo) getGizmo(xStart+1,yStart+1);
                 if(location2 != null || location3 != null || location4 != null)
                     return false;
+
+                Ball location5 = getBallCheck(xStart,yStart+1);
+
+                if (location5 != null)
+                    return false;
+
                 gizmo = new GFlipper(xStart, yStart, true);
                 break;
 
@@ -80,6 +94,11 @@ public class Model extends Observable implements IModel {
                 if(location2 != null || location3 != null || location4 != null)
                     return false;
 
+                //Only need to make sure its not placed directly on a ball
+                location5 = getBallCheck(xStart, yStart + 1);
+                if (location5 != null)
+                    return false;
+
                 System.out.println("Created a right flipper at " + "X = " + xStart + " Y = " + yStart);
                 gizmo = new GFlipper(xStart, yStart, false);
                 break;
@@ -88,8 +107,9 @@ public class Model extends Observable implements IModel {
                 for(int l = xStart;l<=xEnd;l++){
                     for(int k= yStart;k<=yEnd;k++){
                         location = (Gizmo) getGizmo(l,k);
+                        location5 = getBallCheck(l,k);
                         System.out.println("Checking X = "+ l + " Y= " + k);
-                        if(location != null)
+                        if(location != null || location5 != null)
                             return false;
                     }
                 }
@@ -106,6 +126,13 @@ public class Model extends Observable implements IModel {
     public boolean createGizmo(GizmoType type, int xStart, int yStart, int xEnd, int yEnd) {
         Gizmo gizmo;
         Gizmo location = (Gizmo) getGizmo(xStart, yStart);
+
+        Ball balllocation = getBallCheck(xStart,yStart);
+
+        if(balllocation!=null){
+            return false;
+        }
+
         if (location != null) {
             System.out.println(location);
             return false;
@@ -130,6 +157,11 @@ public class Model extends Observable implements IModel {
                 Gizmo location4 = (Gizmo) getGizmo(xStart + 1, yStart + 1);
                 if (location2 != null || location3 != null || location4 != null)
                     return false;
+
+                Ball location5 = getBallCheck(xStart,yStart+1);
+                if (location5 != null)
+                    return false;
+
                 gizmo = new GFlipper(xStart, yStart, true);
                 break;
             case RIGHTFLIPPER:
@@ -145,6 +177,10 @@ public class Model extends Observable implements IModel {
                 if (location2 != null || location3 != null || location4 != null)
                     return false;
 
+                location5 = getBallCheck(xStart, yStart+1);
+                if (location5 != null)
+                    return false;
+
                 System.out.println("Created a right flipper at " + "X = " + xStart + " Y = " + yStart);
                 gizmo = new GFlipper(xStart, yStart, false);
                 break;
@@ -153,8 +189,9 @@ public class Model extends Observable implements IModel {
                 for(int l = xStart;l<=xEnd;l++){
                     for(int k= yStart;k<=yEnd;k++){
                         location = (Gizmo) getGizmo(l,k);
+                        location5 = getBallCheck(l,k);
                         System.out.println("Checking X = "+ l + " Y= " + k);
-                        if(location != null)
+                        if(location != null || location5 != null)
                             return false;
                     }
                 }
@@ -196,6 +233,35 @@ public class Model extends Observable implements IModel {
 
 
         return null;
+    }
+
+    private Ball getBallCheck(int xPos, int yPos) {
+
+        //Need to check square for an balls inside + radius being inside
+
+        // xPos, yPos is top left corner need to do XPos to XPos + 1 and yPos to yPos + 1
+
+        // minus ball raduis to detect overlap
+        // add ball radius as well
+
+        for (Ball ball : balls) {
+
+            double xLowerLimit = xPos - ball.getCircle().getRadius();
+            double xUpperLimit = xPos + 1 + ball.getCircle().getRadius();
+            double yLowerLimit = yPos - ball.getCircle().getRadius();
+            double yUpperLimit = yPos + 1 + ball.getCircle().getRadius();
+
+            double ballx = ball.getXPosition();
+            double bally = ball.getYPosition();
+
+            if((ballx>xLowerLimit && ballx<xUpperLimit) && (bally>yLowerLimit && bally<yUpperLimit)){
+                return ball;
+            }
+
+        }
+
+        return null;
+
     }
 
     public Ball getBall(double xPos, double yPos) {
@@ -331,10 +397,43 @@ public class Model extends Observable implements IModel {
 
         //TODO need to add placement detection to ball
 
+        double XUpperLimit = xPos+0.25;
+        double YUpperLimit = yPos+0.25;
+        double XLowerLimit = xPos-0.25;
+        double YLowerLimit = yPos-0.25;
+
         int x = (int) xPos;
         int y = (int) yPos;
 
-        Gizmo location = getGizmo(x, y);
+        if(XUpperLimit>x){
+            if(YUpperLimit>y){
+                if(getGizmo((int)XUpperLimit,(int)YUpperLimit) != null || getGizmo(x,y) != null){
+                    return false;
+                };
+            }
+            if(YLowerLimit<y){
+                if(getGizmo((int)XUpperLimit,(int)YLowerLimit) != null || getGizmo(x,y) != null){
+                    return false;
+                }
+            }
+        }
+
+        if(XLowerLimit<x){
+            if(YUpperLimit>y){
+                if(getGizmo((int)XLowerLimit,(int)YUpperLimit) != null || getGizmo(x,y) != null){
+                    return false;
+                };
+            }
+            if(YLowerLimit<y) {
+                if (getGizmo((int) XLowerLimit, (int) YLowerLimit) != null || getGizmo(x, y) != null) {
+                    return false;
+                }
+            }
+        }
+
+        Gizmo location;
+
+        location = getGizmo(x, y);
         Ball ballocation = getBall(xPos, yPos);
 
         if (location == null && ballocation == null) {
@@ -349,8 +448,10 @@ public class Model extends Observable implements IModel {
 
     // TODO Remove?
     @Override
-    public IBall getBall() {
-        return null;
+    public IBall getBall(int startX, int startY) {
+
+        return getBallCheck(startX,startY);
+
     }
 
     public void addKeyConnection(KeyEvent keyEvent, Gizmo gizmo) {
