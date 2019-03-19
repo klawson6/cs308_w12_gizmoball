@@ -79,7 +79,7 @@ public class Model extends Observable implements IModel {
                 if (location5 != null)
                     return false;
 
-                gizmo = new GFlipper(xStart, yStart, true);
+                gizmo = new GFlipper(xStart, yStart, true, id);
                 break;
 
             case RIGHTFLIPPER:
@@ -100,7 +100,7 @@ public class Model extends Observable implements IModel {
                     return false;
 
                 System.out.println("Created a right flipper at " + "X = " + xStart + " Y = " + yStart);
-                gizmo = new GFlipper(xStart, yStart, false);
+                gizmo = new GFlipper(xStart, yStart, false, id);
                 break;
 
             case ABSORBER:
@@ -108,12 +108,12 @@ public class Model extends Observable implements IModel {
                     for(int k= yStart;k<=yEnd;k++){
                         location = (Gizmo) getGizmo(l,k);
                         location5 = getBallCheck(l,k);
-                        System.out.println("Checking X = "+ l + " Y= " + k);
+//                        System.out.println("Checking X = "+ l + " Y= " + k);
                         if(location != null || location5 != null)
                             return false;
                     }
                 }
-                gizmo = new GAbsorber(xStart, yStart, xEnd, yEnd);
+                gizmo = new GAbsorber(xStart, yStart, xEnd, yEnd,id);
                 break;
             default:
                 return false;
@@ -455,15 +455,20 @@ public class Model extends Observable implements IModel {
     }
 
     public void addKeyConnection(KeyEvent keyEvent, Gizmo gizmo) {
-        gizmo.addKeyBinding(keyEvent, "");
+
+        if(gizmo!=null)
+            gizmo.addKeyBinding(keyEvent, "");
+
     }
 
     public void addGizmoConnection(Gizmo gizmoFrom, Gizmo gizmoTo) {
-        gizmoFrom.addGizmoConnection(gizmoTo);
+        if(gizmoFrom!=null && gizmoTo!= null)
+            gizmoFrom.addGizmoConnection(gizmoTo);
     }
 
     public void rotateGizmo(Gizmo gizmo) {
-        gizmo.rotate();
+        if(gizmo!=null)
+            gizmo.rotate();
     }
 
 
