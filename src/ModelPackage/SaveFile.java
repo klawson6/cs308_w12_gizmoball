@@ -43,14 +43,6 @@ public class SaveFile {
         //Add blank line to seperate.
         infoToSave.add("");
 
-        ////////////////////////Ball//////////////////////////
-        //Currently only one ball, will need to be altered if more than one ball is used.
-        List<Ball> balls = model.getModelBalls();
-        for(Ball ball: balls) {
-            infoToSave.add("Ball B " + ball.getXPosition() + " " + ball.getYPosition() + " " + ball.getVelocity().x() + " " + ball.getVelocity().y());
-        }
-        infoToSave.add("");
-
         ////////////////////////Rotation//////////////////////////
         for(Gizmo gizmo: gizmos){
             int rotation = gizmo.getRotation();
@@ -65,10 +57,11 @@ public class SaveFile {
 
         String toSave;
         ///////////////////////////////////////////// Ball /////////////////////////////////////////////
-        IBall ball = model.getBalls().get(0); //todo fix
-        toSave = "Ball B " + ball.getXPosition() + " " + ball.getYPosition() + " " + ball.getVelocity().x() + " " + ball.getVelocity().y();
-        infoToSave.add(toSave);
-
+        List<IBall> balls = model.getBalls();
+        for(IBall ball: balls){
+            toSave = "Ball B " + ball.getXPosition() + " " + ball.getYPosition() + " " + ball.getVelocity().x() + " " + ball.getVelocity().y();
+            infoToSave.add(toSave);
+        }
 
         ///////////////////////////////////////////// Key Connects /////////////////////////////////////////////
         //todo add key connects

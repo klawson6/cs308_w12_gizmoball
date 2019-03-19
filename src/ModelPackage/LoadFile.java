@@ -47,54 +47,71 @@ public class LoadFile {
                 if (info.startsWith("Square")) {
                     scan.next();
                     GizmoType type = GizmoType.SQUARE;
+                    //Get information from line.
                     String name = scan.next();
                     int xPos = scan.nextInt();
                     int yPos = scan.nextInt();
 
-                    //model.addGizmo(new GSquare(xPos,yPos,name));
+                    //Create gizmo with ID
                     model.createGizmo(type,xPos,yPos,xPos,yPos,name);
+
                 } else if (info.startsWith("Circle")) {
                     scan.next();
                     GizmoType type = GizmoType.CIRCLE;
+                    //Get information from line.
                     String name = scan.next();
                     int xPos = scan.nextInt();
                     int yPos = scan.nextInt();
 
-                    //model.addGizmo(new GCircle(xPos,yPos,name));
+                    //Create gizmo with ID
                     model.createGizmo(type,xPos,yPos,xPos,yPos,name);
+
                 } else if (info.startsWith("Triangle")) {
                     scan.next();
                     GizmoType type = GizmoType.TRIANGLE;
+                    //Get information from line.
                     String name = scan.next();
                     int xPos = scan.nextInt();
                     int yPos = scan.nextInt();
 
-                    //model.addGizmo(new GTriangle(xPos,yPos,name));
+                    //Create gizmo with ID
                     model.createGizmo(type,xPos,yPos,xPos,yPos,name);
+
                 } else if (info.startsWith("Rotate")) {
+                    //Get information from line.
                     String type = scan.next();
                     String toRotate = scan.next();
 
-                    System.out.println("Rotating object " + toRotate);
-                    model.rotateGizmo(model.getGizmo(toRotate));
+                    Gizmo gizmo = model.getGizmo(toRotate);
+                    if(gizmo != null)
+                        model.rotateGizmo(gizmo); //Rotate
+                    else{
+                        System.out.println("Error. Gizmo " + toRotate + " is not valid");
+                        System.out.println(info);
+                    }
+
                 } else if (info.startsWith("LeftFlipper")) {
                     scan.next();
                     GizmoType type = GizmoType.LEFTFLIPPER;
+                    //Get information from line.
                     String name = scan.next();
                     int xPos = scan.nextInt();
                     int yPos = scan.nextInt();
 
-                    //model.addGizmo(new GFlipper(xPos,yPos,true,name));
+                    //Create gizmo with ID
                     model.createGizmo(type,xPos,yPos,xPos,yPos,name);
+
                 } else if (info.startsWith("RightFlipper")) {
                     scan.next();
                     GizmoType type = GizmoType.RIGHTFLIPPER;
+                    //Get information from line.
                     String name = scan.next();
                     int xPos = scan.nextInt();
                     int yPos = scan.nextInt();
 
-                    //model.addGizmo(new GFlipper(xPos,yPos,false,name));
+                    //Create gizmo
                     model.createGizmo(type,xPos,yPos,xPos,yPos,name);
+
                 } else if (info.startsWith("KeyConnect")) {
                     String type = scan.next();
                     String toPress = scan.next();
@@ -102,24 +119,40 @@ public class LoadFile {
                     String direction = scan.next();
                     String toMove = scan.next();
 
-                    System.out.println(info);
-
                     int id = Integer.parseInt(keyID);
 
                     String letter = java.awt.event.KeyEvent.getKeyText(id);
                     KeyCode keyCode = KeyCode.getKeyCode(letter);
 
                     KeyEvent k = new KeyEvent(KeyEvent.KEY_PRESSED, letter, "", keyCode,false,false,false,false);
-                    model.addKeyConnection(k,model.getGizmo(toMove));
+
+                    //Check gizmo exists before adding key connection.
+                    Gizmo gizmo = model.getGizmo(toMove);
+                    if(gizmo!=null)
+                        model.addKeyConnection(k,gizmo); //Add connection
+                    else
+                        System.out.println("Error. Gizmo " + toMove + " does not exist.");
 
                 } else if (info.startsWith("Connect")) {
                     String type = scan.next();
-                    String obj1 = scan.next();
-                    String obj2 = scan.next();
+                    String giz1 = scan.next();
+                    String giz2 = scan.next();
 
-                    System.out.println(info);
-                    model.addGizmoConnection(model.getGizmo(obj1),model.getGizmo(obj2));
+                    Gizmo g1 = model.getGizmo(giz1);
+                    Gizmo g2 = model.getGizmo(giz2);
+                    if(g1 != null && g2 != null) {
+                        model.addGizmoConnection(g1, g2); //Add connection
+                    }else{
+                        if(g1 == null){
+                            System.out.println("Error. Gizmo " + giz1 + " is not valid");
+                        }
+                        if(g2 == null){
+                            System.out.println("Error. Gizmo " + giz2 + " is not valid");
+                        }
+                    }
+
                 } else if (info.startsWith("Ball")) {
+                    //Get information from line.
                     String type = scan.next();
                     String name = scan.next();
                     double xPos = scan.nextDouble();
@@ -127,22 +160,23 @@ public class LoadFile {
                     double xVel = Double.parseDouble(scan.next());
                     double yVel = Double.parseDouble(scan.next());
 
-
+                    //Add ball
                     model.addBall(new Ball(xPos,yPos,xVel, yVel));
+
                 } else if (info.startsWith("Absorber")) {
                     scan.next();
                     GizmoType type = GizmoType.ABSORBER;
+                    //Get information from line.
                     String name = scan.next();
                     int x1 = scan.nextInt();
                     int y1 = scan.nextInt();
                     int x2 = scan.nextInt();
                     int y2 = scan.nextInt();
-                    //model.addGizmo(new GAbsorber(x1,y1,x2,y2,name));
+
+                    //Create gizmo with ID
                     model.createGizmo(type,x1,y1,x2,y2,name);
                 } else if (info.equals("")) {
 
-                } else {
-                    //System.out.println("\n\n\n\n\nStill to add " + scan.next()); //debug, to be removed
                 }
             }
             //close scanners
