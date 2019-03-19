@@ -13,10 +13,14 @@
 .label {
     -fx-text-fill: #ffffff;
     -fx-wrap-text: true;
+    -fx-text-alignment: center;
+    -fx-alignment: center;
 }
 
 .choice-box > .label {
     -fx-text-fill: #ffffff;
+    -fx-text-alignment: none;
+    -fx-alignment: none;
 }
 
 .choice-box{
