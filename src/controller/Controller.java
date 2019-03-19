@@ -368,6 +368,10 @@ public class Controller implements Initializable, Observer {
             model = r.run();
             model.addObserver(this);
             update((Observable) model, isBuilding);
+
+            //Update key listener
+            keyBindHandler = new MagicKeyHandler(new KeyBindingHandler(model));
+            rootPane.addEventHandler(KeyEvent.ANY,keyBindHandler);
         }else{
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Error");
