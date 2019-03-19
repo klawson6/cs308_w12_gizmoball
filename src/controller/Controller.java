@@ -14,20 +14,28 @@ import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import javafx.util.Duration;
 import view.ResizableCanvas;
 
+import java.awt.*;
 import java.io.File;
 import java.net.URL;
 import java.util.*;
+import java.util.List;
+import java.util.function.Predicate;
 
 public class Controller implements Initializable, Observer {
 
@@ -485,7 +493,7 @@ public class Controller implements Initializable, Observer {
 
     }
 
-    private void saveFile(){
+    private boolean saveFile(){
         FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Text doc(*.txt)", "*.txt"));
         fileChooser.setInitialFileName("Gizmoball.txt");
@@ -494,12 +502,14 @@ public class Controller implements Initializable, Observer {
         if(file != null) {
             if(model != null){
                 model.save(file);
+                return true;
             }else{
                 Alert alert = new Alert(Alert.AlertType.WARNING);
                 alert.setTitle("Error");
                 alert.setHeaderText(null);
                 alert.setContentText("Empty game! Nothing to save!");
                 alert.showAndWait();
+                return false;
             }
         }else{
             Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -507,6 +517,7 @@ public class Controller implements Initializable, Observer {
             alert.setHeaderText(null);
             alert.setContentText("Please pick a place to save the game at.");
             alert.showAndWait();
+            return false;
         }
     }
 
@@ -523,5 +534,46 @@ public class Controller implements Initializable, Observer {
         timeline.stop();
         timeline.setCycleCount(1);
         timeline.play();
+    }
+
+    public void onClose(WindowEvent event) {
+
+        //What to do when user press X button to close
+
+        Alert closeWindowAlert = new Alert(Alert.AlertType.WARNING);
+        closeWindowAlert.setTitle("Do you want to save before exiting");
+        closeWindowAlert.setHeaderText("Do you want to save current game");
+        Label label = new Label("This action can not be undone");
+        closeWindowAlert.getDialogPane().setContent(label);
+        //closeWindowAlert.setContentText("This action can not be undone");
+        GridPane gridPane = new GridPane();
+        ButtonType yes = new ButtonType("Yes");
+        ButtonType no = new ButtonType("No");
+        ButtonType cancel = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
+        closeWindowAlert.getButtonTypes().setAll(yes,no,cancel);
+
+        //Don't need the included OK button
+
+        //closeWindowAlert.getDialogPane().setContent(gridPane);
+
+        Optional<ButtonType> buttonPressed = closeWindowAlert.showAndWait();
+
+        if(buttonPressed.get().equals(yes)){
+            if(saveFile()){
+                System.exit(0);
+            }else{
+                //Prevent close is something went wrong
+                event.consume();
+            }
+        }
+        if(buttonPressed.get().equals(no)){
+            System.exit(0);
+        }
+        if(buttonPressed.get().equals(cancel)){
+            //Do nothing
+            event.consume();
+        }
+
+
     }
 }

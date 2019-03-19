@@ -142,7 +142,6 @@ public class LoadFile {
                     String letter = java.awt.event.KeyEvent.getKeyText(id);
                     KeyCode keyCode = KeyCode.getKeyCode(letter);
                     KeyEvent k = null;
-                    System.out.println(letter + " " + toMove);
 
                     if (direction.equalsIgnoreCase("up"))
                         k = new KeyEvent(KeyEvent.KEY_RELEASED, letter, "", keyCode, false, false, false, false);
@@ -159,7 +158,6 @@ public class LoadFile {
                         faulty = true;
                     }
 
-                    //KeyEvent.KEY_PRESSED, event.getCharacter(), event.getText(), event.getCode(),
                 } else if (info.startsWith("Connect")) {
                     String type = scan.next();
                     String giz1 = scan.next();
