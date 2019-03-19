@@ -34,7 +34,7 @@ public class AddBallHandler implements EventHandler<MouseEvent> {
             boolean status = model.createBall(x, y, 0, 0);
 
             if(status){
-                info.setText("Ball successfully created at x : " + x + ", y : " + y + ". With Velocity x = " + ", y = ");
+                info.setText("Ball successfully created at x : " + x + ", y : " + y + ". With Velocity x = (Variable)" + ", y = (Variable)");
             }else{
                 info.setText("Failed to add ball");
             }
