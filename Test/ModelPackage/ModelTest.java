@@ -148,7 +148,11 @@ class ModelTest extends Model {
         assertFalse(m.rotate(0, 0));
         m.createGizmo(GizmoType.TRIANGLE,1,1,1,1);
         assertNotNull(m.getGizmo(1, 1));
+        //Triangle Rotate
         assertTrue(m.rotate(1, 1));
+        assertEquals(90,m.getGizmo(1,1).getRotation());
+        assertTrue(m.rotate(1,1));
+        assertEquals(180,m.getGizmo(1,1).getRotation());
     }
 
     @Test
