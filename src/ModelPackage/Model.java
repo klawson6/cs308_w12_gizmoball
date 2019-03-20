@@ -368,9 +368,12 @@ public class Model extends Observable implements IModel {
     public boolean rotate(int xPos, int yPos) {
         Gizmo gizmo = getGizmo(xPos, yPos);
         if (gizmo != null) {
-            boolean change = gizmo.rotate();
-            setChanged();
-            notifyObservers();
+            boolean change = false;
+            if(!gizmo.getGizmoType().equals(GizmoType.LEFTFLIPPER) && !gizmo.getGizmoType().equals(GizmoType.RIGHTFLIPPER)) {
+                change = gizmo.rotate();
+            }
+                setChanged();
+                notifyObservers();
             return change;
         }
         return false;
