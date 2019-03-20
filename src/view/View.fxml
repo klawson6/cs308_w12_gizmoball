@@ -6,7 +6,7 @@
 <?import view.ResizableCanvas?>
 <HBox fx:id="rootPane" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="controller.Controller" stylesheets="@viewCSS.css">
-        <VBox fx:id="menus" HBox.hgrow="ALWAYS" minWidth="710" maxWidth="710" minHeight="700">
+        <VBox fx:id="menus" minWidth="710" maxWidth="710" minHeight="700">
             <ToolBar fx:id="commonToolBar" minWidth="700" minHeight="150" maxHeight="150" VBox.vgrow="ALWAYS" >
                 <VBox fx:id="saveBox" prefHeight="100" prefWidth="100" alignment="CENTER">
                     <ImageView fx:id="saveImg" fitHeight="75" fitWidth="75" HBox.hgrow="ALWAYS"
@@ -107,7 +107,7 @@
                             <Image url="@Pictures/disconnectImg.png"/>
                         </ImageView>
                         <Label text="DISCONNECT GIZMOS" prefHeight="35" prefWidth="86" alignment="CENTER"
-                               translateY="2" wrapText="true"/>
+                               translateY="4" wrapText="true"/>
                     </VBox>
                     <Separator orientation="VERTICAL"/>
                     <!--<Button fx:id="moveGizmo" text="Move Gizmo" prefHeight="50" prefWidth="75"/>-->
