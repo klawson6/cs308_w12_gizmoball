@@ -45,6 +45,8 @@ import java.util.function.Predicate;
 
 public class Controller implements Initializable, Observer {
 
+    final int DEFAULT_SIZE = 700;
+
     @FXML public ToolBar editVariables;
     @FXML public Slider gravitySlider;
     @FXML public TextField gravityValue;
@@ -176,6 +178,7 @@ public class Controller implements Initializable, Observer {
             if(event.getCode() == KeyCode.ENTER) {
                 setCanvasSize(Integer.valueOf(canvasSizeTextField.getText()));
             }
+            canvasSizeTextField.requestFocus();
         });
 
         //Add Handler for Rotation
@@ -433,6 +436,7 @@ public class Controller implements Initializable, Observer {
 
     public void setStage(Stage s){
         stage = s;
+        setCanvasSize(DEFAULT_SIZE);
     }
 
 

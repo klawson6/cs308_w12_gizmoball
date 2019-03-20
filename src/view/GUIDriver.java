@@ -40,7 +40,7 @@ public class GUIDriver extends Application{
             runScene.getStylesheets().add(getClass().getResource("viewCSS.css").toExternalForm());
             controller = loader.getController();
             controller.setStage(primaryStage);
-            controller.setCanvasSize(CANVAS_SIZE);
+            //controller.setCanvasSize(CANVAS_SIZE);
             primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
                 @Override
                 public void handle(WindowEvent event) {
