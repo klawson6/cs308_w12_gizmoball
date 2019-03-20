@@ -36,9 +36,6 @@ public abstract class Gizmo implements IGizmo {
     //Causes Gizmo action
     public abstract void activate();
 
-    //Causes Gizmo to stop action
-    public abstract void deactivate();
-
     //Gets current rotation of gizmo
     public abstract int getRotation();
 

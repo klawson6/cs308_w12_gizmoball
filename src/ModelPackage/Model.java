@@ -15,8 +15,8 @@ public class Model extends Observable implements IModel {
 
     private double gravity = 25;
     private double friction = 10;
-    private final double mu = 0.025;
-    private final double mu2 = 0.025;
+    private double mu = 0.025;
+    private double mu2 = 0.025;
 
     private LineSegment[] borders = new LineSegment[4];
     private Set<Gizmo> gizmoList = new HashSet<>();
@@ -313,6 +313,10 @@ public class Model extends Observable implements IModel {
         Gizmo gizmo = getGizmo(xPos, yPos);
         Gizmo location = getGizmo(newxPos, newyPos);
 
+        if(gizmo == null){
+            return false;
+        }
+
         int Startx = gizmo.getStartxPosition();
         int Starty = gizmo.getStartyPosition();
         int Endx = gizmo.getEndxPosition();
@@ -376,15 +380,6 @@ public class Model extends Observable implements IModel {
     public void activateGizmo(IGizmo g) {
         if (g != null) {
             g.activate();
-            setChanged();
-            notifyObservers();
-        }
-    }
-
-    @Override
-    public void deactivateGizmo(IGizmo g) {
-        if (g != null) {
-            g.deactivate();
             setChanged();
             notifyObservers();
         }
@@ -582,7 +577,7 @@ public class Model extends Observable implements IModel {
     }
 
     @Override
-    public boolean moveBallPostion(IBall ball, double newxPos, double newyPos) {
+    public boolean moveBallPosition(IBall ball, double newxPos, double newyPos) {
         Ball ballToMove = (Ball) ball;
 
         int x = (int) newxPos;
@@ -669,6 +664,13 @@ public class Model extends Observable implements IModel {
             ball.setCircle(ball.getStartingX(), ball.getStartingY());
             ball.startBall();
             ball.setVelocity(ball.getStartingVelocity().x(), ball.getStartingVelocity().y());
+
+        }
+        // Reset Flipper Angles
+        for(Gizmo g : this.getModelGizmoList()){
+            if(g.getGizmoType().equals(GizmoType.RIGHTFLIPPER) || g.getGizmoType().equals(GizmoType.LEFTFLIPPER)){
+                ((GFlipper) g).setAngleDegrees(0);
+            }
         }
     }
 
@@ -682,6 +684,33 @@ public class Model extends Observable implements IModel {
         notifyObservers();
 
         return outcome;
+    }
+
+    @Override
+    public void setGravity(double value) {
+        gravity = value;
+    }
+
+    public double getGravity(){
+        return gravity;
+    }
+
+    @Override
+    public void setMu(double value) {
+        mu = value;
+    }
+
+    public double getMu(){
+        return mu;
+    }
+
+    @Override
+    public void setMu2(double value) {
+        mu2 = value;
+    }
+
+    public double getMu2(){
+        return mu2;
     }
 
     /**
@@ -748,20 +777,45 @@ public class Model extends Observable implements IModel {
 
             //Check TUC for all composing line segments
             for (LineSegment l : g.getComposingLines()) {
+
                 double current = Geometry.timeUntilWallCollision(l, ball.getCircle(), ball.getVelocity());
                 if (current < minTime) {
                     minTime = current;
                     newVelocity = Geometry.reflectWall(l, ball.getVelocity(), g.getReflectionCoef());
                     collisionGizmo = g;
                 }
+                if(g.getGizmoType().equals(GizmoType.LEFTFLIPPER) || g.getGizmoType().equals(GizmoType.RIGHTFLIPPER)){
+                    GFlipper flipper = (GFlipper) g;
+                    current = Geometry.timeUntilRotatingWallCollision(l,flipper.getRotationPoint(),Math.toRadians(GFlipper.ROTATION_RATE),ball.getCircle(),ball.getVelocity());
+                    if(current<minTime) {
+                        minTime = current;
+                        newVelocity = Geometry.reflectRotatingWall(l,flipper.getRotationPoint(),Math.toRadians(GFlipper.ROTATION_RATE),ball.getCircle(),ball.getVelocity(),flipper.getReflectionCoef());
+                        collisionGizmo = g;
+                    }
+                }
+
+
+
             }
             for (Circle c : g.getComposingCircles()) {
+
                 double current = Geometry.timeUntilCircleCollision(c, ball.getCircle(), ball.getVelocity());
                 if (current < minTime) {
                     minTime = current;
                     newVelocity = Geometry.reflectCircle(c.getCenter(), ball.getPos(), ball.getVelocity(), g.getReflectionCoef());
                     collisionGizmo = g;
                 }
+                if(g.getGizmoType().equals(GizmoType.LEFTFLIPPER) || g.getGizmoType().equals(GizmoType.RIGHTFLIPPER)){
+                    GFlipper flipper = (GFlipper) g;
+                    current = Geometry.timeUntilRotatingCircleCollision(c,flipper.getRotationPoint(),Math.toRadians(GFlipper.ROTATION_RATE),ball.getCircle(),ball.getVelocity());
+                    if(current<minTime) {
+                        minTime = current;
+                        newVelocity = Geometry.reflectRotatingCircle(c,flipper.getRotationPoint(),Math.toRadians(GFlipper.ROTATION_RATE),ball.getCircle(),ball.getVelocity(),flipper.getReflectionCoef());
+                        collisionGizmo = g;
+                    }
+                }
+
+
             }
 
         }

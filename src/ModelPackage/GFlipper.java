@@ -8,9 +8,9 @@ import java.util.Set;
 
 public class GFlipper extends Gizmo{
 
-    private final static int ROTATION_RATE = 10;
+    public final static double ROTATION_RATE = 10.8;
 
-    private int angleDegrees;
+    private double angleDegrees;
     private boolean isLeft;
     private boolean isActivated;
     private int xPosition;
@@ -168,7 +168,7 @@ public class GFlipper extends Gizmo{
     }
 
     public int getRotation() {
-        return angleDegrees;
+        return (int) angleDegrees;
     }
 
     @Override
@@ -191,9 +191,9 @@ public class GFlipper extends Gizmo{
     public boolean rotate() {
         //Does nothing for flipper
 
-        int rotation = angleDegrees + ROTATION_RATE;
+        double rotation = angleDegrees + ROTATION_RATE;
         if (rotation > 90) {
-            angleDegrees = 90;
+            angleDegrees = 90.0;
         } else {
             angleDegrees = rotation;
         }
@@ -224,7 +224,6 @@ public class GFlipper extends Gizmo{
 
         Vect centre = circle1.getCenter();
         int currentRotation = getRotation();
-        int perpendicular = 90 + currentRotation;
 
         composingLines.clear();
         double topX = xPosition;
@@ -242,47 +241,28 @@ public class GFlipper extends Gizmo{
         //Need to move at radius distance of circle. this will make it perpendicular
         LineSegment lineBetween = new LineSegment(centre1,centre2);
 
-        double distance = lineBetween.length();
-        //Distance will be as hypotenuse
-        //Need trig
-
-        double x;
-        double y;
-
-        //Y component to move
-        y = Math.cos(Math.toRadians(getRotation())) * distance;
-        //X component to move
-        x = Math.tan(Math.toRadians(getRotation())) * y;
-
-
-
         Angle angle = lineBetween.angle();
-        Vect centrepoint = new Vect(centre1.x()+x/2,centre1.y()+y/2);
 
-        Vect perp = new Vect(new Angle(Math.toRadians(90)),circle.getRadius());
-        Vect CircleTopRight = circle.getCenter().plus(perp);
-        Vect CircleTopLeft = circle.getCenter().minus(perp);
-        Vect CircleBottomRight = circle1.getCenter().plus(perp);
-        Vect CircleBottomLeft = circle1.getCenter().minus(perp);
+        double value = Math.toDegrees(angle.radians());
+
+        Vect perp = new Vect(new Angle(Math.toRadians(value + 90)));
+
+        Vect CircleTopRight = circle.getCenter().plus(perp.times(0.5));
+        Vect CircleTopLeft = circle.getCenter().minus(perp.times(0.5));
+        Vect CircleBottomRight = circle1.getCenter().plus(perp.times(0.5));
+        Vect CircleBottomLeft = circle1.getCenter().minus(perp.times(0.5));
+
         lineSegment = new LineSegment(CircleTopRight,CircleBottomRight);
         lineSegment1 = new LineSegment(CircleTopLeft,CircleBottomLeft);
 
-        /*
-        if(isLeft){
-            lineSegment = Geometry.rotateAround(lineSegment,centrepoint,new Angle(-Math.toRadians(getRotation())));
-            lineSegment1 = Geometry.rotateAround(lineSegment1,centrepoint,new Angle(-Math.toRadians(getRotation())));
-        }else{
-            lineSegment = Geometry.rotateAround(lineSegment,centrepoint,new Angle(-Math.toRadians(getRotation())));
-            lineSegment1 = Geometry.rotateAround(lineSegment1,centrepoint,new Angle(-Math.toRadians(getRotation())));
-        }
-*/
+
         composingLines.add(lineSegment);
         composingLines.add(lineSegment1);
 
     }
 
     public void antirotate(){
-        int rotation = angleDegrees - ROTATION_RATE;
+        double rotation = angleDegrees - ROTATION_RATE;
         if(rotation < 0){
             angleDegrees = 0;
         }else {
@@ -294,12 +274,10 @@ public class GFlipper extends Gizmo{
 
     @Override
     public void activate(){
-        //FIXME rotate flipper?
-            isActivated = true;
+        isActivated = !isActivated;
     }
 
-    @Override
-    public void deactivate() {
-        isActivated = false;
+    public Vect getRotationPoint() {
+        return new Vect(xPosition + 0.5, yPosition + 0.5);
     }
 }

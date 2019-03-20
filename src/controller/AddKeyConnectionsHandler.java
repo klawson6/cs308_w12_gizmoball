@@ -59,10 +59,6 @@ public class AddKeyConnectionsHandler implements EventHandler<MouseEvent> {
                         rb2.setToggleGroup(group);
                         rb1.setSelected(true);
 
-                        if (g.getGizmoType().equals(GizmoType.RIGHTFLIPPER) || g.getGizmoType().equals(GizmoType.LEFTFLIPPER)) {
-                            rb2.setVisible(false);
-                        }
-
                         //Add radio buttons to a pane
                         GridPane gp = new GridPane();
                         gp.add(rb1, 0, 0);
@@ -80,9 +76,6 @@ public class AddKeyConnectionsHandler implements EventHandler<MouseEvent> {
                                 if (!event.getCode().getName().equals("Esc")) {
                                     if (group.getSelectedToggle().getUserData().toString().equals("press")) {
                                         addOnKeyPressed(event);
-                                        if (g.getGizmoType().equals(GizmoType.RIGHTFLIPPER) || g.getGizmoType().equals(GizmoType.LEFTFLIPPER)) {
-                                            addOnKeyReleased(event);
-                                        }
                                     } else {
                                         addOnKeyReleased(event);
                                     }

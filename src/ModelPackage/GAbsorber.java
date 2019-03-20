@@ -176,18 +176,4 @@ public class GAbsorber extends Gizmo {
     public LinkedList<Ball> getAbsorberBalls(){
         return absorbedBall;
     }
-
-    @Override
-    //Stops action
-    public void deactivate() {
-        if (!absorbedBall.isEmpty()) {
-            Ball ball = absorbedBall.removeFirst();
-            ball.setCircle(getEndxPosition() - 0.5, getEndyPosition() - 1);
-            ball.modifyVelocity(new Vect(0, -50));
-            System.out.println(ball.getVelocity());
-            ball.startBall();
-
-        }
-
-    }
 }

@@ -6,6 +6,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 class IGizmoSquareTest {
 
@@ -57,12 +58,11 @@ class IGizmoSquareTest {
 
     @Test
     void activate(){
-
-    }
-
-    @Test
-    void deactivate(){
-
+        for(int i = 0; i < 3; i++){
+            Color previousColour = gizmo.getColour();
+            gizmo.activate();
+            assertNotEquals(gizmo.getColour(), previousColour);
+        }
     }
 
     @Test

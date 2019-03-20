@@ -6,6 +6,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 class IGizmoTriangleTest {
 
@@ -57,17 +58,42 @@ class IGizmoTriangleTest {
 
     @Test
     void activate(){
-
-    }
-
-    @Test
-    void deactivate(){
-
+        for(int i = 0; i < 3; i++){
+            Color previousColour = gizmo.getColour();
+            gizmo.activate();
+            assertNotEquals(gizmo.getColour(), previousColour);
+        }
     }
 
     @Test
     void getKeybindings(){
 
+    }
+
+    @Test
+    void rotationTest(){
+        GTriangle triangle = (GTriangle) gizmo;
+        triangle.rotate();
+        assertEquals(90, triangle.getRotation());
+        triangle.rotate();
+        assertEquals(180, triangle.getRotation());
+        triangle.rotate();
+        assertEquals(270, triangle.getRotation());
+        triangle.rotate();
+        assertEquals(0, triangle.getRotation());
+    }
+
+    @Test
+    void rotationLeftTest(){
+        GTriangle triangle = (GTriangle) gizmo;
+        triangle.rotateLeft();
+        assertEquals(270, triangle.getRotation());
+        triangle.rotateLeft();
+        assertEquals(180, triangle.getRotation());
+        triangle.rotateLeft();
+        assertEquals(90, triangle.getRotation());
+        triangle.rotateLeft();
+        assertEquals(0, triangle.getRotation());
     }
 
 

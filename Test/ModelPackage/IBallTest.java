@@ -38,4 +38,12 @@ class IBallTest {
         assertEquals(vector.x(), 5);
     }
 
+    @Test
+    void moveBallTest(){
+        Ball castedBall = (Ball) ball;
+        Vect previous = ((Ball) ball).getPos();
+        assertEquals(castedBall.moveBall(0.0), previous);
+        assertNotEquals(castedBall.moveBall(1.0), previous);
+    }
+
 }

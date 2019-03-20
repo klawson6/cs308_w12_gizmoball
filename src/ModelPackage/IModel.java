@@ -17,13 +17,12 @@ public interface IModel  {
     boolean rotate(int xPos, int yPos);
     void activate(IGizmo gizmo);
     void activateGizmo(IGizmo g);
-    void deactivateGizmo(IGizmo g);
     void checkFlippers();
 
     boolean createBall(double xPos, double yPos,double xVelocity, double yVelocity);
     IBall getBall(int startX, int startY);
     void moveBall();
-    boolean moveBallPostion(IBall ball, double newxPos, double newyPos);
+    boolean moveBallPosition(IBall ball, double newxPos, double newyPos);
 
     boolean addKeyConnection(int xPos, int Pos, KeyEvent key);
     boolean addGizmoConnection(int xPosofSelectedGizmo, int yPosfSelectedGizmo, int xPosofTargetGizmo, int yPosofTargetGizmo);
@@ -41,4 +40,11 @@ public interface IModel  {
     void reset();
 
     boolean deleteBall(double x, double y);
+
+    void setGravity(double value);
+    double getGravity();
+    void setMu(double value);
+    double getMu();
+    void setMu2(double value);
+    double getMu2();
 }

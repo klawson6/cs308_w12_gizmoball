@@ -1,5 +1,6 @@
 package ModelPackage;
 
+import javafx.scene.input.KeyCode;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -69,9 +70,20 @@ public class SaveFile {
             Set<KeyEvent> connections = connectHashMap.keySet();
             for(KeyEvent k: connections){
                 //KeyConnect key 87 up RF137
-                toSave = "KeyConnect key " + k.getCode() + " up " + gizmo.getId();
-                infoToSave.add(toSave);
-                toSave = "KeyConnect key " + k.getCode() + " down " + gizmo.getId();
+                toSave = "";
+                int code;
+                if(k.getCode() == KeyCode.UNDEFINED)
+                    code = KeyCode.getKeyCode(k.getCharacter()).getCode();
+                else
+                    code = k.getCode().getCode();
+
+                if(k.getEventType() == KeyEvent.KEY_PRESSED)
+                    toSave = "KeyConnect key " + code + " down " + gizmo.getId();
+
+                if(k.getEventType() == KeyEvent.KEY_RELEASED)
+                    toSave = "KeyConnect key " + code + " up " + gizmo.getId();
+
+
                 infoToSave.add(toSave);
             }
         }
