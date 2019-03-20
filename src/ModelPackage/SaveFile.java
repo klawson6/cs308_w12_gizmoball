@@ -77,9 +77,10 @@ public class SaveFile {
                 else
                     code = k.getCode().getCode();
 
+                if(k.getEventType() == KeyEvent.KEY_TYPED)
+                    toSave = "KeyConnect key " + code + " down " + gizmo.getId();
                 if(k.getEventType() == KeyEvent.KEY_PRESSED)
                     toSave = "KeyConnect key " + code + " down " + gizmo.getId();
-
                 if(k.getEventType() == KeyEvent.KEY_RELEASED)
                     toSave = "KeyConnect key " + code + " up " + gizmo.getId();
 
