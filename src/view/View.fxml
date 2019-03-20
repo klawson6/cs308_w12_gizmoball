@@ -209,15 +209,15 @@
                     <HBox spacing="15" alignment="CENTER">
                         <VBox alignment="CENTER">
                             <TextField fx:id="muValue" prefHeight="20" prefWidth="180" alignment="CENTER"/>
-                            <Slider fx:id="muSlider" prefHeight="50" prefWidth="180" max="1.0" min="0" minorTickCount="5" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="0.025"/>
+                            <Slider fx:id="muSlider" prefHeight="50" prefWidth="180" majorTickUnit="0.025" max="1.0" min="0" minorTickCount="0" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="0.025"/>
                             <Label text="MU" prefHeight="10" prefWidth="180" alignment="CENTER"
-                                   wrapText="true" translateY="-15"/>
+                                   wrapText="true" translateY="-10"/>
                         </VBox>
                         <VBox alignment="CENTER">
                             <TextField fx:id="mu2Value" prefHeight="20" prefWidth="180" alignment="CENTER"/>
-                            <Slider fx:id="mu2Slider" prefHeight="50" prefWidth="180" max="1.0" min="0" minorTickCount="5" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="0.025" />
+                            <Slider fx:id="mu2Slider" prefHeight="50" prefWidth="180" majorTickUnit="0.025" max="1.0" min="0" minorTickCount="0" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="0.025" />
                             <Label text="MU2" prefHeight="10" prefWidth="180" alignment="CENTER"
-                                   wrapText="true" translateY="-15"/>
+                                   wrapText="true" translateY="-10"/>
                         </VBox>
                     </HBox>
                 </VBox>

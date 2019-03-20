@@ -31,6 +31,7 @@ import javafx.scene.shape.Shape;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 import javafx.stage.WindowEvent;
 import javafx.util.Duration;
 import javafx.util.StringConverter;
@@ -167,7 +168,7 @@ public class Controller implements Initializable, Observer {
         //quitButton.setOnAction(event -> System.exit(0));
         saveImg.setOnMouseClicked(event -> saveFile());
         loadImg.setOnMouseClicked(event -> loadFile());
-        exitImg.setOnMouseClicked(event -> System.exit(0));
+        exitImg.setOnMouseClicked(event -> onClose(new WindowEvent(this.stage, WindowEvent.WINDOW_CLOSE_REQUEST)));
         buildImg.setOnMouseClicked(event -> toggleModes());
         startImg.setOnMouseClicked(event -> startTimeline());
         pauseImg.setOnMouseClicked(event -> stopTimeline());
@@ -177,8 +178,8 @@ public class Controller implements Initializable, Observer {
         canvasSizeTextField.setOnKeyPressed((event) -> {
             if(event.getCode() == KeyCode.ENTER) {
                 setCanvasSize(Integer.valueOf(canvasSizeTextField.getText()));
+                canvas.requestFocus();
             }
-            canvasSizeTextField.requestFocus();
         });
 
         //Add Handler for Rotation
@@ -290,8 +291,7 @@ public class Controller implements Initializable, Observer {
            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
                gravityValue.setText(String.valueOf(newValue));
                model.setGravity(gravitySlider.getValue());
-               canvas.requestFocus();
-               gravitySlider.requestFocus();}
+               canvas.requestFocus(); }
        });
 
         gravityValue.setOnKeyPressed(new EventHandler<KeyEvent>() {
@@ -317,7 +317,6 @@ public class Controller implements Initializable, Observer {
                 muValue.setText(String.valueOf(newValue));
                 model.setMu(muSlider.getValue());
                 canvas.requestFocus();
-                muSlider.requestFocus();
             }
         });
 
@@ -344,7 +343,6 @@ public class Controller implements Initializable, Observer {
                 mu2Value.setText(String.valueOf(newValue));
                 model.setMu2(mu2Slider.getValue());
                 canvas.requestFocus();
-                mu2Slider.requestFocus();
             }
         });
 
@@ -451,13 +449,15 @@ public class Controller implements Initializable, Observer {
         if(canvasSize < 200){
             canvasSize = 200;
             canvasSizeTextField.setText(String.valueOf(canvasSize));
+        } else if (canvasSize > 2000) {
+            canvasSize = 2000;
+            canvasSizeTextField.setText(String.valueOf(canvasSize));
         }
         canvas.setWidth(canvasSize);
         canvas.setHeight(canvasSize);
         canvas.draw(isBuilding);
         canvasSizeTextField.setText(String.valueOf(canvasSize));
         stage.sizeToScene();
-        canvas.toFront();
     }
 
 
