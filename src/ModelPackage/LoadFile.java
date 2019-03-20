@@ -6,7 +6,6 @@ import javafx.scene.input.KeyEvent;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.List;
 import java.util.Scanner;
 
 //import java.awt.event.KeyEvent;
@@ -146,7 +145,7 @@ public class LoadFile {
                     if (direction.equalsIgnoreCase("up"))
                         k = new KeyEvent(KeyEvent.KEY_RELEASED, letter, "", keyCode, false, false, false, false);
                     else if (direction.equalsIgnoreCase("down"))
-                        k = new KeyEvent(KeyEvent.KEY_PRESSED, letter, "", keyCode, false, false, false, false);
+                        k = new KeyEvent(KeyEvent.KEY_TYPED, letter, "", keyCode, false, false, false, false);
 
 
                     //Check gizmo exists before adding key connection.
