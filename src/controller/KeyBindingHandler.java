@@ -1,9 +1,9 @@
 package controller;
 
-import ModelPackage.GizmoType;
 import ModelPackage.IGizmo;
 import ModelPackage.IModel;
 import javafx.event.EventHandler;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
 import java.util.HashMap;
@@ -31,11 +31,22 @@ public class KeyBindingHandler implements EventHandler<KeyEvent> {
 
             for (KeyEvent e : bindings) {
 
-                if (event.getCode().equals(e.getCode()) && event.getEventType().getName().equals(e.getEventType().getName())   ) {
-                    model.activateGizmo(g);
-                    System.out.println("Keybind Pressed/Released " + event.getCharacter());
 
+                KeyCode key = e.getCode();
+                if(key != KeyCode.UNDEFINED){
+                    if (event.getCode().equals(e.getCode()) && event.getEventType().getName().equals(e.getEventType().getName())   ) {
+                        model.activateGizmo(g);
+                        System.out.println("Keybind Pressed/Released " + event.getCode());
+
+                    }
+                }else{
+                    if (event.getCharacter().equals(e.getCharacter()) && event.getEventType().getName().equals(e.getEventType().getName())   ) {
+                        model.activateGizmo(g);
+                        System.out.println("Keybind Pressed/Released " + event.getCharacter());
+
+                    }
                 }
+
             }
 
         }
