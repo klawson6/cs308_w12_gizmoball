@@ -215,7 +215,8 @@ public class LoadFile {
                     Gizmo gizmo = model.getGizmo(name);
                     if(gizmo != null)
                         gizmo.move(xPos,yPos);
-
+                    else
+                        faulty = true;
 
 
                 } else if(info.startsWith("Friction")){
@@ -262,13 +263,5 @@ public class LoadFile {
         error.setHeaderText("File type not supported, please selected a .txt file.");
         error.show();
     }
-
-    /**
-     * @requires: The model is not null & the gizmo exists within the model
-     *
-     * @param: m The model that the gizmo should exist within
-     * @param: name The ID of the gizmo
-     * @return: The gizmo as a Gizmo object
-     */
 
 }
