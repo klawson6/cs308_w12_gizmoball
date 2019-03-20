@@ -1,6 +1,8 @@
 package controller;
 
 import ModelPackage.*;
+import com.sun.javafx.fxml.builder.JavaFXSceneBuilder;
+import com.sun.org.apache.xerces.internal.impl.dv.util.HexBin;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
@@ -17,17 +19,22 @@ import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
+import javafx.scene.shape.Shape;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 import javafx.stage.WindowEvent;
 import javafx.util.Duration;
+import javafx.util.StringConverter;
 import view.ResizableCanvas;
 
 import java.awt.*;
@@ -38,6 +45,8 @@ import java.util.List;
 import java.util.function.Predicate;
 
 public class Controller implements Initializable, Observer {
+
+    final int DEFAULT_SIZE = 700;
 
     @FXML public ToolBar editVariables;
     @FXML public Slider gravitySlider;
@@ -55,9 +64,10 @@ public class Controller implements Initializable, Observer {
     private boolean isBuilding = false;
 
     @FXML private ResizableCanvas canvas;
-    @FXML private VBox rootPane;
-    @FXML private Button startButton, stopButton, tickButton, buildButton, runButton, saveButton, loadButton, quitButton,keyConnect,keyDisconnect,connect,disconnect;
-    @FXML private ToolBar commonToolBar, runToolBar, buildToolBar;
+    @FXML private HBox rootPane;
+    @FXML private ImageView saveImg, loadImg, exitImg, buildImg, startImg, pauseImg, tickImg, runImg, addBallImg, kConnectImg, kDisconnectImg, connectImg, disconnectImg, moveImg, rotateImg, deleteGizmoImg, deleteBallImg;
+    @FXML private Button stopButton, tickButton, runButton, keyConnect,keyDisconnect,connect,disconnect;
+    @FXML private ToolBar commonToolBar, runToolBar, buildToolBar1, buildToolBar2;
     @FXML private Button rotateButton;
     @FXML private Button deleteButton;
     @FXML private Button addBallButton;
@@ -90,9 +100,12 @@ public class Controller implements Initializable, Observer {
 
     private void initialiseToolBars(){
         initialiseCommonToolBar();
-        buildToolBar.setManaged(false);
-        buildToolBar.setVisible(false);
-        buildToolBar.maxWidthProperty().bind(canvas.widthProperty());
+        buildToolBar1.setManaged(false);
+        buildToolBar1.setVisible(false);
+        buildToolBar1.maxWidthProperty().bind(canvas.widthProperty());
+        buildToolBar2.setManaged(false);
+        buildToolBar2.setVisible(false);
+        buildToolBar2.maxWidthProperty().bind(canvas.widthProperty());
         runToolBar.maxWidthProperty().bind(canvas.widthProperty());
         commonToolBar.maxWidthProperty().bind(canvas.widthProperty());
         populateChoiceBox();
@@ -145,104 +158,99 @@ public class Controller implements Initializable, Observer {
     }
 
     private void addButtonListeners(){
-        startButton.setOnAction(event -> startTimeline());
-        stopButton.setOnAction(event -> stopTimeline());
-        tickButton.setOnAction(event -> tick());
-        saveButton.setOnAction(event -> saveFile());
-        loadButton.setOnAction(event -> loadFile());
-        runButton.setOnAction(event -> toggleModes());
-        buildButton.setOnAction(event -> toggleModes());
-        quitButton.setOnAction(event -> System.exit(0));
-
+        //startButton.setOnAction(event -> startTimeline());
+        //stopButton.setOnAction(event -> stopTimeline());
+        //tickButton.setOnAction(event -> tick());
+       // saveButton.setOnAction(event -> saveFile());
+        //loadButton.setOnAction(event -> loadFile());
+       // runButton.setOnAction(event -> toggleModes());
+       // buildButton.setOnAction(event -> toggleModes());
+        //quitButton.setOnAction(event -> System.exit(0));
+        saveImg.setOnMouseClicked(event -> saveFile());
+        loadImg.setOnMouseClicked(event -> loadFile());
+        exitImg.setOnMouseClicked(event -> onClose(new WindowEvent(this.stage, WindowEvent.WINDOW_CLOSE_REQUEST)));
+        buildImg.setOnMouseClicked(event -> toggleModes());
+        startImg.setOnMouseClicked(event -> startTimeline());
+        pauseImg.setOnMouseClicked(event -> stopTimeline());
+        tickImg.setOnMouseClicked(event -> tick());
+        runImg.setOnMouseClicked(event -> toggleModes());
         // Resize Canvas
         canvasSizeTextField.setOnKeyPressed((event) -> {
-            if(event.getCode() == KeyCode.ENTER) { setCanvasSize(Integer.valueOf(canvasSizeTextField.getText())); canvas.requestFocus();}
+            if(event.getCode() == KeyCode.ENTER) {
+                setCanvasSize(Integer.valueOf(canvasSizeTextField.getText()));
+                canvas.requestFocus();
+            }
         });
 
         //Add Handler for Rotation
 
-        rotateButton.setOnAction(event -> {
+        rotateImg.setOnMouseClicked(event -> {
             canvas.removeEventHandler(MouseEvent.ANY,mouseHandler);
             mouseHandler = new RotationHandler(model, canvas, infoLabel);
             canvas.addEventHandler(MouseEvent.ANY, mouseHandler);
             canvas.requestFocus();
-            rotateButton.requestFocus();
+            rotateImg.requestFocus();
             setInfoLabel("Click on a Gizmo to Rotate it.");
-
         }
 
         );
 
         //Add Handler for Deleting Gizmos
 
-        deleteButton.setOnAction(event -> {
-
+        deleteGizmoImg.setOnMouseClicked(event -> {
             canvas.removeEventHandler(MouseEvent.ANY, mouseHandler);
             mouseHandler = new DeleteGizmoHandler(model, canvas);
             canvas.addEventHandler(MouseEvent.ANY, mouseHandler);
             canvas.requestFocus();
-            deleteButton.requestFocus();
+            deleteGizmoImg.requestFocus();
             setInfoLabel("Click on a Gizmo to delete it.");
-
         });
         //Add handler for adding keybindings
-        keyConnect.setOnAction(event -> {
-
+        kConnectImg.setOnMouseClicked(event -> {
             canvas.removeEventHandler(MouseEvent.ANY, mouseHandler);
             mouseHandler = new AddKeyConnectionsHandler(canvas,model, infoLabel);
             canvas.addEventHandler(MouseEvent.ANY, mouseHandler);
             canvas.requestFocus();
-            keyConnect.requestFocus();
+            kConnectImg.requestFocus();
             setInfoLabel("Click on a Gizmo to add a key binding.");
-
         });
         //Add handler for adding keybindings
-        keyDisconnect.setOnAction(event -> {
-
+        kDisconnectImg.setOnMouseClicked(event -> {
             canvas.removeEventHandler(MouseEvent.ANY, mouseHandler);
             mouseHandler = new RemoveKeyConnectionsHandler(model,canvas, infoLabel);
             canvas.addEventHandler(MouseEvent.ANY, mouseHandler);
             canvas.requestFocus();
-            keyDisconnect.requestFocus();
+            kDisconnectImg.requestFocus();
             setInfoLabel("Click on a Gizmo to remove the key binding.");
-
         });
 
         //Add handler for adding gizmo connections
-        connect.setOnAction(event -> {
-
+        connectImg.setOnMouseClicked(event -> {
             canvas.removeEventHandler(MouseEvent.ANY, mouseHandler);
             mouseHandler = new AddGizmoConnectionsHandler(canvas,model, infoLabel);
             canvas.addEventHandler(MouseEvent.ANY, mouseHandler);
             canvas.requestFocus();
             infoLabel.setText("Please select two gizmos to connect.");
-            connect.requestFocus();
-
-
-
+            connectImg.requestFocus();
         });
 
         //Add handler for removing gizmo connections
-        disconnect.setOnAction(event -> {
-
+        disconnectImg.setOnMouseClicked(event -> {
             canvas.removeEventHandler(MouseEvent.ANY, mouseHandler);
             mouseHandler = new RemoveGizmoConnectionsHandler(canvas,model, infoLabel);
             canvas.addEventHandler(MouseEvent.ANY, mouseHandler);
             canvas.requestFocus();
             setInfoLabel("Please select two gizmos to disconnect.");
-            disconnect.requestFocus();
-
+            disconnectImg.requestFocus();
         });
 
-        deleteBall.setOnAction(event -> {
-
+        deleteBallImg.setOnMouseClicked(event -> {
             canvas.removeEventHandler(MouseEvent.ANY, mouseHandler);
             mouseHandler = new DeleteBallHandler(model,canvas);
             canvas.addEventHandler(MouseEvent.ANY, mouseHandler);
             canvas.requestFocus();
-            keyDisconnect.requestFocus();
+            deleteBallImg.requestFocus();
             setInfoLabel("Click on the grid to delete a Ball.");
-
         });
 
         //Add Handler for Gizmos to be added
@@ -261,22 +269,21 @@ public class Controller implements Initializable, Observer {
             }
         });
 
-        addBallButton.setOnAction(event -> {
+        addBallImg.setOnMouseClicked(event -> {
             canvas.removeEventHandler(MouseEvent.ANY, mouseHandler);
             mouseHandler = new AddBallHandler(model,canvas,infoLabel);
             canvas.addEventHandler(MouseEvent.ANY, mouseHandler);
             canvas.requestFocus();
-            addBallButton.requestFocus();
-
+            addBallImg.requestFocus();
         });
 
-        moveGizmo.setOnAction(event -> {
+        moveImg.setOnMouseClicked(event -> {
             canvas.removeEventHandler(MouseEvent.ANY, mouseHandler);
             mouseHandler = new MoveGizmoHandler(model,canvas,infoLabel);
             canvas.addEventHandler(MouseEvent.ANY, mouseHandler);
             setInfoLabel("Select Gizmo to Move");
             canvas.requestFocus();
-            moveGizmo.requestFocus();
+            moveImg.requestFocus();
         });
 
        gravitySlider.valueProperty().addListener(new ChangeListener<Number>() {
@@ -284,8 +291,7 @@ public class Controller implements Initializable, Observer {
            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
                gravityValue.setText(String.valueOf(newValue));
                model.setGravity(gravitySlider.getValue());
-               canvas.requestFocus();
-               gravitySlider.requestFocus();}
+               canvas.requestFocus(); }
        });
 
         gravityValue.setOnKeyPressed(new EventHandler<KeyEvent>() {
@@ -311,7 +317,6 @@ public class Controller implements Initializable, Observer {
                 muValue.setText(String.valueOf(newValue));
                 model.setMu(muSlider.getValue());
                 canvas.requestFocus();
-                muSlider.requestFocus();
             }
         });
 
@@ -338,7 +343,6 @@ public class Controller implements Initializable, Observer {
                 mu2Value.setText(String.valueOf(newValue));
                 model.setMu2(mu2Slider.getValue());
                 canvas.requestFocus();
-                mu2Slider.requestFocus();
             }
         });
 
@@ -359,7 +363,6 @@ public class Controller implements Initializable, Observer {
             }
         });
 
-
     }
 
 
@@ -377,10 +380,10 @@ public class Controller implements Initializable, Observer {
             isBuilding = true;
             runToolBar.setManaged(false);
             runToolBar.setVisible(false);
-            //editVariables.setManaged(false);
-            //editVariables.setVisible(false);
-            buildToolBar.setManaged(true);
-            buildToolBar.setVisible(true);
+            buildToolBar1.setManaged(true);
+            buildToolBar1.setVisible(true);
+            buildToolBar2.setManaged(true);
+            buildToolBar2.setVisible(true);
             //FIXME handler on root pane?
             rootPane.removeEventHandler(KeyEvent.ANY,keyBindHandler);
             canvas.removeEventHandler(MouseEvent.ANY,mouseHandler);
@@ -391,13 +394,15 @@ public class Controller implements Initializable, Observer {
             canvas.addEventHandler(MouseEvent.ANY, mouseHandler);
             //canvas.removeEventHandler(KeyEvent.ANY,keyBindHandler);
             canvas.draw(isBuilding);
-
+            setCanvasSize(Integer.valueOf(canvasSizeTextField.getText()));
         }else{ // From build to run mode
             isBuilding = false;
             runToolBar.setManaged(true);
             runToolBar.setVisible(true);
-            buildToolBar.setManaged(false);
-            buildToolBar.setVisible(false);
+            buildToolBar1.setManaged(false);
+            buildToolBar1.setVisible(false);
+            buildToolBar2.setManaged(false);
+            buildToolBar2.setVisible(false);
             editVariables.setManaged(true);
             editVariables.setVisible(true);
 
@@ -413,14 +418,15 @@ public class Controller implements Initializable, Observer {
 
             canvas.draw(isBuilding);
             stage.sizeToScene();
+            setCanvasSize(Integer.valueOf(canvasSizeTextField.getText()));
         }
 
-        addBallButton.setOnAction(event -> {
-            canvas.removeEventHandler(MouseEvent.ANY, mouseHandler);
-            mouseHandler = new AddBallHandler(model,canvas, infoLabel);
-            canvas.addEventHandler(MouseEvent.ANY, mouseHandler);
-            setInfoLabel("Click on the grid to add a Ball.");
-        });
+//        addBallImg.setOnMouseClicked(event -> {
+//            canvas.removeEventHandler(MouseEvent.ANY, mouseHandler);
+//            mouseHandler = new AddBallHandler(model,canvas, infoLabel);
+//            canvas.addEventHandler(MouseEvent.ANY, mouseHandler);
+//            setInfoLabel("Click on the grid to add a Ball.");
+//        });
 
     }
 
@@ -428,6 +434,7 @@ public class Controller implements Initializable, Observer {
 
     public void setStage(Stage s){
         stage = s;
+        setCanvasSize(DEFAULT_SIZE);
     }
 
 
@@ -442,12 +449,14 @@ public class Controller implements Initializable, Observer {
         if(canvasSize < 200){
             canvasSize = 200;
             canvasSizeTextField.setText(String.valueOf(canvasSize));
+        } else if (canvasSize > 2000) {
+            canvasSize = 2000;
+            canvasSizeTextField.setText(String.valueOf(canvasSize));
         }
         canvas.setWidth(canvasSize);
         canvas.setHeight(canvasSize);
         canvas.draw(isBuilding);
         canvasSizeTextField.setText(String.valueOf(canvasSize));
-        stage.setMaxWidth(canvasSize);
         stage.sizeToScene();
     }
 

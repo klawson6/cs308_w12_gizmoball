@@ -73,13 +73,14 @@ public class SaveFile {
                 toSave = "";
                 int code;
                 if(k.getCode() == KeyCode.UNDEFINED)
-                    code = KeyCode.getKeyCode(k.getCharacter()).getCode();
+                    code = KeyCode.getKeyCode(k.getCharacter()).impl_getCode();
                 else
-                    code = k.getCode().getCode();
+                    code = k.getCode().impl_getCode();
 
+                if(k.getEventType() == KeyEvent.KEY_TYPED)
+                    toSave = "KeyConnect key " + code + " down " + gizmo.getId();
                 if(k.getEventType() == KeyEvent.KEY_PRESSED)
                     toSave = "KeyConnect key " + code + " down " + gizmo.getId();
-
                 if(k.getEventType() == KeyEvent.KEY_RELEASED)
                     toSave = "KeyConnect key " + code + " up " + gizmo.getId();
 

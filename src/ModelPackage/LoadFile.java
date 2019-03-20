@@ -6,7 +6,6 @@ import javafx.scene.input.KeyEvent;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.List;
 import java.util.Scanner;
 
 //import java.awt.event.KeyEvent;
@@ -146,7 +145,7 @@ public class LoadFile {
                     if (direction.equalsIgnoreCase("up"))
                         k = new KeyEvent(KeyEvent.KEY_RELEASED, letter, "", keyCode, false, false, false, false);
                     else if (direction.equalsIgnoreCase("down"))
-                        k = new KeyEvent(KeyEvent.KEY_PRESSED, letter, "", keyCode, false, false, false, false);
+                        k = new KeyEvent(KeyEvent.KEY_TYPED, letter, "", keyCode, false, false, false, false);
 
 
                     //Check gizmo exists before adding key connection.
@@ -216,7 +215,8 @@ public class LoadFile {
                     Gizmo gizmo = model.getGizmo(name);
                     if(gizmo != null)
                         gizmo.move(xPos,yPos);
-
+                    else
+                        faulty = true;
 
 
                 } else if(info.startsWith("Friction")){
@@ -263,13 +263,5 @@ public class LoadFile {
         error.setHeaderText("File type not supported, please selected a .txt file.");
         error.show();
     }
-
-    /**
-     * @requires: The model is not null & the gizmo exists within the model
-     *
-     * @param: m The model that the gizmo should exist within
-     * @param: name The ID of the gizmo
-     * @return: The gizmo as a Gizmo object
-     */
 
 }
