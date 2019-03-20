@@ -1,0 +1,8 @@
+This was built using openjfx 11.
+
+To run, use the command line and run:
+
+java --module-path /%PATH_TO%/javafx-sdk-11.0.2/lib --add-modules=javafx.controls,javafx.fxml -jar Gizmoball.jar
+
+Please change the PATH_TO to the proper path where your OpenJFX library is.
+Download the library at it at https://gluonhq.com/products/javafx/
