@@ -18,10 +18,12 @@ import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Shape;
@@ -275,7 +277,7 @@ public class Controller implements Initializable, Observer {
             canvas.addEventHandler(MouseEvent.ANY, mouseHandler);
             setInfoLabel("Select Gizmo to Move");
             canvas.requestFocus();
-            moveGizmo.requestFocus();
+            moveImg.requestFocus();
         });
 
        gravitySlider.valueProperty().addListener(new ChangeListener<Number>() {
@@ -395,8 +397,10 @@ public class Controller implements Initializable, Observer {
             isBuilding = false;
             runToolBar.setManaged(true);
             runToolBar.setVisible(true);
-            buildToolBar.setManaged(false);
-            buildToolBar.setVisible(false);
+            buildToolBar1.setManaged(false);
+            buildToolBar1.setVisible(false);
+            buildToolBar2.setManaged(false);
+            buildToolBar2.setVisible(false);
             editVariables.setManaged(true);
             editVariables.setVisible(true);
 
