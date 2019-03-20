@@ -1,3 +1,57 @@
 .root, .root * {
-    -fx-focus-traversable: true ;
+    /*-fx-focus-traversable: false ;*/
+}
+
+/**{*/
+    /*font-size: 3px;*/
+/*}*/
+
+.label, .choice-box, .choice-box > .label{
+    /*-fx-font-size: 10;*/
+}
+
+.label {
+    -fx-text-fill: #ffffff;
+    -fx-wrap-text: true;
+    -fx-text-alignment: center;
+    -fx-alignment: center;
+}
+
+.choice-box > .label {
+    -fx-text-fill: #ffffff;
+    -fx-text-alignment: none;
+    -fx-alignment: none;
+}
+
+.choice-box{
+    -fx-border-width: 3;
+    -fx-border-color: #7171C2;
+    -fx-border-style: solid;
+    -fx-background-color: #2f2f50;
+}
+
+#menus {
+    -fx-border-width: 5;
+    -fx-border-color: #7171C2;
+    -fx-border-style: solid;
+    -fx-background-color: #2f2f50;
+}
+
+#commonToolBar, #buildToolBar1, #buildToolBar2, #runToolBar{
+    -fx-background-color: #2f2f50;
+    -fx-spacing: 3em;
+    /*-fx-border-width: 5;*/
+    /*-fx-border-color: #7171C2;*/
+    /*-fx-border-style: solid;*/
+}
+
+#buildToolBar1, #buildToolBar2, #runToolBar {
+    -fx-alignment: center;
+}
+
+#fillerBar{
+    -fx-border-width: 2.5;
+    -fx-border-color: #7171C2;
+    -fx-border-style: solid;
+    -fx-background-color: #7171C2;
 }

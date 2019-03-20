@@ -153,7 +153,7 @@ public class GAbsorber extends Gizmo {
     private void moveAbsorbedBall(Ball ball){
 
 
-        ball.setCircle(getEndxPosition() - 0.75, getEndyPosition() -0.75);
+        ball.setCircle(getEndxPosition() - 0.5, getEndyPosition() -0.5);
         ball.setVelocity(0,0);
 
         ball.stopBall();
