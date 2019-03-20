@@ -1,15 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.Slider?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToolBar?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import view.ResizableCanvas?>
 <?import javafx.scene.layout.HBox?>
@@ -199,88 +195,32 @@
                            wrapText="true"/>
                 </VBox>
             </ToolBar>
-            <ToolBar fx:id="editVariables" maxWidth="700" minWidth="150" minHeight="150" maxHeight="150" VBox.vgrow="ALWAYS">
-                <GridPane>
-                    <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
-                    </columnConstraints>
-                    <rowConstraints>
-                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                        <RowConstraints />
-                    </rowConstraints>
-                    <children>
-                        <Label text="Gravity" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="0" />
-                        <GridPane GridPane.columnIndex="0" GridPane.rowIndex="1">
-                            <columnConstraints>
-                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
-                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
-                            </columnConstraints>
-                            <rowConstraints>
-                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                            </rowConstraints>
-                            <children>
-                                <Slider fx:id="gravitySlider" max="50.0" min="-50.0" minorTickCount="5" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="25.0" />
-                                <TextField fx:id="gravityValue" GridPane.columnIndex="1" />
-                            </children>
-                        </GridPane>
-                    </children>
-                </GridPane>
-
-                <GridPane>
-                    <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
-                    </columnConstraints>
-                    <rowConstraints>
-                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                        <RowConstraints />
-                    </rowConstraints>
-
-
-                    <Label text="mu" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="0" />
-
-
-                    <GridPane GridPane.columnIndex="0" GridPane.rowIndex="1">
-                        <columnConstraints>
-                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
-                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
-                        </columnConstraints>
-                        <rowConstraints>
-                            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                        </rowConstraints>
-
-                        <Slider fx:id="muSlider" max="1.0" min="0" minorTickCount="5" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="0.025" />
-                        <TextField fx:id="muValue" GridPane.columnIndex="1" />
-                    </GridPane>
-                </GridPane>
-
-                <GridPane>
-                    <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
-                    </columnConstraints>
-                    <rowConstraints>
-                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                        <RowConstraints />
-                    </rowConstraints>
-                    <children>
-                        <Label text="mu2" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="0" />
-                        <GridPane GridPane.columnIndex="0" GridPane.rowIndex="1">
-                            <columnConstraints>
-                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
-                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
-                            </columnConstraints>
-                            <rowConstraints>
-                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                            </rowConstraints>
-                            <children>
-                                <Slider fx:id="mu2Slider" max="1.0" min="0" minorTickCount="5" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="0.025" />
-                                <TextField fx:id="mu2Value" GridPane.columnIndex="1" />
-                            </children>
-                        </GridPane>
-                    </children>
-                </GridPane>
+            <ToolBar fx:id="editVariables" minWidth="700" maxWidth="700" minHeight="150" maxHeight="150" VBox.vgrow="ALWAYS">
+                <VBox prefHeight="150" prefWidth="200" alignment="CENTER">
+                    <Label text="GRAVITY" prefHeight="40" prefWidth="200" alignment="CENTER"
+                           wrapText="true"/>
+                    <TextField fx:id="gravityValue" prefHeight="20" prefWidth="180" alignment="CENTER"/>
+                    <Slider fx:id="gravitySlider" prefHeight="50" prefWidth="180" max="50.0" min="-50.0" minorTickCount="5" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="25.0" />
+                    <Label prefHeight="10" prefWidth="360" />
+                </VBox>
+                <VBox prefHeight="150" prefWidth="440"  alignment="CENTER">
+                    <Label text="FRICTION" prefHeight="40" prefWidth="300" alignment="CENTER"
+                           wrapText="true"/>
+                    <HBox spacing="15" alignment="CENTER">
+                        <VBox alignment="CENTER">
+                            <TextField fx:id="muValue" prefHeight="20" prefWidth="180" alignment="CENTER"/>
+                            <Slider fx:id="muSlider" prefHeight="50" prefWidth="180" max="1.0" min="0" minorTickCount="5" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="0.025"/>
+                            <Label text="MU" prefHeight="10" prefWidth="180" alignment="CENTER"
+                                   wrapText="true" translateY="-15"/>
+                        </VBox>
+                        <VBox alignment="CENTER">
+                            <TextField fx:id="mu2Value" prefHeight="20" prefWidth="180" alignment="CENTER"/>
+                            <Slider fx:id="mu2Slider" prefHeight="50" prefWidth="180" max="1.0" min="0" minorTickCount="5" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="0.025" />
+                            <Label text="MU2" prefHeight="10" prefWidth="180" alignment="CENTER"
+                                   wrapText="true" translateY="-15"/>
+                        </VBox>
+                    </HBox>
+                </VBox>
             </ToolBar>
         </VBox>
     <ResizableCanvas fx:id="canvas">

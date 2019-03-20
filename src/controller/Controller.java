@@ -2,6 +2,7 @@ package controller;
 
 import ModelPackage.*;
 import com.sun.javafx.fxml.builder.JavaFXSceneBuilder;
+import com.sun.org.apache.xerces.internal.impl.dv.util.HexBin;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
@@ -32,6 +33,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import javafx.util.Duration;
+import javafx.util.StringConverter;
 import view.ResizableCanvas;
 
 import java.awt.*;
@@ -359,7 +361,6 @@ public class Controller implements Initializable, Observer {
                 }
             }
         });
-
 
     }
 
