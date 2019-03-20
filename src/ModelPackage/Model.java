@@ -536,7 +536,8 @@ public class Model extends Observable implements IModel {
 
                     if (cd.getCollisionGizmo().getGizmoConnectionIds().size() > 0) {
                         for (String id : cd.getCollisionGizmo().getGizmoConnectionIds()) {
-                            getGizmo(id).activate();
+                            if (getGizmo(id) != null)
+                                getGizmo(id).activate();
                         }
                     }
                 }
