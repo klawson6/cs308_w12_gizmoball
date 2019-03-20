@@ -456,7 +456,6 @@ public class Controller implements Initializable, Observer {
         canvas.setHeight(canvasSize);
         canvas.draw(isBuilding);
         canvasSizeTextField.setText(String.valueOf(canvasSize));
-        stage.setMaxWidth(canvasSize);
         stage.sizeToScene();
         canvas.toFront();
     }
