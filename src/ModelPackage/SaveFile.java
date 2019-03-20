@@ -73,9 +73,9 @@ public class SaveFile {
                 toSave = "";
                 int code;
                 if(k.getCode() == KeyCode.UNDEFINED)
-                    code = KeyCode.getKeyCode(k.getCharacter()).impl_getCode();
+                    code = KeyCode.getKeyCode(k.getCharacter()).getCode();
                 else
-                    code = k.getCode().impl_getCode();
+                    code = k.getCode().getCode();
 
                 if(k.getEventType() == KeyEvent.KEY_TYPED)
                     toSave = "KeyConnect key " + code + " down " + gizmo.getId();
